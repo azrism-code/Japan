@@ -1,4 +1,4 @@
-const CACHE='japan-trip-v9-9';
+const CACHE='japan-trip-v9-10';
 const CORE=['./','./index.html','./manifest.json','./icon.svg','./styles.css','./app.js','./index.htm'];
 
 self.addEventListener('install',event=>{
