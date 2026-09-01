@@ -1,7 +1,7 @@
-// Japan Trip v9.9 loader
+// Japan Trip v9.10 loader
 (async function bootJapanTrip(){
   try{
-    const res=await fetch('./index.htm?v=99',{cache:'no-store'});
+    const res=await fetch('./index.htm?v=100',{cache:'no-store'});
     if(!res.ok) throw new Error('legacy source '+res.status);
     const html=await res.text();
     const doc=new DOMParser().parseFromString(html,'text/html');
@@ -33,18 +33,20 @@
     }
 
     installExpenses();
-    document.title='Japan Trip 2026 · v9.9';
-    const ver=document.querySelector('header .logo small'); if(ver) ver.textContent='2026 · v9.9';
-    document.documentElement.dataset.appReady='v9.9';
+    installFlightReminders();
+    document.title='Japan Trip 2026 · v9.10';
+    const ver=document.querySelector('header .logo small'); if(ver) ver.textContent='2026 · v9.10';
+    document.documentElement.dataset.appReady='v9.10';
   }catch(err){
     console.error('Japan Trip boot failed',err);
     document.documentElement.dataset.appReady='error';
     installExpenses();
+    installFlightReminders();
   }
 
   if('serviceWorker' in navigator){
     try{
-      const reg=await navigator.serviceWorker.register('./service-worker.js?v=99');
+      const reg=await navigator.serviceWorker.register('./service-worker.js?v=100');
       reg.update();
     }catch(e){console.warn('SW registration failed',e);}
   }
@@ -73,7 +75,6 @@ function expLoad(){
   let a=null;
   try{const x=JSON.parse(localStorage.getItem(EXP_KEY));if(Array.isArray(x))a=x;}catch(e){}
   if(!a)a=EXP_DEFAULTS.map((x,i)=>({...x,id:Date.now()+i}));
-  // Migration: early v9.8 users may have a saved list without the paid flight row.
   if(!a.some(x=>String(x.category||'').includes('טיסות')||/טיס/.test(String(x.name||'')))){
     a.unshift({...EXP_DEFAULTS[0],id:Date.now()-1});
     try{localStorage.setItem(EXP_KEY,JSON.stringify(a));}catch(e){}
@@ -180,3 +181,54 @@ function expSaveEdit(id){
   expSave(a,expSettings());expEditing=null;expRender();
 }
 function expSetFilter(c){expFilter=c;expRender();}
+
+// ---------- Airport timing reminders v9.10 ----------
+function flightReminderStop(time,icon,title,text){
+  const d=document.createElement('div');
+  d.className='stop flight-reminder-stop';
+  d.innerHTML=`<div class="time">${time}</div><div class="rail"><i>${icon}</i></div><div class="stop-card"><h3>${title}</h3><p>${text}</p></div>`;
+  return d;
+}
+function installFlightReminders(){
+  const style=document.createElement('style');
+  if(!document.getElementById('flightReminderStyle')){
+    style.id='flightReminderStyle';
+    style.textContent='.flight-reminder-stop .stop-card{background:#fffaf2;border:1px solid #ead9b7}.flight-reminder-stop h3{margin-bottom:4px}';
+    document.head.appendChild(style);
+  }
+
+  // 03/11 TLV 13:50: leave toward airport ~4h before departure, arrive ~3h before.
+  const day0=document.getElementById('day-0');
+  if(day0&&!day0.querySelector('.flight-reminder-stop')){
+    const list=day0.querySelector('.list-view');
+    const first=list?.querySelector('.stop');
+    if(list&&first){
+      list.insertBefore(flightReminderStop('09:50','🚗','יציאה לכיוון נתב״ג','יציאה לכיוון שדה התעופה, כשעה לפני שעת ההגעה המתוכננת לטרמינל.'),first);
+      list.insertBefore(flightReminderStop('10:50','🛫','הגעה לנתב״ג','להיות בשדה כ־3 שעות לפני ההמראה של 13:50.'),first);
+    }
+  }
+
+  // 17/11 NRT 21:30: leave Tokyo ~4h before departure, arrive ~3h before.
+  const day14=document.getElementById('day-14');
+  if(day14&&!day14.querySelector('.flight-reminder-stop')){
+    const list=day14.querySelector('.list-view');
+    const stops=[...(list?.querySelectorAll('.stop')||[])];
+    const flight=stops.find(s=>/EK321|המראה מטוקיו|Narita → Dubai/i.test(s.textContent||''));
+    if(list){
+      const ref=flight||null;
+      list.insertBefore(flightReminderStop('17:30','🚆','יציאה לכיוון Narita','יציאה לכיוון שדה התעופה, כשעה לפני שעת ההגעה המתוכננת לטרמינל.'),ref);
+      list.insertBefore(flightReminderStop('18:30','🛫','הגעה ל-Narita','להיות בשדה כ־3 שעות לפני ההמראה של 21:30.'),ref);
+    }
+  }
+
+  // Connection legs: already inside the airport, so show practical gate reminders instead of a fake trip to the airport.
+  document.querySelectorAll('.stop-card').forEach(card=>{
+    const t=card.textContent||'';
+    if(/EK320/.test(t)&&!card.querySelector('.connection-reminder')){
+      const p=document.createElement('p');p.className='connection-reminder';p.innerHTML='<b>⏰ קונקשן:</b> כבר נמצאים בשדה בדובאי; לכוון להיות בשער סביב 21:45, כשעה לפני ההמראה 22:45.';card.appendChild(p);
+    }
+    if(/EK2120|FZ1073/.test(t)&&!card.querySelector('.connection-reminder')){
+      const p=document.createElement('p');p.className='connection-reminder';p.innerHTML='<b>⏰ קונקשן:</b> כבר נמצאים בשדה בדובאי; לכוון להיות בשער סביב 05:15, כשעה לפני ההמראה 06:15.';card.appendChild(p);
+    }
+  });
+}
