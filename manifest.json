@@ -1,0 +1,12 @@
+{
+  "name": "Japan Trip 2026",
+  "short_name": "Japan Trip",
+  "description": "Japan 2026 mobile trip planner",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "lang": "he",
+  "dir": "rtl"
+}
