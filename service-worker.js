@@ -1,17 +1,46 @@
-const CACHE='japan-trip-v9-6-hotfix1';
-const CORE=['./','./index.html','./manifest.json','./icon.svg','./styles.css'];
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting())));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
-self.addEventListener('fetch',e=>{
-  if(e.request.method!=='GET') return;
-  const u=new URL(e.request.url);
-  if(u.pathname.endsWith('/app.js')){
-    e.respondWith(fetch(e.request,{cache:'no-store'}).then(async r=>{
-      let txt=await r.text();
-      txt=txt.replace(/function toggleDetail\(b\)[\s\S]*?document\.addEventListener\('DOMContentLoaded',loadTake\);\s*(?=const PLACE_DATA=)/,'');
-      return new Response(txt,{headers:{'Content-Type':'application/javascript; charset=utf-8','Cache-Control':'no-store'}});
-    }));
+const CACHE='japan-trip-v9-7';
+const CORE=['./','./index.html','./manifest.json','./icon.svg','./styles.css','./app.js','./index.htm'];
+
+self.addEventListener('install',event=>{
+  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()));
+});
+
+self.addEventListener('activate',event=>{
+  event.waitUntil(
+    caches.keys()
+      .then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))
+      .then(()=>self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch',event=>{
+  if(event.request.method!=='GET') return;
+  const url=new URL(event.request.url);
+
+  // Always prefer the newest app shell and logic. This avoids desktop/mobile
+  // getting stuck on different cached generations after an update.
+  if(url.origin===self.location.origin && /\/(index\.html|app\.js|styles\.css|index\.htm)$/.test(url.pathname)){
+    event.respondWith(
+      fetch(event.request,{cache:'no-store'})
+        .then(response=>{
+          if(response&&response.ok){
+            const copy=response.clone();
+            caches.open(CACHE).then(cache=>cache.put(event.request,copy));
+          }
+          return response;
+        })
+        .catch(()=>caches.match(event.request).then(r=>r||caches.match('./index.html')))
+    );
     return;
   }
-  e.respondWith(fetch(e.request).then(r=>{const copy=r.clone();caches.open(CACHE).then(c=>c.put(e.request,copy));return r;}).catch(()=>caches.match(e.request).then(r=>r||caches.match('./index.html'))));
+
+  event.respondWith(
+    caches.match(event.request).then(cached=>cached||fetch(event.request).then(response=>{
+      if(response&&response.ok){
+        const copy=response.clone();
+        caches.open(CACHE).then(cache=>cache.put(event.request,copy));
+      }
+      return response;
+    }))
+  );
 });
