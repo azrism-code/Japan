@@ -24,8 +24,16 @@ function decorate(){
    const anchor=card.querySelector('.osm-choice')||card.querySelector('.open-day-route');
    if(anchor)anchor.before(box);else card.appendChild(box);
  });
+ addRamenIchiza();
  const v=document.querySelector('header .logo small');if(v)v.textContent='2026 · v9.12';
  document.title='Japan Trip 2026 · v9.12';document.documentElement.dataset.appReady='v9.12';
+}
+function addRamenIchiza(){
+ const day=document.getElementById('day-12');if(!day||day.querySelector('[data-ramen-ichiza]'))return;
+ const list=day.querySelector('.list-view');if(!list)return;
+ const stop=document.createElement('div');stop.className='stop';stop.dataset.ramenIchiza='1';
+ stop.innerHTML='<div class="time">אופציה</div><div class="rail"><i>🍜</i></div><div class="stop-card"><h3>Ramen Ichiza · Namba</h3><p>אופציה לארוחה כשאנחנו באזור Namba / Dotonbori. מתחם ראמן בקומה 9 של EDION Namba עם כמה חנויות ראמן במקום אחד.</p><div class="stop-actions"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Namba+Ramen+Ichiza+EDION+Namba+Osaka" rel="noopener" target="_blank">📍 פתח מפה ↗</a></div></div>';
+ list.appendChild(stop);
 }
 function css(){if(document.getElementById('walk-v912-css'))return;const s=document.createElement('style');s.id='walk-v912-css';s.textContent='.walk-pref-v912{margin:9px 0;padding:10px 11px;border-radius:12px;background:#f4f8f2;border:1px solid #dce9d7;font-size:11px}.walk-pref-v912 b{display:block;font-size:12px;margin-bottom:4px}.walk-pref-v912 span{display:block;line-height:1.55}.walk-pref-v912 small{display:block;color:#667064;margin-top:5px;line-height:1.45}';document.head.appendChild(s);}
 function run(){css();decorate();}
