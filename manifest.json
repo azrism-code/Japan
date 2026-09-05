@@ -3,7 +3,7 @@
   "short_name": "Japan Trip",
   "description": "Japan 2026 mobile trip planner",
   "id": "./",
-  "start_url": "./",
+  "start_url": "./?v912i=1",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
