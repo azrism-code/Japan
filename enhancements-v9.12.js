@@ -1,7 +1,7 @@
-// Japan Trip v9.12g — shopping update + safe updater
+// Japan Trip v9.12h — shopping update + safe updater
 (function(){
   'use strict';
-  const VERSION='v9.12g';
+  const VERSION='v9.12h';
   function addOnitsukaToShoes(){
     const els=[...document.querySelectorAll('h1,h2,h3,h4,p,span,div,li')];
     const shoe=els.find(el=>/נעלי ריצה/.test(el.textContent||'') && el.children.length<8);
@@ -17,22 +17,16 @@
   }
   function stableVersion(){
     let v=document.querySelector('header .logo .app-version');
-    if(!v){
-      const old=document.querySelector('header .logo small');
-      if(old){v=document.createElement('span');v.className='app-version';v.style.cssText=old.getAttribute('style')||'';old.replaceWith(v);}
-    }
+    if(!v){const old=document.querySelector('header .logo small');if(old){v=document.createElement('span');v.className='app-version';v.style.cssText=old.getAttribute('style')||'';old.replaceWith(v);}}
     if(v)v.textContent='2026 · '+VERSION;
     document.title='Japan Trip 2026 · '+VERSION;
     document.documentElement.dataset.appReady=VERSION;
   }
-  function loadPatch(src,id){
-    if(document.getElementById(id))return;
-    const s=document.createElement('script');s.id=id;s.src=src+'?v=912g';s.async=false;document.body.appendChild(s);
-  }
+  function loadPatch(src,id){if(document.getElementById(id))return;const s=document.createElement('script');s.id=id;s.src=src+'?v=912h';s.async=false;document.body.appendChild(s);}
   function loadLatestPatches(){
     loadPatch('./ramen-v9.12e.js','patch-ramen-912e');
     loadPatch('./itinerary-fill-v9.12f.js','patch-itinerary-912f');
-    loadPatch('./cleanup-v9.12g.js','patch-cleanup-912g');
+    loadPatch('./cleanup-v9.12g.js','patch-cleanup-912h');
   }
   async function updateServiceWorker(){
     if(!('serviceWorker' in navigator))return;
@@ -40,12 +34,12 @@
       if(!window.__jpControllerWatch){
         window.__jpControllerWatch=true;
         navigator.serviceWorker.addEventListener('controllerchange',()=>{
-          if(sessionStorage.getItem('jp-sw-912g-reloaded'))return;
-          sessionStorage.setItem('jp-sw-912g-reloaded','1');
+          if(sessionStorage.getItem('jp-sw-912h-reloaded'))return;
+          sessionStorage.setItem('jp-sw-912h-reloaded','1');
           location.reload();
         });
       }
-      const reg=await navigator.serviceWorker.register('./service-worker.js?v=912g',{scope:'./'});
+      const reg=await navigator.serviceWorker.register('./service-worker.js?v=912h',{scope:'./'});
       await reg.update();
     }catch(e){console.warn('Japan Trip SW update',e);}
   }
