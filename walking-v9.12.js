@@ -1,20 +1,110 @@
 // Japan Trip v9.12 - itinerary helpers
 (function(){'use strict';
 const WALK_PAIRS=[['Kaminarimon','Nakamise'],['Nakamise','Sensō-ji'],['Ueno','Ameyoko'],['Ameyoko','Akihabara'],['Meiji Jingu','Takeshita'],['Takeshita','Omotesando'],['Omotesando','Shibuya'],['Tsukiji','Ginza'],['Ginza','Imperial Palace'],['Imperial Palace','Tokyo Station'],['Kiyomizu','Higashiyama'],['Higashiyama','Gion'],['Gion','Pontocho'],['Nara Park','Tōdai'],['Tōdai','Naramachi'],['Shinsaibashi','Dotonbori']];
-function norm(s){return(s||'').toLowerCase().replace(/[^a-z0-9\u0590-\u05ff]+/g,' ').trim()}function hit(a,b){a=norm(a);b=norm(b);return WALK_PAIRS.some(([x,y])=>{x=norm(x);y=norm(y);return(a.includes(x)&&b.includes(y))||(a.includes(y)&&b.includes(x))})}
-function replaceRemm(){document.querySelectorAll('.hotel-card,.booking-card,.card,.stop-card').forEach(card=>{if(!/remm Tokyo Kyobashi/i.test(card.textContent||''))return;card.innerHTML=card.innerHTML.replace(/remm Tokyo Kyobashi/gi,'Hotel Metropolitan Tokyo Marunouchi').replace(/2-6-21 Kyobashi[^<]*/gi,'1-7-12 Marunouchi, Chiyoda · Sapia Tower').replace(/E874633747/gi,'QXU287073')});document.querySelectorAll('[data-metropolitan-v912]').forEach(x=>x.remove())}
-function removeCrossHotelSafely(){const all=[...document.querySelectorAll('body *')];all.filter(el=>/Cross Hotel Osaka/i.test(el.textContent||'')&&!/Hotel Royal Classic Osaka/i.test(el.textContent||'')).filter(el=>![...el.children].some(c=>/Cross Hotel Osaka/i.test(c.textContent||'')&&!/Hotel Royal Classic Osaka/i.test(c.textContent||''))).forEach(el=>{const card=el.closest('.hotel-card,.booking-card');if(card&&!/Hotel Royal Classic Osaka/i.test(card.textContent||''))card.remove();else el.remove();});}
-function ensureRoyalClassic(){
-  // Osaka has one hotel booking for 14-16/11. Show the check-in only on 14/11; do not create a second hotel card on 15/11.
-  document.querySelectorAll('#day-12 .royal-classic-fix').forEach(x=>x.remove());
-  const day=document.getElementById('day-11');if(!day||/Hotel Royal Classic Osaka/i.test(day.textContent||''))return;
+function norm(s){return(s||'').toLowerCase().replace(/[^a-z0-9\u0590-\u05ff]+/g,' ').trim()}
+function hit(a,b){a=norm(a);b=norm(b);return WALK_PAIRS.some(([x,y])=>{x=norm(x);y=norm(y);return(a.includes(x)&&b.includes(y))||(a.includes(y)&&b.includes(x))})}
+
+function replaceRemm(){
+  document.querySelectorAll('.hotel-card,.booking-card,.card,.stop-card').forEach(card=>{
+    if(!/remm Tokyo Kyobashi/i.test(card.textContent||''))return;
+    card.innerHTML=card.innerHTML
+      .replace(/remm Tokyo Kyobashi/gi,'Hotel Metropolitan Tokyo Marunouchi')
+      .replace(/2-6-21 Kyobashi[^<]*/gi,'1-7-12 Marunouchi, Chiyoda · Sapia Tower')
+      .replace(/E874633747/gi,'QXU287073');
+  });
+  document.querySelectorAll('[data-metropolitan-v912]').forEach(x=>x.remove());
+}
+
+function rebuildOsakaHotelDays(){
+  const specs=[
+    {id:'day-11',date:'14/11',note:'צ׳ק-אין · 14–16/11'},
+    {id:'day-12',date:'15/11',note:'לינה · אותו מלון, לילה שני'}
+  ];
+  specs.forEach(spec=>{
+    const day=document.getElementById(spec.id); if(!day)return;
+    const list=day.querySelector('.list-view'); if(!list)return;
+
+    // Remove every old Osaka-hotel stop from this day, including stale Cross references
+    // and previous injected Royal Classic fixes, then add exactly one clean hotel stop.
+    [...list.querySelectorAll('.stop')].forEach(stop=>{
+      const t=stop.textContent||'';
+      if(/Cross Hotel Osaka|Hotel Royal Classic Osaka|royal-classic-fix/i.test(t+' '+(stop.className||''))) stop.remove();
+    });
+
+    // Replace any residual Cross wording elsewhere inside the day without touching layout.
+    const walker=document.createTreeWalker(day,NodeFilter.SHOW_TEXT);
+    const nodes=[]; while(walker.nextNode())nodes.push(walker.currentNode);
+    nodes.forEach(n=>{if(/Cross Hotel Osaka/i.test(n.nodeValue||''))n.nodeValue=n.nodeValue.replace(/Cross Hotel Osaka/gi,'Hotel Royal Classic Osaka');});
+
+    const stop=document.createElement('div');
+    stop.className='stop royal-classic-fix';
+    stop.dataset.osakaHotel='royal-classic';
+    stop.innerHTML='<div class="time">🏨</div><div class="rail"><i>🏨</i></div><div class="stop-card"><h3>Hotel Royal Classic Osaka</h3><p>'+spec.note+' · Namba</p><div class="hotel-exit-v912">🚉 Osaka Metro Namba · Exit 12 · מחובר ישירות למלון</div></div>';
+    list.appendChild(stop);
+  });
+}
+
+function migrateExpenses(){
+  try{
+    const k='japanTrip_expenses_v1',raw=localStorage.getItem(k),a=raw?JSON.parse(raw):null;
+    if(!Array.isArray(a))return;
+    let changed=false;
+    for(let i=a.length-1;i>=0;i--){if(/Cross Hotel Osaka/i.test(a[i].name||'')){a.splice(i,1);changed=true}}
+    let x=a.find(x=>/מלון טוקיו.*לילה אחרון|remm Tokyo Kyobashi|Hotel Metropolitan Tokyo Marunouchi/i.test(x.name||''));
+    if(!x){x={id:Date.now(),category:'🏨 לינה',included:true,payment:'אשראי'};a.push(x);changed=true}
+    const target={name:'Hotel Metropolitan Tokyo Marunouchi',status:'שולם',payment:'אשראי',currency:'ILS',amount:676.61,category:'🏨 לינה',included:true,note:'16–17/11 · QXU287073 · ביטול חינם עד 15/11 21:59'};
+    Object.keys(target).forEach(key=>{if(x[key]!==target[key]){x[key]=target[key];changed=true}});
+    if(changed){localStorage.setItem(k,JSON.stringify(a));if(typeof expRender==='function')setTimeout(expRender,0)}
+  }catch(e){}
+}
+
+function addHotelExits(){
+  const tips=[
+    ['JR Kyushu Hotel Blossom Shinjuku','🚉 JR Shinjuku · South Exit · כ־3 דק׳ הליכה'],
+    ['Richmond Hotel Premier Kyoto Shijo','🚉 Shijo / Karasuma · Exit 24 · כ־7 דק׳ הליכה'],
+    ['Hotel Royal Classic Osaka','🚉 Osaka Metro Namba · Exit 12 · מחובר ישירות למלון'],
+    ['Hotel Metropolitan Tokyo Marunouchi','🚄 Tokyo Station · Nihombashi Exit · Sapia Tower · כ־1 דק׳ מ־Shinkansen Nihombashi Gate']
+  ];
+  document.querySelectorAll('.hotel-card,.booking-card,.card,.stop-card').forEach(card=>{
+    if(card.querySelector('.hotel-exit-v912'))return;
+    const txt=card.textContent||'',t=tips.find(([n])=>txt.toLowerCase().includes(n.toLowerCase()));
+    if(!t)return;
+    const d=document.createElement('div');d.className='hotel-exit-v912';d.textContent=t[1];card.appendChild(d);
+  });
+}
+
+function addRamenIchiza(){
+  const day=document.getElementById('day-12');if(!day||day.querySelector('[data-ramen-ichiza]'))return;
   const list=day.querySelector('.list-view');if(!list)return;
-  const stop=document.createElement('div');stop.className='stop royal-classic-fix';
-  stop.innerHTML='<div class="time">🏨</div><div class="rail"><i>🏨</i></div><div class="stop-card"><h3>Hotel Royal Classic Osaka</h3><p>14–16/11 · Namba · המלון היחיד שלנו באוסקה · צ׳ק-אין ב־14/11</p><div class="hotel-exit-v912">🚉 Osaka Metro Namba · Exit 12 · מחובר ישירות למלון</div></div>';
+  const stop=document.createElement('div');stop.className='stop';stop.dataset.ramenIchiza='1';
+  stop.innerHTML='<div class="time">אופציה</div><div class="rail"><i>🍜</i></div><div class="stop-card"><h3>Ramen Ichiza · Namba</h3><p>אופציה לארוחה כשאנחנו באזור Namba / Dotonbori.</p></div>';
   list.appendChild(stop);
 }
-function migrateExpenses(){try{const k='japanTrip_expenses_v1',raw=localStorage.getItem(k),a=raw?JSON.parse(raw):null;if(!Array.isArray(a))return;let changed=false;for(let i=a.length-1;i>=0;i--){if(/Cross Hotel Osaka/i.test(a[i].name||'')){a.splice(i,1);changed=true}}let x=a.find(x=>/מלון טוקיו.*לילה אחרון|remm Tokyo Kyobashi|Hotel Metropolitan Tokyo Marunouchi/i.test(x.name||''));if(!x){x={id:Date.now(),category:'🏨 לינה',included:true,payment:'אשראי'};a.push(x);changed=true}const target={name:'Hotel Metropolitan Tokyo Marunouchi',status:'שולם',payment:'אשראי',currency:'ILS',amount:676.61,category:'🏨 לינה',included:true,note:'16–17/11 · QXU287073 · ביטול חינם עד 15/11 21:59'};Object.keys(target).forEach(key=>{if(x[key]!==target[key]){x[key]=target[key];changed=true}});if(changed){localStorage.setItem(k,JSON.stringify(a));if(typeof expRender==='function')setTimeout(expRender,0)}}catch(e){}}
-function addHotelExits(){const tips=[['JR Kyushu Hotel Blossom Shinjuku','🚉 JR Shinjuku · South Exit · כ־3 דק׳ הליכה'],['Richmond Hotel Premier Kyoto Shijo','🚉 Shijo / Karasuma · Exit 24 · כ־7 דק׳ הליכה'],['Hotel Royal Classic Osaka','🚉 Osaka Metro Namba · Exit 12 · מחובר ישירות למלון'],['Hotel Metropolitan Tokyo Marunouchi','🚄 Tokyo Station · Nihombashi Exit · Sapia Tower · כ־1 דק׳ מ־Shinkansen Nihombashi Gate']];document.querySelectorAll('.hotel-card,.booking-card,.card,.stop-card').forEach(card=>{if(card.querySelector('.hotel-exit-v912'))return;const txt=card.textContent||'',t=tips.find(([n])=>txt.toLowerCase().includes(n.toLowerCase()));if(!t)return;const d=document.createElement('div');d.className='hotel-exit-v912';d.textContent=t[1];card.appendChild(d)})}
-function addRamenIchiza(){const day=document.getElementById('day-12');if(!day||day.querySelector('[data-ramen-ichiza]'))return;const list=day.querySelector('.list-view');if(!list)return;const stop=document.createElement('div');stop.className='stop';stop.dataset.ramenIchiza='1';stop.innerHTML='<div class="time">אופציה</div><div class="rail"><i>🍜</i></div><div class="stop-card"><h3>Ramen Ichiza · Namba</h3><p>אופציה לארוחה כשאנחנו באזור Namba / Dotonbori.</p></div>';list.appendChild(stop)}
-function decorate(){replaceRemm();removeCrossHotelSafely();ensureRoyalClassic();migrateExpenses();document.querySelectorAll('.route-map-card').forEach(card=>{if(card.querySelector('.walk-pref-v912'))return;const stops=[...card.querySelectorAll('ol li')].map(x=>x.textContent.trim()).filter(Boolean),walks=[];for(let i=0;i<stops.length-1;i++)if(hit(stops[i],stops[i+1]))walks.push(stops[i]+' → '+stops[i+1]);if(!walks.length)return;const box=document.createElement('div');box.className='walk-pref-v912';box.innerHTML='<b>🚶 עדיפות להליכה</b><span>'+walks.join(' · ')+'</span><small>במעברים של עד כ־20–25 דקות נעדיף ללכת.</small>';card.appendChild(box)});addRamenIchiza();addHotelExits();const v=document.querySelector('header .logo small');if(v)v.textContent='2026 · v9.12'}
-function css(){if(document.getElementById('walk-v912-css'))return;const s=document.createElement('style');s.id='walk-v912-css';s.textContent='.walk-pref-v912,.hotel-exit-v912{margin:9px 0;padding:10px 11px;border-radius:12px;background:#f4f8f2;border:1px solid #dce9d7;font-size:11px}.walk-pref-v912 b{display:block;font-size:12px;margin-bottom:4px}.hotel-exit-v912{font-weight:700;line-height:1.5}';document.head.appendChild(s)}function run(){css();decorate()}new MutationObserver(()=>setTimeout(run,60)).observe(document.documentElement,{childList:true,subtree:true});if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();})();
+
+function decorate(){
+  replaceRemm();
+  rebuildOsakaHotelDays();
+  migrateExpenses();
+  document.querySelectorAll('.route-map-card').forEach(card=>{
+    if(card.querySelector('.walk-pref-v912'))return;
+    const stops=[...card.querySelectorAll('ol li')].map(x=>x.textContent.trim()).filter(Boolean),walks=[];
+    for(let i=0;i<stops.length-1;i++)if(hit(stops[i],stops[i+1]))walks.push(stops[i]+' → '+stops[i+1]);
+    if(!walks.length)return;
+    const box=document.createElement('div');box.className='walk-pref-v912';
+    box.innerHTML='<b>🚶 עדיפות להליכה</b><span>'+walks.join(' · ')+'</span><small>במעברים של עד כ־20–25 דקות נעדיף ללכת.</small>';
+    card.appendChild(box);
+  });
+  addRamenIchiza();
+  addHotelExits();
+  const v=document.querySelector('header .logo small');if(v)v.textContent='2026 · v9.12';
+}
+function css(){
+  if(document.getElementById('walk-v912-css'))return;
+  const s=document.createElement('style');s.id='walk-v912-css';
+  s.textContent='.walk-pref-v912,.hotel-exit-v912{margin:9px 0;padding:10px 11px;border-radius:12px;background:#f4f8f2;border:1px solid #dce9d7;font-size:11px}.walk-pref-v912 b{display:block;font-size:12px;margin-bottom:4px}.hotel-exit-v912{font-weight:700;line-height:1.5}';
+  document.head.appendChild(s);
+}
+function run(){css();decorate()}
+new MutationObserver(()=>setTimeout(run,60)).observe(document.documentElement,{childList:true,subtree:true});
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
+})();
