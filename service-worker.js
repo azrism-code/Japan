@@ -1,5 +1,5 @@
-const CACHE='japan-trip-v9-12b';
-const CORE=['./','./index.html','./manifest.json','./icon.svg','./styles.css','./app.js','./index.htm','./enhancements-v9.11.js','./walking-v9.12.js','./enhancements-v9.12.js'];
+const CACHE='japan-trip-v9-12c';
+const CORE=['./','./index.html','./manifest.json','./icon.svg','./styles.css','./app.js','./index.htm','./enhancements-v9.11.js','./walking-v9.12.js','./enhancements-v9.12.js','./hotels-v9.12c.js'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()));
@@ -15,15 +15,16 @@ self.addEventListener('fetch',event=>{
   if(url.origin===self.location.origin && /\/app\.js$/.test(url.pathname)){
     event.respondWith(fetch(event.request,{cache:'no-store'}).then(async response=>{
       if(!response.ok)return response;
-      const base=await response.text(); let extra=''; let walking=''; let shopping='';
+      const base=await response.text(); let extra=''; let walking=''; let shopping=''; let hotels='';
       try{const r=await fetch('./enhancements-v9.11.js',{cache:'no-store'});if(r.ok)extra=await r.text();}catch(e){}
       try{const r=await fetch('./walking-v9.12.js',{cache:'no-store'});if(r.ok)walking=await r.text();}catch(e){}
       try{const r=await fetch('./enhancements-v9.12.js',{cache:'no-store'});if(r.ok)shopping=await r.text();}catch(e){}
-      return new Response(base+'\n\n'+extra+'\n\n'+walking+'\n\n'+shopping,{status:200,headers:{'Content-Type':'application/javascript; charset=utf-8','Cache-Control':'no-store'}});
+      try{const r=await fetch('./hotels-v9.12c.js',{cache:'no-store'});if(r.ok)hotels=await r.text();}catch(e){}
+      return new Response(base+'\n\n'+extra+'\n\n'+walking+'\n\n'+shopping+'\n\n'+hotels,{status:200,headers:{'Content-Type':'application/javascript; charset=utf-8','Cache-Control':'no-store'}});
     }).catch(()=>caches.match(event.request)));
     return;
   }
-  if(url.origin===self.location.origin && /\/(index\.html|styles\.css|index\.htm|enhancements-v9\.11\.js|walking-v9\.12\.js|enhancements-v9\.12\.js)$/.test(url.pathname)){
+  if(url.origin===self.location.origin && /\/(index\.html|styles\.css|index\.htm|enhancements-v9\.11\.js|walking-v9\.12\.js|enhancements-v9\.12\.js|hotels-v9\.12c\.js)$/.test(url.pathname)){
     event.respondWith(fetch(event.request,{cache:'no-store'}).then(response=>{if(response&&response.ok){const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));}return response;}).catch(()=>caches.match(event.request).then(r=>r||caches.match('./index.html'))));
     return;
   }
