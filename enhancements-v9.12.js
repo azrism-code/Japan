@@ -15,6 +15,16 @@
     box.innerHTML='<b>👟 Onitsuka Tiger</b><br><span>עדיפות: Omotesando ביום 6/11 — ממש על המסלול. חלופות: Ginza / Shinjuku / Namba.</span><br><a href="https://www.google.com/maps/search/?api=1&query=Onitsuka+Tiger+Omotesando+Tokyo" target="_blank" rel="noopener" style="font-weight:800;text-decoration:none">📍 פתח מפה ↗</a>';
     card.appendChild(box);
   }
+  function stableVersion(){
+    let v=document.querySelector('header .logo .app-version');
+    if(!v){
+      const old=document.querySelector('header .logo small');
+      if(old){v=document.createElement('span');v.className='app-version';v.style.cssText=old.getAttribute('style')||'';old.replaceWith(v);}
+    }
+    if(v)v.textContent='2026 · '+VERSION;
+    document.title='Japan Trip 2026 · '+VERSION;
+    document.documentElement.dataset.appReady=VERSION;
+  }
   function loadPatch(src,id){
     if(document.getElementById(id))return;
     const s=document.createElement('script');s.id=id;s.src=src+'?v=912g';s.async=false;document.body.appendChild(s);
@@ -39,13 +49,7 @@
       await reg.update();
     }catch(e){console.warn('Japan Trip SW update',e);}
   }
-  function run(){
-    addOnitsukaToShoes();
-    loadLatestPatches();
-    const v=document.querySelector('header .logo small');if(v)v.textContent='2026 · '+VERSION;
-    document.title='Japan Trip 2026 · '+VERSION;
-    document.documentElement.dataset.appReady=VERSION;
-  }
+  function run(){addOnitsukaToShoes();loadLatestPatches();stableVersion();}
   let busy=false;const schedule=()=>{if(busy)return;busy=true;setTimeout(()=>{busy=false;run();},100)};
   new MutationObserver(schedule).observe(document.documentElement,{childList:true,subtree:true});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',schedule);else schedule();
