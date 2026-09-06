@@ -1,5 +1,5 @@
-const VERSION='v9.13.3';
-const CACHE='japan-trip-v9-13-3';
+const VERSION='v9.13.4';
+const CACHE='japan-trip-v9-13-4';
 const MODULES=['./data.js','./drive.js'];
 const CORE=['./','./index.html','./manifest.json','./icon.svg','./styles.css','./app.js','./index.htm',...MODULES];
 
@@ -16,8 +16,8 @@ self.addEventListener('activate',event=>{
     for(const client of clients){
       try{
         const u=new URL(client.url);
-        if(u.origin===self.location.origin&&!u.searchParams.has('v9133')){
-          u.searchParams.set('v9133',Date.now().toString());
+        if(u.origin===self.location.origin&&!u.searchParams.has('v9134')){
+          u.searchParams.set('v9134',Date.now().toString());
           await client.navigate(u.href);
         }
       }catch(e){}
@@ -37,14 +37,17 @@ self.addEventListener('fetch',event=>{
       merged=merged.replace(/v9\.10/g,VERSION).replace(/Japan Trip 2026 · v9\.10/g,'Japan Trip 2026 · '+VERSION);
       const moduleTexts=[];
       for(const file of MODULES){
-        const r=await fetch(file+'?v=9133',{cache:'no-store'});
+        const r=await fetch(file+'?v=9134',{cache:'no-store'});
         if(r.ok){
           let text=await r.text();
-          text=text.replace(/v9\.13\.1/g,VERSION).replace(/v9\.13\.2/g,VERSION);
+          text=text.replace(/v9\.13\.1/g,VERSION).replace(/v9\.13\.2/g,VERSION).replace(/v9\.13\.3/g,VERSION);
+          // The original Places filter expects the exact category value "מסעדות".
+          // Normalize consolidated restaurant cards to that value so all restaurants appear in the filter.
+          text=text.replace(/🍽️ מסעדות/g,'מסעדות');
           moduleTexts.push(text);
         }
       }
-      const finalizer=`\n;(function JapanTripFinalUi(){\n'use strict';\nconst V='${VERSION}';\nconst $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];\nconst clean=s=>String(s||'').replace(/\\s+/g,' ').trim();\nfunction version(){const v=$('header .logo .app-version')||$('header .logo small');if(v)v.textContent='2026 · '+V;document.title='Japan Trip 2026 · '+V;document.documentElement.dataset.appReady=V;}\nfunction osakaHotel(){const day=$('#day-11'),list=$('.list-view',day);if(!day||!list)return;let hotels=$$(':scope > .stop',list).filter(s=>/Hotel Royal Classic Osaka|Cross Hotel Osaka/i.test(s.textContent||''));hotels.slice(1).forEach(s=>s.remove());let hotel=hotels[0];if(!hotel){hotel=document.createElement('div');hotel.className='stop hotel-itinerary-stop';hotel.innerHTML='<div class="time">אחה״צ</div><div class="rail"><i>🏨</i></div><div class="stop-card"><h3>Check-in · Hotel Royal Classic Osaka</h3><p>הגעה מ-Nara, צ׳ק-אין והתארגנות. המלון מחובר ישירות ל-Osaka Metro Namba דרך Exit 12.</p><div class="stop-actions"><button class="info-modal-btn guide-tips-btn" data-place="Hotel Royal Classic Osaka" type="button">ℹ️ מדריך וטיפים</button></div></div>';const evening=$$(':scope > .stop',list).find(s=>/Hozenji Temple|Dotonbori · ערב ראשון|ארוחת ערב · Namba/i.test(s.textContent||''));if(evening)evening.before(hotel);else list.appendChild(hotel);}}\nfunction places(){const page=$('#page-places'),grid=$('#placesGrid');if(!page||!grid)return;const junk=/^(?:החזרת רכב|החזר(?:ת)? רכב|לקיחת רכב|קבלת רכב|איסוף רכב|המשך לפי מקום לינה|המשך לפי המלון|לפי מקום לינה|check[ -]?in|check[ -]?out)$/i;$$('.place-card',grid).forEach(card=>{const h=$('h3',card),title=clean(h?.textContent);if(junk.test(title)){card.remove();return;}$$('.place-card-meta,.place-meta,.place-category',card).forEach(el=>{let t=clean(el.textContent);if(!/במסלול/i.test(t))return;t=t.replace(/\\s*[·•-]?\\s*במסלול\\s*[:·]?\\s*.*$/i,'').trim();if(t)el.textContent=t;else el.remove();});const badges=$$('.scheduled-badge,.planned-badge,.route-badge',card).filter(el=>/במסלול/i.test(el.textContent||''));badges.slice(1).forEach(el=>el.remove());});const custom=$('#placesRestaurantFilter');if(custom)custom.remove();const seen=new Set();$$('button',page).forEach(b=>{const raw=clean(b.textContent).replace(/[🏨🍽️📍⛩️🛍️🌃⭐]/g,'').trim().toLowerCase();if(!raw)return;const key=raw==='hotel'||raw==='hotels'?'מלונות':raw;if(seen.has(key)&&(key==='מלונות'||key==='מסעדות'))b.remove();else seen.add(key);});}\nfunction run(){version();osakaHotel();places();}\nrun();setTimeout(run,300);setTimeout(run,1200);\n})();`;
+      const finalizer=`\n;(function JapanTripFinalUi(){\n'use strict';\nconst V='${VERSION}';\nconst $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];\nconst clean=s=>String(s||'').replace(/\\s+/g,' ').trim();\nfunction version(){const v=$('header .logo .app-version')||$('header .logo small');if(v)v.textContent='2026 · '+V;document.title='Japan Trip 2026 · '+V;document.documentElement.dataset.appReady=V;}\nfunction osakaHotel(){const day=$('#day-11'),list=$('.list-view',day);if(!day||!list)return;let hotels=$$(':scope > .stop',list).filter(s=>/Hotel Royal Classic Osaka|Cross Hotel Osaka/i.test(s.textContent||''));hotels.slice(1).forEach(s=>s.remove());let hotel=hotels[0];if(!hotel){hotel=document.createElement('div');hotel.className='stop hotel-itinerary-stop';hotel.innerHTML='<div class="time">אחה״צ</div><div class="rail"><i>🏨</i></div><div class="stop-card"><h3>Check-in · Hotel Royal Classic Osaka</h3><p>הגעה מ-Nara, צ׳ק-אין והתארגנות. המלון מחובר ישירות ל-Osaka Metro Namba דרך Exit 12.</p><div class="stop-actions"><button class="info-modal-btn guide-tips-btn" data-place="Hotel Royal Classic Osaka" type="button">ℹ️ מדריך וטיפים</button></div></div>';const evening=$$(':scope > .stop',list).find(s=>/Hozenji Temple|Dotonbori · ערב ראשון|ארוחת ערב · Namba/i.test(s.textContent||''));if(evening)evening.before(hotel);else list.appendChild(hotel);}}\nfunction places(){const page=$('#page-places'),grid=$('#placesGrid');if(!page||!grid)return;const junk=/^(?:החזרת רכב|החזר(?:ת)? רכב|לקיחת רכב|קבלת רכב|איסוף רכב|המשך לפי מקום לינה|המשך לפי המלון|לפי מקום לינה|חזרה ל.+|שינקנסן(?:\\s*→.*)?|shinkansen(?:\\s*→.*)?|train(?:\\s*→.*)?|רכבת(?:\\s*→.*)?|נסיעה(?:\\s*→.*)?|מעבר(?:\\s*→.*)?|check[ -]?in|check[ -]?out)$/i;$$('.place-card',grid).forEach(card=>{const h=$('h3',card),title=clean(h?.textContent);if(junk.test(title)){card.remove();return;}if(card.dataset.type==='restaurant'||/66tantan|Rokuroku Tantan|Gyukatsu Motomura|Uobei|AFURI|Katsukura|Musashi Sushi|Mizuno|551\\s*HORAI|Namba Ramen Ichiza/i.test(title)){card.dataset.cat='מסעדות';card.dataset.type='restaurant';}$$('.place-card-meta,.place-meta,.place-category',card).forEach(el=>{let t=clean(el.textContent);if(!/במסלול/i.test(t))return;t=t.replace(/\\s*[·•-]?\\s*במסלול\\s*[:·]?\\s*.*$/i,'').trim();if(t)el.textContent=t;else el.remove();});const badges=$$('.scheduled-badge,.planned-badge,.route-badge',card).filter(el=>/במסלול/i.test(el.textContent||''));badges.slice(1).forEach(el=>el.remove());});const custom=$('#placesRestaurantFilter');if(custom)custom.remove();const seen=new Set();$$('button',page).forEach(b=>{const raw=clean(b.textContent).replace(/[🏨🍽️📍⛩️🛍️🌃⭐🍜]/g,'').trim().toLowerCase();if(!raw)return;const key=raw==='hotel'||raw==='hotels'?'מלונות':raw;if(seen.has(key)&&(key==='מלונות'||key==='מסעדות'))b.remove();else seen.add(key);});if(typeof applyPF==='function')applyPF();}\nfunction run(){version();osakaHotel();places();}\nrun();setTimeout(run,300);setTimeout(run,1200);\n})();`;
       merged+='\n\n;(function __japanTripLoadConsolidated(){\n'+
         "if(document.documentElement.dataset.appReady==='"+VERSION+"'||document.documentElement.dataset.appReady==='error'){\n"+
         moduleTexts.join('\n\n')+finalizer+
