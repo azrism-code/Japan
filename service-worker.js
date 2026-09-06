@@ -29,25 +29,29 @@ self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET')return;
   const url=new URL(event.request.url);
 
-  // Build one runtime bundle from the main app + two maintained modules.
-  // Historical patch files are no longer loaded.
+  // One runtime build: app.js + data.js + drive.js. Historical patch files are not loaded.
   if(url.origin===self.location.origin&&/\/app\.js$/.test(url.pathname)){
     event.respondWith((async()=>{
       const baseResponse=await fetch(event.request,{cache:'no-store'});
       if(!baseResponse.ok)return baseResponse;
       let merged=await baseResponse.text();
-      // The old app.js loader still contains its historical label; normalize it during the build.
       merged=merged.replace(/v9\.10/g,VERSION).replace(/Japan Trip 2026 · v9\.10/g,'Japan Trip 2026 · '+VERSION);
+      const moduleTexts=[];
       for(const file of MODULES){
         const r=await fetch(file+'?v=9130',{cache:'no-store'});
-        if(r.ok)merged+='\n\n'+await r.text();
+        if(r.ok)moduleTexts.push(await r.text());
       }
+      // The legacy loader is asynchronous; run the maintained modules only after it finishes.
+      merged+='\n\n;(function __japanTripLoadConsolidated(){\n'+
+        "if(document.documentElement.dataset.appReady==='"+VERSION+"'||document.documentElement.dataset.appReady==='error'){\n"+
+        moduleTexts.join('\n\n')+
+        '\nreturn;}\nsetTimeout(__japanTripLoadConsolidated,50);\n})();';
       return new Response(merged,{status:200,headers:{'Content-Type':'application/javascript; charset=utf-8','Cache-Control':'no-store'}});
     })().catch(()=>caches.match(event.request)));
     return;
   }
 
-  // Keep the initially rendered shell on the same version/title too, so the label does not visibly race on startup.
+  // Normalize the initially rendered shell as well, preventing visible version/title flicker.
   if(url.origin===self.location.origin&&(/\/index\.html$/.test(url.pathname)||url.pathname.endsWith('/Japan/')||url.pathname.endsWith('/Japan'))){
     event.respondWith(fetch(event.request,{cache:'no-store'}).then(async response=>{
       if(!response.ok)return response;
