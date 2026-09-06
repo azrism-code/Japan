@@ -1,11 +1,15 @@
-const CACHE='japan-trip-v9-12x';
-const PATCHES=['./ramen-v9.12e.js','./stable-v9.12k.js','./canonical-hotels-v9.12l.js','./content-audit-v9.12m.js','./audit-state-v9.12n.js','./hotel-card-ui-v9.12o.js','./flights-v9.12p.js','./drive-sync-v9.12s.js','./docs-picker-v9.12t.js','./tantan66-v9.12v.js','./title-v9.12w.js','./places-cleanup-v9.12x.js'];
+const CACHE='japan-trip-v9-12y';
+const PATCHES=['./ramen-v9.12e.js','./stable-v9.12k.js','./canonical-hotels-v9.12l.js','./content-audit-v9.12m.js','./audit-state-v9.12n.js','./hotel-card-ui-v9.12o.js','./flights-v9.12p.js','./drive-sync-v9.12s.js','./docs-picker-v9.12t.js','./tantan66-v9.12v.js','./title-v9.12w.js','./places-audit-v9.12y.js'];
 const CORE=['./','./index.html','./manifest.json','./icon.svg','./styles.css','./app.js','./index.htm',...PATCHES];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()))});
-self.addEventListener('activate',event=>{event.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)));await self.clients.claim();const clients=await self.clients.matchAll({type:'window',includeUncontrolled:true});for(const client of clients){try{const u=new URL(client.url);if(u.origin===self.location.origin&&!u.searchParams.has('v912x')){u.searchParams.set('v912x',Date.now().toString());await client.navigate(u.href)}}catch(e){}}})())});
+self.addEventListener('activate',event=>{event.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)));await self.clients.claim();const clients=await self.clients.matchAll({type:'window',includeUncontrolled:true});for(const client of clients){try{const u=new URL(client.url);if(u.origin===self.location.origin&&!u.searchParams.has('v912y')){u.searchParams.set('v912y',Date.now().toString());await client.navigate(u.href)}}catch(e){}}})())});
 self.addEventListener('fetch',event=>{
  if(event.request.method!=='GET')return;const url=new URL(event.request.url);
- if(url.origin===self.location.origin&&/\/app\.js$/.test(url.pathname)){event.respondWith(fetch(event.request,{cache:'no-store'}).then(async response=>{if(!response.ok)return response;const base=await response.text();const parts=[];for(const f of PATCHES){try{const r=await fetch(f+'?v=912x',{cache:'no-store'});if(r.ok)parts.push(await r.text())}catch(e){}}return new Response(base+'\n\n'+parts.join('\n\n'),{status:200,headers:{'Content-Type':'application/javascript; charset=utf-8','Cache-Control':'no-store'}})}).catch(()=>caches.match(event.request)));return}
+ if(url.origin===self.location.origin&&/\/app\.js$/.test(url.pathname)){event.respondWith(fetch(event.request,{cache:'no-store'}).then(async response=>{if(!response.ok)return response;const base=await response.text();const parts=[];for(const f of PATCHES){try{const r=await fetch(f+'?v=912y',{cache:'no-store'});if(r.ok)parts.push(await r.text())}catch(e){}}
+ let merged=base+'\n\n'+parts.join('\n\n');
+ // Older patches still contain their historical version labels. Normalize all UI version writes to one value so the header no longer visibly races during startup.
+ merged=merged.replace(/v9\.12[a-z]/g,'v9.12y').replace(/v9\.1[01]/g,'v9.12y').replace(/v9\.6/g,'v9.12y').replace(/v9\.5/g,'v9.12y');
+ return new Response(merged,{status:200,headers:{'Content-Type':'application/javascript; charset=utf-8','Cache-Control':'no-store'}})}).catch(()=>caches.match(event.request)));return}
  if(url.origin===self.location.origin){event.respondWith(fetch(event.request,{cache:'no-store'}).then(response=>{if(response&&response.ok){const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy))}return response}).catch(()=>caches.match(event.request).then(r=>r||caches.match('./index.html'))));return}
  event.respondWith(fetch(event.request).catch(()=>caches.match(event.request)));
 });
