@@ -1,5 +1,5 @@
-const VERSION='v9.13.0';
-const CACHE='japan-trip-v9-13-0';
+const VERSION='v9.13.1';
+const CACHE='japan-trip-v9-13-1';
 const MODULES=['./data.js','./drive.js'];
 const CORE=['./','./index.html','./manifest.json','./icon.svg','./styles.css','./app.js','./index.htm',...MODULES];
 
@@ -16,8 +16,8 @@ self.addEventListener('activate',event=>{
     for(const client of clients){
       try{
         const u=new URL(client.url);
-        if(u.origin===self.location.origin&&!u.searchParams.has('v9130')){
-          u.searchParams.set('v9130',Date.now().toString());
+        if(u.origin===self.location.origin&&!u.searchParams.has('v9131')){
+          u.searchParams.set('v9131',Date.now().toString());
           await client.navigate(u.href);
         }
       }catch(e){}
@@ -29,7 +29,6 @@ self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET')return;
   const url=new URL(event.request.url);
 
-  // One runtime build: app.js + data.js + drive.js. Historical patch files are not loaded.
   if(url.origin===self.location.origin&&/\/app\.js$/.test(url.pathname)){
     event.respondWith((async()=>{
       const baseResponse=await fetch(event.request,{cache:'no-store'});
@@ -38,10 +37,9 @@ self.addEventListener('fetch',event=>{
       merged=merged.replace(/v9\.10/g,VERSION).replace(/Japan Trip 2026 · v9\.10/g,'Japan Trip 2026 · '+VERSION);
       const moduleTexts=[];
       for(const file of MODULES){
-        const r=await fetch(file+'?v=9130',{cache:'no-store'});
+        const r=await fetch(file+'?v=9131',{cache:'no-store'});
         if(r.ok)moduleTexts.push(await r.text());
       }
-      // The legacy loader is asynchronous; run the maintained modules only after it finishes.
       merged+='\n\n;(function __japanTripLoadConsolidated(){\n'+
         "if(document.documentElement.dataset.appReady==='"+VERSION+"'||document.documentElement.dataset.appReady==='error'){\n"+
         moduleTexts.join('\n\n')+
@@ -51,7 +49,6 @@ self.addEventListener('fetch',event=>{
     return;
   }
 
-  // Normalize the initially rendered shell as well, preventing visible version/title flicker.
   if(url.origin===self.location.origin&&(/\/index\.html$/.test(url.pathname)||url.pathname.endsWith('/Japan/')||url.pathname.endsWith('/Japan'))){
     event.respondWith(fetch(event.request,{cache:'no-store'}).then(async response=>{
       if(!response.ok)return response;
