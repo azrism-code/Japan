@@ -1,6 +1,6 @@
-const VERSION='v9.13.1';
-const CACHE='japan-trip-v9-13-1';
-const MODULES=['./data.js','./drive.js'];
+const VERSION='v9.13.2';
+const CACHE='japan-trip-v9-13-2';
+const MODULES=['./data.js','./drive.js','./ui-fixes.js'];
 const CORE=['./','./index.html','./manifest.json','./icon.svg','./styles.css','./app.js','./index.htm',...MODULES];
 
 self.addEventListener('install',event=>{
@@ -16,8 +16,8 @@ self.addEventListener('activate',event=>{
     for(const client of clients){
       try{
         const u=new URL(client.url);
-        if(u.origin===self.location.origin&&!u.searchParams.has('v9131')){
-          u.searchParams.set('v9131',Date.now().toString());
+        if(u.origin===self.location.origin&&!u.searchParams.has('v9132')){
+          u.searchParams.set('v9132',Date.now().toString());
           await client.navigate(u.href);
         }
       }catch(e){}
@@ -37,7 +37,7 @@ self.addEventListener('fetch',event=>{
       merged=merged.replace(/v9\.10/g,VERSION).replace(/Japan Trip 2026 · v9\.10/g,'Japan Trip 2026 · '+VERSION);
       const moduleTexts=[];
       for(const file of MODULES){
-        const r=await fetch(file+'?v=9131',{cache:'no-store'});
+        const r=await fetch(file+'?v=9132',{cache:'no-store'});
         if(r.ok)moduleTexts.push(await r.text());
       }
       merged+='\n\n;(function __japanTripLoadConsolidated(){\n'+
