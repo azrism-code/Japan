@@ -1,78 +1,28 @@
-const VERSION='v9.13.4';
-const CACHE='japan-trip-v9-13-4';
+const VERSION='v9.13.5';
+const CACHE='japan-trip-v9-13-5';
 const MODULES=['./data.js','./drive.js'];
 const CORE=['./','./index.html','./manifest.json','./icon.svg','./styles.css','./app.js','./index.htm',...MODULES];
 
-self.addEventListener('install',event=>{
-  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()));
-});
-
-self.addEventListener('activate',event=>{
-  event.waitUntil((async()=>{
-    const keys=await caches.keys();
-    await Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)));
-    await self.clients.claim();
-    const clients=await self.clients.matchAll({type:'window',includeUncontrolled:true});
-    for(const client of clients){
-      try{
-        const u=new URL(client.url);
-        if(u.origin===self.location.origin&&!u.searchParams.has('v9134')){
-          u.searchParams.set('v9134',Date.now().toString());
-          await client.navigate(u.href);
-        }
-      }catch(e){}
-    }
-  })());
-});
-
+self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
+self.addEventListener('activate',event=>{event.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)));await self.clients.claim();const cs=await self.clients.matchAll({type:'window',includeUncontrolled:true});for(const c of cs){try{const u=new URL(c.url);if(u.origin===self.location.origin&&!u.searchParams.has('v9135')){u.searchParams.set('v9135',Date.now());await c.navigate(u.href)}}catch(e){}}})())});
 self.addEventListener('fetch',event=>{
-  if(event.request.method!=='GET')return;
-  const url=new URL(event.request.url);
-
-  if(url.origin===self.location.origin&&/\/app\.js$/.test(url.pathname)){
-    event.respondWith((async()=>{
-      const baseResponse=await fetch(event.request,{cache:'no-store'});
-      if(!baseResponse.ok)return baseResponse;
-      let merged=await baseResponse.text();
-      merged=merged.replace(/v9\.10/g,VERSION).replace(/Japan Trip 2026 · v9\.10/g,'Japan Trip 2026 · '+VERSION);
-      const moduleTexts=[];
-      for(const file of MODULES){
-        const r=await fetch(file+'?v=9134',{cache:'no-store'});
-        if(r.ok){
-          let text=await r.text();
-          text=text.replace(/v9\.13\.1/g,VERSION).replace(/v9\.13\.2/g,VERSION).replace(/v9\.13\.3/g,VERSION);
-          // The original Places filter expects the exact category value "מסעדות".
-          // Normalize consolidated restaurant cards to that value so all restaurants appear in the filter.
-          text=text.replace(/🍽️ מסעדות/g,'מסעדות');
-          moduleTexts.push(text);
-        }
-      }
-      const finalizer=`\n;(function JapanTripFinalUi(){\n'use strict';\nconst V='${VERSION}';\nconst $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];\nconst clean=s=>String(s||'').replace(/\\s+/g,' ').trim();\nfunction version(){const v=$('header .logo .app-version')||$('header .logo small');if(v)v.textContent='2026 · '+V;document.title='Japan Trip 2026 · '+V;document.documentElement.dataset.appReady=V;}\nfunction osakaHotel(){const day=$('#day-11'),list=$('.list-view',day);if(!day||!list)return;let hotels=$$(':scope > .stop',list).filter(s=>/Hotel Royal Classic Osaka|Cross Hotel Osaka/i.test(s.textContent||''));hotels.slice(1).forEach(s=>s.remove());let hotel=hotels[0];if(!hotel){hotel=document.createElement('div');hotel.className='stop hotel-itinerary-stop';hotel.innerHTML='<div class="time">אחה״צ</div><div class="rail"><i>🏨</i></div><div class="stop-card"><h3>Check-in · Hotel Royal Classic Osaka</h3><p>הגעה מ-Nara, צ׳ק-אין והתארגנות. המלון מחובר ישירות ל-Osaka Metro Namba דרך Exit 12.</p><div class="stop-actions"><button class="info-modal-btn guide-tips-btn" data-place="Hotel Royal Classic Osaka" type="button">ℹ️ מדריך וטיפים</button></div></div>';const evening=$$(':scope > .stop',list).find(s=>/Hozenji Temple|Dotonbori · ערב ראשון|ארוחת ערב · Namba/i.test(s.textContent||''));if(evening)evening.before(hotel);else list.appendChild(hotel);}}\nfunction places(){const page=$('#page-places'),grid=$('#placesGrid');if(!page||!grid)return;const junk=/^(?:החזרת רכב|החזר(?:ת)? רכב|לקיחת רכב|קבלת רכב|איסוף רכב|המשך לפי מקום לינה|המשך לפי המלון|לפי מקום לינה|חזרה ל.+|שינקנסן(?:\\s*→.*)?|shinkansen(?:\\s*→.*)?|train(?:\\s*→.*)?|רכבת(?:\\s*→.*)?|נסיעה(?:\\s*→.*)?|מעבר(?:\\s*→.*)?|check[ -]?in|check[ -]?out)$/i;$$('.place-card',grid).forEach(card=>{const h=$('h3',card),title=clean(h?.textContent);if(junk.test(title)){card.remove();return;}if(card.dataset.type==='restaurant'||/66tantan|Rokuroku Tantan|Gyukatsu Motomura|Uobei|AFURI|Katsukura|Musashi Sushi|Mizuno|551\\s*HORAI|Namba Ramen Ichiza/i.test(title)){card.dataset.cat='מסעדות';card.dataset.type='restaurant';}$$('.place-card-meta,.place-meta,.place-category',card).forEach(el=>{let t=clean(el.textContent);if(!/במסלול/i.test(t))return;t=t.replace(/\\s*[·•-]?\\s*במסלול\\s*[:·]?\\s*.*$/i,'').trim();if(t)el.textContent=t;else el.remove();});const badges=$$('.scheduled-badge,.planned-badge,.route-badge',card).filter(el=>/במסלול/i.test(el.textContent||''));badges.slice(1).forEach(el=>el.remove());});const custom=$('#placesRestaurantFilter');if(custom)custom.remove();const seen=new Set();$$('button',page).forEach(b=>{const raw=clean(b.textContent).replace(/[🏨🍽️📍⛩️🛍️🌃⭐🍜]/g,'').trim().toLowerCase();if(!raw)return;const key=raw==='hotel'||raw==='hotels'?'מלונות':raw;if(seen.has(key)&&(key==='מלונות'||key==='מסעדות'))b.remove();else seen.add(key);});if(typeof applyPF==='function')applyPF();}\nfunction run(){version();osakaHotel();places();}\nrun();setTimeout(run,300);setTimeout(run,1200);\n})();`;
-      merged+='\n\n;(function __japanTripLoadConsolidated(){\n'+
-        "if(document.documentElement.dataset.appReady==='"+VERSION+"'||document.documentElement.dataset.appReady==='error'){\n"+
-        moduleTexts.join('\n\n')+finalizer+
-        '\nreturn;}\nsetTimeout(__japanTripLoadConsolidated,50);\n})();';
-      return new Response(merged,{status:200,headers:{'Content-Type':'application/javascript; charset=utf-8','Cache-Control':'no-store'}});
-    })().catch(()=>caches.match(event.request)));
-    return;
-  }
-
-  if(url.origin===self.location.origin&&(/\/index\.html$/.test(url.pathname)||url.pathname.endsWith('/Japan/')||url.pathname.endsWith('/Japan'))){
-    event.respondWith(fetch(event.request,{cache:'no-store'}).then(async response=>{
-      if(!response.ok)return response;
-      let html=await response.text();
-      html=html.replace(/v9\.5/g,VERSION).replace(/v9\.6/g,VERSION).replace(/>יוצאים לדרך ✈️</g,'>עזרי ואיילי יוצאים לדרך ✈️<');
-      return new Response(html,{status:response.status,headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'}});
-    }).catch(()=>caches.match('./index.html')));
-    return;
-  }
-
-  if(url.origin===self.location.origin){
-    event.respondWith(fetch(event.request,{cache:'no-store'}).then(response=>{
-      if(response&&response.ok){const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));}
-      return response;
-    }).catch(()=>caches.match(event.request).then(r=>r||caches.match('./index.html'))));
-    return;
-  }
-  event.respondWith(fetch(event.request).catch(()=>caches.match(event.request)));
+ if(event.request.method!=='GET')return;const url=new URL(event.request.url);
+ if(url.origin===self.location.origin&&/\/app\.js$/.test(url.pathname)){event.respondWith((async()=>{const br=await fetch(event.request,{cache:'no-store'});if(!br.ok)return br;let merged=await br.text();merged=merged.replace(/v9\.10/g,VERSION).replace(/Japan Trip 2026 · v9\.10/g,'Japan Trip 2026 · '+VERSION);const mt=[];for(const f of MODULES){const r=await fetch(f+'?v=9135',{cache:'no-store'});if(r.ok){let t=await r.text();t=t.replace(/v9\.13\.[1-4]/g,VERSION).replace(/🍽️ מסעדות/g,'מסעדות');mt.push(t)}}
+ const fin=`\n;(function JapanTripFinalUi(){'use strict';const V='${VERSION}',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)],clean=s=>String(s||'').replace(/\\s+/g,' ').trim();
+ function version(){const v=$('header .logo .app-version')||$('header .logo small');if(v)v.textContent='2026 · '+V;document.title='Japan Trip 2026 · '+V;document.documentElement.dataset.appReady=V}
+ function osakaHotel(){const day=$('#day-11'),list=$('.list-view',day);if(!day||!list)return;let hs=$$(':scope > .stop',list).filter(s=>/Hotel Royal Classic Osaka|Cross Hotel Osaka/i.test(s.textContent||''));hs.slice(1).forEach(s=>s.remove());if(!hs[0]){const h=document.createElement('div');h.className='stop hotel-itinerary-stop';h.innerHTML='<div class="time">אחה״צ</div><div class="rail"><i>🏨</i></div><div class="stop-card"><h3>Check-in · Hotel Royal Classic Osaka</h3><p>הגעה מ-Nara, צ׳ק-אין והתארגנות.</p></div>';const e=$$(':scope > .stop',list).find(s=>/Hozenji|Dotonbori/i.test(s.textContent||''));e?e.before(h):list.appendChild(h)}}
+ function places(){const page=$('#page-places'),grid=$('#placesGrid');if(!page||!grid)return;const junk=/^(?:החזרת רכב|החזר(?:ת)? רכב|לקיחת רכב|קבלת רכב|איסוף רכב|המשך לפי מקום לינה|המשך לפי המלון|לפי מקום לינה|חזרה ל.+|שינקנסן(?:\\s*→.*)?|shinkansen(?:\\s*→.*)?|train(?:\\s*→.*)?|רכבת(?:\\s*→.*)?|נסיעה(?:\\s*→.*)?|מעבר(?:\\s*→.*)?|check[ -]?in|check[ -]?out)$/i;$$('.place-card',grid).forEach(c=>{const title=clean($('h3',c)?.textContent);if(junk.test(title)){c.remove();return}if(c.dataset.type==='restaurant'||/66tantan|Rokuroku Tantan|Gyukatsu Motomura|Uobei|AFURI|Katsukura|Musashi Sushi|Mizuno|551\\s*HORAI|Namba Ramen Ichiza/i.test(title)){c.dataset.cat='מסעדות';c.dataset.type='restaurant'}$$('.place-card-meta,.place-meta,.place-category',c).forEach(el=>{let t=clean(el.textContent);if(/במסלול/i.test(t)){t=t.replace(/\\s*[·•-]?\\s*במסלול\\s*[:·]?\\s*.*$/i,'').trim();t?el.textContent=t:el.remove()}})});$('#placesRestaurantFilter')?.remove();if(typeof applyPF==='function')applyPF()}
+ const WALKS={
+  asakusa:{title:'Asakusa Lights',sub:'19:30 · כ־60–75 דקות · ארוחת ערב משתלבת בדרך',stops:[['1','Sensō-ji','המקדש והאזור המואר בלילה.'],['2','Nakamise & side streets','הליכה בסמטאות סביב המקדש; חלק מהחנויות כבר סגורות וזה דווקא נותן אווירה רגועה.'],['3','Sumida River','הליכה קצרה לכיוון הנהר והגשרים.'],['4','Tokyo Skytree view','מסיימים מול קו הרקיע וה-Skytree המואר.']],map:'https://www.google.com/maps/dir/?api=1&origin=Senso-ji+Tokyo&destination=Sumida+River+Tokyo&waypoints=Nakamise+Shopping+Street+Tokyo&travelmode=walking'},
+  ueno:{title:'Ueno → Akihabara',sub:'19:30 · כ־60–75 דקות · אוכל ב-Ameyoko או Akihabara',stops:[['1','Ueno / Ameyoko','מתחילים באזור Ameyoko המואר והעמוס באוכל וחנויות.'],['2','Okachimachi','ממשיכים דרומה דרך הרחובות שמתחת ומסביב למסילת הרכבת.'],['3','Akihabara Electric Town','נכנסים לאזור האורות, האלקטרוניקה והאנימה.'],['4','Akihabara Station','סיום נוח ליד התחנה.']],map:'https://www.google.com/maps/dir/?api=1&origin=Ameyoko+Shopping+District+Tokyo&destination=Akihabara+Station&waypoints=Okachimachi+Station&travelmode=walking'},
+  shibuya:{title:'Shibuya After Dark',sub:'19:30 · כ־60–75 דקות · ארוחת ערב באזור Shibuya',stops:[['1','Hachikō + Shibuya Crossing','פתיחה בכיכר ובמעבר החצייה כשהאזור בשיא התאורה.'],['2','Center-gai','נכנסים לרחובות הצפופים של Shibuya.'],['3','Nonbei Yokocho','סמטה קטנה וצפופה ליד פסי הרכבת.'],['4','Miyashita Park','מסיימים באזור המודרני והפתוח של Miyashita Park.']],map:'https://www.google.com/maps/dir/?api=1&origin=Hachiko+Memorial+Statue&destination=Miyashita+Park&waypoints=Shibuya+Center-gai%7CNonbei+Yokocho&travelmode=walking'},
+  marunouchi:{title:'Marunouchi → Ginza',sub:'19:30 · כ־60–75 דקות · מתאים במיוחד ללילה האחרון',stops:[['1','Tokyo Station · Marunouchi','מתחילים מהחזית המוארת של Tokyo Station.'],['2','Marunouchi Naka-dori','הליכה בין הרחובות האלגנטיים של Marunouchi.'],['3','Imperial Palace outer area','עוברים באזור החיצוני של הארמון והחפיר.'],['4','Ginza','מסיימים ברחובות המוארים של Ginza ומשלבים ארוחת ערב.']],map:'https://www.google.com/maps/dir/?api=1&origin=Tokyo+Station+Marunouchi&destination=Ginza+Tokyo&waypoints=Marunouchi+Naka-dori%7CImperial+Palace+Tokyo&travelmode=walking'}
+ };
+ function modal(){let m=$('#eveningWalkModal');if(m)return m;m=document.createElement('div');m.id='eveningWalkModal';m.style.cssText='display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.48);padding:18px;align-items:center;justify-content:center';m.innerHTML='<div style="background:#fff;border-radius:22px;max-width:430px;width:100%;max-height:86vh;overflow:auto;padding:18px;direction:rtl;box-shadow:0 16px 50px #0005"><button id="ewClose" style="float:left;border:0;background:#eee;border-radius:50%;width:34px;height:34px;font-size:20px">×</button><h2 id="ewTitle" style="margin:2px 0 5px">🌙</h2><div id="ewSub" style="color:#666;font-size:13px;margin-bottom:15px"></div><div id="ewStops"></div><a id="ewMap" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:16px;padding:11px;border-radius:12px;background:#111;color:#fff;text-decoration:none;font-weight:700">📍 פתח מסלול הליכה במפה</a></div>';document.body.appendChild(m);$('#ewClose',m).onclick=()=>m.style.display='none';m.onclick=e=>{if(e.target===m)m.style.display='none'};return m}
+ function openWalk(k){const w=WALKS[k],m=modal();if(!w)return;$('#ewTitle',m).textContent='🌙 '+w.title;$('#ewSub',m).textContent=w.sub;$('#ewStops',m).innerHTML=w.stops.map(s=>'<div style="display:flex;gap:11px;margin:12px 0"><b style="background:#111;color:#fff;border-radius:50%;min-width:28px;height:28px;text-align:center;line-height:28px">'+s[0]+'</b><div><strong>'+s[1]+'</strong><div style="font-size:13px;color:#555;margin-top:2px">'+s[2]+'</div></div></div>').join('');$('#ewMap',m).href=w.map;m.style.display='flex'}
+ function tokyoEvenings(){const assignments=[{id:'day-2',k:'asakusa'},{id:'day-3',k:'ueno'},{id:'day-4',k:'shibuya'},{id:'day-13',k:'marunouchi'}];assignments.forEach(a=>{const d=$('#'+a.id),list=$('.list-view',d);if(!d||!list||$('.evening-walk-stop',list))return;const w=WALKS[a.k],s=document.createElement('div');s.className='stop evening-walk-stop';s.innerHTML='<div class="time">19:30</div><div class="rail"><i>🌙</i></div><div class="stop-card" style="border:1px solid #d9d9e8;background:linear-gradient(180deg,#fff,#f8f8ff)"><h3>🌙 טיול ערב · '+w.title+'</h3><p>אחרי חזרה למלון ומנוחה. '+w.sub.replace('19:30 · ','')+'</p><div class="stop-actions"><button type="button" class="evening-walk-btn" data-walk="'+a.k+'">פתח מסלול ערב</button></div></div>';list.appendChild(s)});document.onclick=e=>{const b=e.target.closest('.evening-walk-btn');if(b)openWalk(b.dataset.walk)}}
+ function run(){version();osakaHotel();places();tokyoEvenings()}run();setTimeout(run,300);setTimeout(run,1200);})();`;
+ merged+='\n\n;(function __japanTripLoadConsolidated(){\n'+"if(document.documentElement.dataset.appReady==='"+VERSION+"'||document.documentElement.dataset.appReady==='error'){\n"+mt.join('\n\n')+fin+'\nreturn;}\nsetTimeout(__japanTripLoadConsolidated,50);\n})();';return new Response(merged,{status:200,headers:{'Content-Type':'application/javascript; charset=utf-8','Cache-Control':'no-store'}})})().catch(()=>caches.match(event.request)));return}
+ if(url.origin===self.location.origin&&(/\/index\.html$/.test(url.pathname)||url.pathname.endsWith('/Japan/')||url.pathname.endsWith('/Japan'))){event.respondWith(fetch(event.request,{cache:'no-store'}).then(async r=>{if(!r.ok)return r;let h=await r.text();h=h.replace(/v9\.5/g,VERSION).replace(/v9\.6/g,VERSION).replace(/>יוצאים לדרך ✈️</g,'>עזרי ואיילי יוצאים לדרך ✈️<');return new Response(h,{status:r.status,headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'}})}).catch(()=>caches.match('./index.html')));return}
+ if(url.origin===self.location.origin){event.respondWith(fetch(event.request,{cache:'no-store'}).then(r=>{if(r&&r.ok){const cp=r.clone();caches.open(CACHE).then(c=>c.put(event.request,cp))}return r}).catch(()=>caches.match(event.request).then(r=>r||caches.match('./index.html'))));return}event.respondWith(fetch(event.request).catch(()=>caches.match(event.request)));
 });
