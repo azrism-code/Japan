@@ -1,0 +1,5 @@
+/* Japan Trip 2026 · curated content presentation · v10.0.2 */
+/* The itinerary already identifies the current hotel by name; a separate "הוזמן" pill is redundant here. */
+.hotel-mini .status-badge:not(.pending){display:none!important}
+/* Explicitly suppressed or unavailable media must not reserve an empty image box. */
+img[src^="none:"],.stop-thumb[src^="none:"],.place-thumb[src^="none:"],.info-image[src^="none:"]{display:none!important}
