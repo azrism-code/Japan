@@ -1,1 +1,0 @@
-Japan Trip v10 preview. Current preview version: 10.0.1
