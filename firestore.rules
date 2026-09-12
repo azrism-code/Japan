@@ -1,1 +1,36 @@
-cnVsZXNfdmVyc2lvbiA9ICcyJzsKc2VydmljZSBjbG91ZC5maXJlc3RvcmUgewogIG1hdGNoIC9kYXRhYmFzZXMve2RhdGFiYXNlfS9kb2N1bWVudHMgewogICAgZnVuY3Rpb24gc2lnbmVkSW4oKSB7IHJldHVybiByZXF1ZXN0LmF1dGggIT0gbnVsbDsgfQogICAgZnVuY3Rpb24gdHJpcCh0cmlwSWQpIHsgcmV0dXJuIGdldCgvZGF0YWJhc2VzLyQoZGF0YWJhc2UpL2RvY3VtZW50cy90cmlwcy8kKHRyaXBJZCkpOyB9CiAgICBmdW5jdGlvbiBpc093bmVyKHRyaXBJZCkgeyByZXR1cm4gc2lnbmVkSW4oKSAmJiB0cmlwKHRyaXBJZCkuZGF0YS5vd25lclVpZCA9PSByZXF1ZXN0LmF1dGgudWlkOyB9CiAgICBmdW5jdGlvbiBpc0VkaXRvcih0cmlwSWQpIHsKICAgICAgcmV0dXJuIHNpZ25lZEluKCkgJiYKICAgICAgICAocmVxdWVzdC5hdXRoLnVpZCBpbiB0cmlwKHRyaXBJZCkuZGF0YS5lZGl0b3JVaWRzIHx8CiAgICAgICAgIHJlcXVlc3QuYXV0aC50b2tlbi5lbWFpbCBpbiB0cmlwKHRyaXBJZCkuZGF0YS5lZGl0b3JFbWFpbHMpOwogICAgfQogICAgZnVuY3Rpb24gY2FuRWRpdCh0cmlwSWQpIHsgcmV0dXJuIGlzT3duZXIodHJpcElkKSB8fCBpc0VkaXRvcih0cmlwSWQpOyB9CgogICAgbWF0Y2ggL3RyaXBzL3t0cmlwSWR9IHsKICAgICAgYWxsb3cgY3JlYXRlOiBpZiBzaWduZWRJbigpCiAgICAgICAgJiYgcmVxdWVzdC5yZXNvdXJjZS5kYXRhLm93bmVyVWlkID09IHJlcXVlc3QuYXV0aC51aWQKICAgICAgICAmJiByZXF1ZXN0LnJlc291cmNlLmRhdGEub3duZXJFbWFpbCA9PSByZXF1ZXN0LmF1dGgudG9rZW4uZW1haWw7CiAgICAgIGFsbG93IHJlYWQ6IGlmIGNhbkVkaXQodHJpcElkKTsKICAgICAgYWxsb3cgdXBkYXRlLCBkZWxldGU6IGlmIGlzT3duZXIodHJpcElkKTsKCiAgICAgIG1hdGNoIC9zaGFyZWQve2RvY0lkfSB7CiAgICAgICAgYWxsb3cgcmVhZCwgd3JpdGU6IGlmIGNhbkVkaXQodHJpcElkKTsKICAgICAgfQogICAgICBtYXRjaCAvcHJpdmF0ZS97ZG9jSWR9IHsKICAgICAgICBhbGxvdyByZWFkLCB3cml0ZTogaWYgY2FuRWRpdCh0cmlwSWQpOwogICAgICB9CiAgICB9CgogICAgLyogQSBzaGFyZSB0b2tlbiBpcyBhbiB1bmd1ZXNzYWJsZSBjYXBhYmlsaXR5IFVSTC4gSXQgY29udGFpbnMgb25seSB2aWV3ZXItc2FmZSBkYXRhLiAqLwogICAgbWF0Y2ggL3NoYXJlcy97c2hhcmVUb2tlbn0gewogICAgICBhbGxvdyByZWFkOiBpZiB0cnVlOwogICAgICBhbGxvdyBjcmVhdGUsIHVwZGF0ZSwgZGVsZXRlOiBpZiBzaWduZWRJbigpCiAgICAgICAgJiYgY2FuRWRpdChyZXF1ZXN0LnJlc291cmNlLmRhdGEudHJpcElkKTsKICAgIH0KICB9Cn0K
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function trip(tripId) { return get(/databases/$(database)/documents/trips/$(tripId)); }
+    function isOwner(tripId) { return signedIn() && trip(tripId).data.ownerUid == request.auth.uid; }
+    function isEditor(tripId) {
+      return signedIn() &&
+        (request.auth.uid in trip(tripId).data.editorUids ||
+         request.auth.token.email in trip(tripId).data.editorEmails);
+    }
+    function canEdit(tripId) { return isOwner(tripId) || isEditor(tripId); }
+
+    match /trips/{tripId} {
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerEmail == request.auth.token.email;
+      allow read: if canEdit(tripId);
+      allow update, delete: if isOwner(tripId);
+
+      match /shared/{docId} {
+        allow read, write: if canEdit(tripId);
+      }
+      match /private/{docId} {
+        allow read, write: if canEdit(tripId);
+      }
+    }
+
+    /* A share token is an unguessable capability URL. It contains only viewer-safe data. */
+    match /shares/{shareToken} {
+      allow read: if true;
+      allow create, update, delete: if signedIn()
+        && canEdit(request.resource.data.tripId);
+    }
+  }
+}
