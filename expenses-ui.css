@@ -1,0 +1,6 @@
+/* Japan Trip 2026 · compact expense controls · v10.0.5 */
+.expense-actions-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:2px 0 10px}
+.expense-actions-bar button{border:1px solid #e4d7cd;background:#fff;border-radius:12px;padding:10px 8px;font-size:11.5px;font-weight:900;color:#5f5148;box-shadow:0 2px 8px #00000008}
+.expense-actions-bar button.active{background:#fff0df;border-color:#e9a45c;color:#a8560b}
+.expense-panel{margin-top:8px}
+.expense-panel[hidden]{display:none!important}
