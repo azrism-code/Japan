@@ -1,1 +1,18 @@
-LyogSmFwYW4gVHJpcCAyMDI2IMK3IHNlcnZpY2Ugd29ya2VyIMK3IHYxMC4xLjAKICAgU2ltcGxlIG9mZmxpbmUgY2FjaGUuIE5vIHNvdXJjZSByZXdyaXRpbmcsIG1vZHVsZSBtZXJnaW5nIG9yIGZvcmNlZCBuYXZpZ2F0aW9uLiAqLwpjb25zdCBDQUNIRT0namFwYW4tdHJpcC12MTAtMS0wJzsKY29uc3QgQ09SRT1bCiAgJy4vJywnLi9pbmRleC5odG1sJywnLi9zdHlsZXMuY3NzJywnLi9wbGFjZS1jb250ZW50LmNzcycsJy4vc3RhdGlvbi1ndWlkZXMuY3NzJywnLi9leHBlbnNlcy11aS5jc3MnLCcuL3RyaXAtZGF0YS5qcycsJy4vcGxhY2UtY29udGVudC5qcycsJy4vZmlyZWJhc2UtY29uZmlnLmpzJywnLi9maXJlc3RvcmUtc3luYy5qcycsJy4vYXBwLmpzJywnLi9jYXItcmVudGFsLmpzJywnLi9kcml2ZS5qcycsJy4vc3RhdGlvbi1ndWlkZXMuanMnLCcuL2V4cGVuc2Utc2FmZXR5LmpzJywnLi9leHBlbnNlcy11aS5qcycsJy4vbWFuaWZlc3QuanNvbicsJy4vaWNvbi5zdmcnLAogICcuL2Fzc2V0cy90cmFpbi1pbmZvZ3JhcGhpYy5zdmcnLAogICcuL2ltYWdlcy9ldmVuaW5nLXdhbGtzL2FzYWt1c2EuanBnJywnLi9pbWFnZXMvZXZlbmluZy13YWxrcy91ZW5vLWFraWhhYmFyYS5qcGcnLCcuL2ltYWdlcy9ldmVuaW5nLXdhbGtzL3NoaWJ1eWEuanBnJywnLi9pbWFnZXMvZXZlbmluZy13YWxrcy9tYXJ1bm91Y2hpLWdpbnphLmpwZycKXTsKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJyxldmVudD0+ZXZlbnQud2FpdFVudGlsKGNhY2hlcy5vcGVuKENBQ0hFKS50aGVuKGNhY2hlPT5jYWNoZS5hZGRBbGwoQ09SRSkpLnRoZW4oKCk9PnNlbGYuc2tpcFdhaXRpbmcoKSkpKTsKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdhY3RpdmF0ZScsZXZlbnQ9PmV2ZW50LndhaXRVbnRpbChjYWNoZXMua2V5cygpLnRoZW4oa2V5cz0+UHJvbWlzZS5hbGwoa2V5cy5maWx0ZXIoaz0+ayE9PUNBQ0hFKS5tYXAoaz0+Y2FjaGVzLmRlbGV0ZShrKSkpKS50aGVuKCgpPT5zZWxmLmNsaWVudHMuY2xhaW0oKSkpKTsKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsZXZlbnQ9PnsKICBpZihldmVudC5yZXF1ZXN0Lm1ldGhvZCE9PSdHRVQnKXJldHVybjsKICBjb25zdCB1cmw9bmV3IFVSTChldmVudC5yZXF1ZXN0LnVybCk7aWYodXJsLm9yaWdpbiE9PXNlbGYubG9jYXRpb24ub3JpZ2luKXJldHVybjsKICBpZihldmVudC5yZXF1ZXN0Lm1vZGU9PT0nbmF2aWdhdGUnKXsKICAgIGV2ZW50LnJlc3BvbmRXaXRoKGZldGNoKGV2ZW50LnJlcXVlc3Qse2NhY2hlOiduby1zdG9yZSd9KS50aGVuKHJlc3BvbnNlPT57Y29uc3QgY29weT1yZXNwb25zZS5jbG9uZSgpO2NhY2hlcy5vcGVuKENBQ0hFKS50aGVuKGM9PmMucHV0KCcuL2luZGV4Lmh0bWwnLGNvcHkpKTtyZXR1cm4gcmVzcG9uc2V9KS5jYXRjaCgoKT0+Y2FjaGVzLm1hdGNoKCcuL2luZGV4Lmh0bWwnKSkpO3JldHVybjsKICB9CiAgZXZlbnQucmVzcG9uZFdpdGgoZmV0Y2goZXZlbnQucmVxdWVzdCkudGhlbihyZXNwb25zZT0+e2lmKHJlc3BvbnNlJiZyZXNwb25zZS5vayl7Y29uc3QgY29weT1yZXNwb25zZS5jbG9uZSgpO2NhY2hlcy5vcGVuKENBQ0hFKS50aGVuKGM9PmMucHV0KGV2ZW50LnJlcXVlc3QsY29weSkpfXJldHVybiByZXNwb25zZX0pLmNhdGNoKCgpPT5jYWNoZXMubWF0Y2goZXZlbnQucmVxdWVzdCkpKTsKfSk7Cg==
+/* Japan Trip 2026 · service worker · v10.1.0
+   Simple offline cache. No source rewriting, module merging or forced navigation. */
+const CACHE='japan-trip-v10-1-0';
+const CORE=[
+  './','./index.html','./styles.css','./place-content.css','./station-guides.css','./expenses-ui.css','./trip-data.js','./place-content.js','./firebase-config.js','./firestore-sync.js','./app.js','./car-rental.js','./drive.js','./station-guides.js','./expense-safety.js','./expenses-ui.js','./manifest.json','./icon.svg',
+  './assets/train-infographic.svg',
+  './images/evening-walks/asakusa.jpg','./images/evening-walks/ueno-akihabara.jpg','./images/evening-walks/shibuya.jpg','./images/evening-walks/marunouchi-ginza.jpg'
+];
+self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting())));
+self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',event=>{
+  if(event.request.method!=='GET')return;
+  const url=new URL(event.request.url);if(url.origin!==self.location.origin)return;
+  if(event.request.mode==='navigate'){
+    event.respondWith(fetch(event.request,{cache:'no-store'}).then(response=>{const copy=response.clone();caches.open(CACHE).then(c=>c.put('./index.html',copy));return response}).catch(()=>caches.match('./index.html')));return;
+  }
+  event.respondWith(fetch(event.request).then(response=>{if(response&&response.ok){const copy=response.clone();caches.open(CACHE).then(c=>c.put(event.request,copy))}return response}).catch(()=>caches.match(event.request)));
+});
