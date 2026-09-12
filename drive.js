@@ -76,12 +76,9 @@
   function actionHtml(key){const f=docs()[key];if(f)return '<div class="reservation-doc-actions" data-doc-key="'+esc(key)+'"><button type="button" class="reservation-doc-open">👁️ צפייה באסמכתה</button><button type="button" class="reservation-doc-replace" title="החלפת אסמכתה" aria-label="החלפת אסמכתה">🔄</button><button type="button" class="reservation-doc-unlink" title="מחיקת אסמכתה" aria-label="מחיקת אסמכתה">🗑️</button><span class="reservation-doc-name" title="'+esc(f.name||'')+'">'+esc(f.name||'')+'</span></div>';return '<div class="reservation-doc-actions" data-doc-key="'+esc(key)+'"><button type="button" class="reservation-doc-link">➕ הוסף אסמכתה</button></div>'}
   function renderDocs(){$$('[data-doc-key]').forEach(host=>{const key=host.dataset.docKey;if(!key)return;const slot=$('.doc-slot',host);if(slot)slot.innerHTML=actionHtml(key)})}
 
-  function mountSyncUI(){
-    $$('[data-drive-sync-slot]').forEach(slot=>{slot.innerHTML='<div class="drive-card"><div class="drive-row"><b>☁️ Google Drive Sync</b><button type="button" class="drive-connect">חבר / סנכרן</button><button type="button" class="drive-settings">הגדרה</button></div><div class="drive-status">'+((accessToken||loadSessionToken())?'מחובר לסשן Google':'לא מחובר כרגע')+'</div></div>';$('.drive-connect',slot).onclick=syncNow;$('.drive-settings',slot).onclick=()=>{const id=prompt('Google OAuth Client ID:',getClientId());if(id===null)return;if(id.trim())localStorage.setItem(CLIENT_KEY,id.trim());else localStorage.removeItem(CLIENT_KEY);clearSessionToken();tokenClient=null;status('הגדרת Google נשמרה. לחץ חבר / סנכרן.')}})
-  }
+  function mountSyncUI(){$$('[data-drive-sync-slot]').forEach(slot=>{slot.innerHTML=''})}
 
   document.addEventListener('click',e=>{const b=e.target.closest('.reservation-doc-open,.reservation-doc-link,.reservation-doc-replace,.reservation-doc-unlink');if(!b)return;const key=b.closest('[data-doc-key]')?.dataset.docKey;if(!key)return;if(b.classList.contains('reservation-doc-open'))openDoc(key);else if(b.classList.contains('reservation-doc-unlink'))unlink(key);else chooseDoc(key)});
-  document.addEventListener('japan:stateChanged',schedulePush);
-  window.addEventListener('load',()=>{renderDocs();mountSyncUI();setTimeout(()=>doSync(false),800)});
-  window.JapanDrive={renderDocs,mountSyncUI,syncNow};
+  window.addEventListener('load',()=>{renderDocs();mountSyncUI()});
+  window.JapanDrive={renderDocs,mountSyncUI};
 })();

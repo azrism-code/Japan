@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function trip(tripId) { return get(/databases/$(database)/documents/trips/$(tripId)); }
+    function isOwner(tripId) { return signedIn() && trip(tripId).data.ownerUid == request.auth.uid; }
+    function isEditor(tripId) {
+      return signedIn() &&
+        (request.auth.uid in trip(tripId).data.editorUids ||
+         request.auth.token.email in trip(tripId).data.editorEmails);
+    }
+    function canEdit(tripId) { return isOwner(tripId) || isEditor(tripId); }
+
+    match /trips/{tripId} {
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerEmail == request.auth.token.email;
+      allow read: if canEdit(tripId);
+      allow update, delete: if isOwner(tripId);
+
+      match /shared/{docId} {
+        allow read, write: if canEdit(tripId);
+      }
+      match /private/{docId} {
+        allow read, write: if canEdit(tripId);
+      }
+    }
+
+    /* A share token is an unguessable capability URL. It contains only viewer-safe data. */
+    match /shares/{shareToken} {
+      allow read: if true;
+      allow create, update, delete: if signedIn()
+        && canEdit(request.resource.data.tripId);
+    }
+  }
+}

@@ -85,7 +85,7 @@ function placeImage(key,p){return p?.image||IMAGE_BY_PLACE[key]||''}
 function worthText(key,p){return p?.worth||WORTH_BY_PLACE[key]||p?.tip||'שווה כחלק מהמסלול בזכות האופי הייחודי של המקום והחיבור הטבעי לאתרים שסביבו.'}
 
 function parseStorage(key,fallback){try{const v=JSON.parse(localStorage.getItem(key)||'');return v??fallback}catch(e){return fallback}}
-function setStorage(key,value){localStorage.setItem(key,JSON.stringify(value));document.dispatchEvent(new CustomEvent('japan:stateChanged'))}
+function setStorage(key,value){if(window.JapanCloud&&!window.JapanCloud.canWrite())return window.JapanCloud.deny();localStorage.setItem(key,JSON.stringify(value));document.dispatchEvent(new CustomEvent('japan:stateChanged'));return true}
 function listFromStorage(key,defaults,legacy=[]){for(const k of [key,...legacy]){const v=parseStorage(k,null);if(Array.isArray(v)&&v.length)return v.map((x,i)=>typeof x==='string'?{id:Date.now()+i,name:x,done:false}:{id:x.id||Date.now()+i,done:false,...x})}return defaults.map((x,i)=>typeof x==='string'?{id:Date.now()+i,name:x,done:false}:{id:Date.now()+i,done:false,...x})}
 let take=listFromStorage(keys.take,T.takeDefault,['japanTrip_take_v1','takeList']);
 let shop=listFromStorage(keys.shop,T.shoppingDefault,['japanTrip_shop_v1','shoppingList','shopList']);
@@ -143,7 +143,8 @@ document.addEventListener('click',e=>{const b=e.target.closest('button,a,label')
 document.addEventListener('change',e=>{if(e.target.matches('[data-take-check]')){take[Number(e.target.dataset.takeCheck)].done=e.target.checked;saveTake();return}if(e.target.matches('[data-shop-check]')){shop[Number(e.target.dataset.shopCheck)].done=e.target.checked;saveShop();return}if(e.target.matches('[data-exp-include]')){const a=expItems(),x=a.find(v=>String(v.id)===String(e.target.dataset.expInclude));if(x)x.included=e.target.checked;setStorage(keys.expenses,a);openPage('expenses');return}if(e.target.id==='importFile'){importData(e.target.files?.[0]);return}});
 document.addEventListener('input',e=>{if(e.target.id==='placeSearch'){state.placeSearch=e.target.value;applyPlaceFilters();return}if(e.target.id==='ilsAmount'){const v=Number(e.target.value);$('#jpyAmount').value=v?Math.round(v/T.rateJpyIls):'';$('#moneyResult').textContent=v?`₪${fmt(v)} ≈ ¥${fmt(v/T.rateJpyIls)}`:'הכנס סכום להמרה';return}if(e.target.id==='jpyAmount'){const v=Number(e.target.value);$('#ilsAmount').value=v?(v*T.rateJpyIls).toFixed(2):'';$('#moneyResult').textContent=v?`¥${fmt(v)} ≈ ₪${fmt(v*T.rateJpyIls)}`:'הכנס סכום להמרה';return}});
 $('#overlay').addEventListener('click',closeMenu);$('#infoModal').addEventListener('click',e=>{if(e.target.id==='infoModal')closeModal('#infoModal')});$('#eveningModal').addEventListener('click',e=>{if(e.target.id==='eveningModal')closeModal('#eveningModal')});$('#imageOverlay').addEventListener('click',e=>{if(e.target.id==='imageOverlay')closeImage()});$('#menuButton').addEventListener('click',openMenu);
-state.day=currentTripDay();renderTrip();document.documentElement.dataset.appReady='v10.0.1';
+document.addEventListener('japan:cloudApplied',()=>{take=listFromStorage(keys.take,T.takeDefault);shop=listFromStorage(keys.shop,T.shoppingDefault);if(state.page)openPage(state.page);else renderTrip()});
+state.day=currentTripDay();renderTrip();document.documentElement.dataset.appReady='v10.1.0';
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').then(r=>r.update()).catch(console.warn));
 window.JapanTripApp={openPage,closePage,renderTrip,renderHotels,renderBookings,keys};
 })();
