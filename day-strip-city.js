@@ -1,13 +1,19 @@
-/* Japan Trip 2026 · day strip city labels · v10.1.5 */
+/* Japan Trip 2026 · day strip city labels · v10.1.6 */
 (() => {
   'use strict';
 
+  let pending=false;
+
   function enhanceDayStrip(){
+    pending=false;
     const days=window.TRIP_DATA?.days;
     const strip=document.getElementById('dayStrip');
-    if(!Array.isArray(days)||!strip)return;
+    if(!Array.isArray(days)||!strip)return false;
 
-    strip.querySelectorAll('.day-chip').forEach((chip,index)=>{
+    const chips=[...strip.querySelectorAll('.day-chip')];
+    if(!chips.length)return false;
+
+    chips.forEach((chip,index)=>{
       const city=days[index]?.city;
       if(!city)return;
       let label=chip.querySelector('.day-city');
@@ -19,6 +25,14 @@
       }
       if(label.textContent!==city)label.textContent=city;
     });
+
+    return chips.every((chip,index)=>!days[index]?.city||chip.querySelector('.day-city'));
+  }
+
+  function scheduleEnhance(){
+    if(pending)return;
+    pending=true;
+    requestAnimationFrame(enhanceDayStrip);
   }
 
   const style=document.createElement('style');
@@ -29,16 +43,26 @@
   `;
   document.head.append(style);
 
-  const strip=document.getElementById('dayStrip');
-  if(strip){
-    const observer=new MutationObserver(()=>requestAnimationFrame(enhanceDayStrip));
-    observer.observe(strip,{childList:true});
-  }
+  // app.js and Firestore can rebuild the strip after this file has loaded.
+  // Observe the whole document so a replaced #dayStrip is handled too.
+  const observer=new MutationObserver(mutations=>{
+    if(mutations.some(m=>m.type==='childList'))scheduleEnhance();
+  });
+  observer.observe(document.documentElement,{childList:true,subtree:true});
 
-  window.addEventListener('pageshow',enhanceDayStrip);
+  window.addEventListener('load',scheduleEnhance);
+  window.addEventListener('pageshow',scheduleEnhance);
   document.addEventListener('visibilitychange',()=>{
-    if(!document.hidden)enhanceDayStrip();
+    if(!document.hidden)scheduleEnhance();
   });
 
-  requestAnimationFrame(enhanceDayStrip);
+  // Cover delayed Firebase/auth rendering on a cold refresh.
+  let attempts=0;
+  const retry=setInterval(()=>{
+    attempts++;
+    const complete=enhanceDayStrip();
+    if(complete||attempts>=40)clearInterval(retry);
+  },250);
+
+  scheduleEnhance();
 })();
