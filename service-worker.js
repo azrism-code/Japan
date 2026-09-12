@@ -1,8 +1,8 @@
-/* Japan Trip 2026 · service worker · v10.1.3
+/* Japan Trip 2026 · service worker · v10.1.4
    Simple offline cache. No source rewriting, module merging or forced navigation. */
-const CACHE='japan-trip-v10-1-3';
+const CACHE='japan-trip-v10-1-4';
 const CORE=[
-  './','./index.html','./styles.css','./place-content.css','./station-guides.css','./expenses-ui.css','./trip-data.js','./place-content.js','./firebase-config.js','./firestore-sync.js','./app.js','./car-rental.js','./drive.js','./station-guides.js','./expense-safety.js','./expenses-ui.js','./manifest.json','./icon.svg',
+  './','./index.html','./styles.css','./place-content.css','./station-guides.css','./expenses-ui.css','./trip-data.js','./place-content.js','./firebase-config.js','./firestore-sync.js','./app.js','./day-strip-city.js','./car-rental.js','./drive.js','./station-guides.js','./expense-safety.js','./expenses-ui.js','./manifest.json','./icon.svg',
   './assets/train-infographic.svg',
   './images/evening-walks/asakusa.jpg','./images/evening-walks/ueno-akihabara.jpg','./images/evening-walks/shibuya.jpg','./images/evening-walks/marunouchi-ginza.jpg'
 ];
