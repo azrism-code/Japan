@@ -72,5 +72,13 @@
   <script src="car-rental.js"></script>
   <script src="drive.js"></script>
   <script src="station-guides.js"></script>
+  <script>
+    document.addEventListener('click',e=>{
+      if(!e.target.closest('[data-station-guide]'))return;
+      const modal=document.getElementById('infoModal');
+      modal?.classList.remove('open');
+      modal?.setAttribute('aria-hidden','true');
+    },true);
+  </script>
 </body>
 </html>
