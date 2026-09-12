@@ -9,8 +9,9 @@
   let db=null, auth=null, role='viewer', applying=false, ready=false, publicUnsubscribe=null;
   const parse=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key)||'')??fallback}catch(e){return fallback}};
   const publicState=()=>({schema:11,take:parse(KEYS.take,[]),shop:parse(KEYS.shop,[]),expenses:parse(KEYS.expenses,[]),expenseSettings:parse(KEYS.expenseSettings,{}),settings:parse(KEYS.settings,{}),completion:parse(KEYS.completion,{}),updatedAt:new Date().toISOString()});
-  const privateState=()=>({schema:11,docs:parse(KEYS.docs,{}),updatedAt:new Date().toISOString()});
-  function applyState(shared,priv){applying=true;for(const [name,key] of Object.entries(KEYS)){const src=name==='docs'?priv:shared;if(src&&src[name]!==undefined)localStorage.setItem(key,JSON.stringify(src[name]))}applying=false;document.dispatchEvent(new CustomEvent('japan:cloudApplied'));}
+  const tripSecrets=()=>({flightBooking:window.TRIP_DATA?.flights?.booking||'',flightLegSeats:(window.TRIP_DATA?.flights?.legs||[]).map(x=>x.seats||''),hotels:Object.fromEntries((window.TRIP_DATA?.hotels||[]).map(h=>[h.key,{booking:h.booking||'',reference:h.reference||''}]))});
+  const privateState=()=>({schema:11,docs:parse(KEYS.docs,{}),secrets:tripSecrets(),updatedAt:new Date().toISOString()});
+  function applyState(shared,priv){applying=true;for(const [name,key] of Object.entries(KEYS)){const src=name==='docs'?priv:shared;if(src&&src[name]!==undefined)localStorage.setItem(key,JSON.stringify(src[name]))}if(priv?.secrets&&window.TRIP_DATA){const s=priv.secrets;if(s.flightBooking!==undefined)window.TRIP_DATA.flights.booking=s.flightBooking;(s.flightLegSeats||[]).forEach((v,i)=>{if(window.TRIP_DATA.flights.legs[i])window.TRIP_DATA.flights.legs[i].seats=v});for(const h of window.TRIP_DATA.hotels||[]){const x=s.hotels?.[h.key];if(x){h.booking=x.booking||'';h.reference=x.reference||''}}}applying=false;document.dispatchEvent(new CustomEvent('japan:cloudApplied'));}
   function setRole(next){role=next;document.documentElement.dataset.role=role;document.dispatchEvent(new CustomEvent('japan:roleChanged',{detail:{role}}));renderStatus();}
   function deny(){alert('מצב צפייה בלבד');return false}
   function canWrite(){return role==='owner'||role==='editor'}
@@ -22,7 +23,7 @@
     ready=true;
     const sharedRef=tripRef.collection('shared').doc('state'), privateRef=tripRef.collection('private').doc('state'), [s,p]=await Promise.all([sharedRef.get(),privateRef.get()]);
     if(!s.exists){await publish(publicState(),privateState());localStorage.setItem(MIGRATION_KEY,JSON.stringify({status:'uploaded',at:new Date().toISOString()}))}else{applyState(s.data(),p.exists?p.data():{});localStorage.setItem(MIGRATION_KEY,JSON.stringify({status:'verified',at:new Date().toISOString()}))}
-    sharedRef.onSnapshot(x=>{if(x.exists)applyState(x.data(),null)});privateRef.onSnapshot(x=>{if(x.exists)applyState(null,x.data())});await publish(s.exists?s.data():publicState(),p.exists?p.data():privateState());renderStatus();
+    const privatePayload=p.exists?{...privateState(),...p.data(),secrets:p.data().secrets||tripSecrets()}:privateState();sharedRef.onSnapshot(x=>{if(x.exists)applyState(x.data(),null)});privateRef.onSnapshot(x=>{if(x.exists)applyState(null,x.data())});await publish(s.exists?s.data():publicState(),privatePayload);renderStatus();
   }
   async function init(){if(!configured){setRole('offline');return}firebase.initializeApp(F);auth=firebase.auth();db=firebase.firestore();try{await db.enablePersistence({synchronizeTabs:true})}catch(e){console.warn('Firestore persistence:',e.code||e)}
     ready=true;auth.onAuthStateChanged(user=>{if(user)bootstrap(user).catch(e=>{console.error(e);watchPublic()});else watchPublic()});
