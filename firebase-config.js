@@ -1,1 +1,15 @@
-LyogUHVibGljIEZpcmViYXNlIHdlYiBjb25maWd1cmF0aW9uLiBGaWxsIGZyb20gRmlyZWJhc2UgQ29uc29sZSA+IFByb2plY3Qgc2V0dGluZ3MgPiBXZWIgYXBwLiAqLwp3aW5kb3cuSkFQQU5fRklSRUJBU0VfQ09ORklHID0gewogIGFwaUtleTogIkFJemFTeUNqaGRkeDU3bTRkQUE5SVJYb1R2VTBtZVlrdmpuX3hwayIsCiAgYXV0aERvbWFpbjogImphcGFuLXRyaXAtMjAyNi1hMWIyZC5maXJlYmFzZWFwcC5jb20iLAogIHByb2plY3RJZDogImphcGFuLXRyaXAtMjAyNi1hMWIyZCIsCiAgc3RvcmFnZUJ1Y2tldDogImphcGFuLXRyaXAtMjAyNi1hMWIyZC5maXJlYmFzZXN0b3JhZ2UuYXBwIiwKICBtZXNzYWdpbmdTZW5kZXJJZDogIjMzNjA1MDA2MDEwMSIsCiAgYXBwSWQ6ICIxOjMzNjA1MDA2MDEwMTp3ZWI6YTgyYzNmM2YzYjA1Y2ZkYjNmZGMyYyIKfTsKCndpbmRvdy5KQVBBTl9DTE9VRF9DT05GSUcgPSB7CiAgdHJpcElkOiAiamFwYW4tMjAyNiIsCiAgb3duZXJFbWFpbDogImF6cmlzbUBnbWFpbC5jb20iLAogIGVkaXRvckVtYWlsczogWyJheWFsYTcyNEBnbWFpbC5jb20iXQp9Owo=
+/* Public Firebase web configuration. Fill from Firebase Console > Project settings > Web app. */
+window.JAPAN_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCjhddx57m4dAA9IRXoTvU0meYkvjn_xpk",
+  authDomain: "japan-trip-2026-a1b2d.firebaseapp.com",
+  projectId: "japan-trip-2026-a1b2d",
+  storageBucket: "japan-trip-2026-a1b2d.firebasestorage.app",
+  messagingSenderId: "336050060101",
+  appId: "1:336050060101:web:a82c3f3f3b05cfdb3fdc2c"
+};
+
+window.JAPAN_CLOUD_CONFIG = {
+  tripId: "japan-2026",
+  ownerEmail: "azrism@gmail.com",
+  editorEmails: ["ayala724@gmail.com"]
+};
