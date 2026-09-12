@@ -1,7 +1,7 @@
-/* Japan Trip 2026 · compact expense controls · v10.0.5 */
+/* Japan Trip 2026 · compact expense controls · v10.0.6 */
 (() => {
   'use strict';
-  const VERSION='10.0.5';
+  const VERSION='10.0.6';
   let openPanel=null;
 
   function isExpensesPage(page){
@@ -49,6 +49,17 @@
       target?.scrollIntoView({behavior:'smooth',block:'nearest'});
     }
   }
+
+  // Capture before app.js handles the delete, so accidental taps can be cancelled safely.
+  document.addEventListener('click',e=>{
+    const del=e.target.closest('[data-exp-delete]');
+    if(!del)return;
+    const name=del.closest('.expense-card')?.querySelector('.expense-head b')?.textContent?.trim()||'ההוצאה הזו';
+    if(!window.confirm(`למחוק את "${name}"?`)){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }
+  },true);
 
   document.addEventListener('click',e=>{
     const panelButton=e.target.closest('[data-exp-panel]');
