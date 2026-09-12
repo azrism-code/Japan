@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · day strip city labels · v10.1.4 */
+/* Japan Trip 2026 · day strip city labels · v10.1.5 */
 (() => {
   'use strict';
 
@@ -8,14 +8,16 @@
     if(!Array.isArray(days)||!strip)return;
 
     strip.querySelectorAll('.day-chip').forEach((chip,index)=>{
-      chip.querySelector('.day-city')?.remove();
       const city=days[index]?.city;
       if(!city)return;
-      const label=document.createElement('em');
-      label.className='day-city';
-      label.dir='auto';
-      label.textContent=city;
-      chip.append(label);
+      let label=chip.querySelector('.day-city');
+      if(!label){
+        label=document.createElement('em');
+        label.className='day-city';
+        label.dir='auto';
+        chip.append(label);
+      }
+      if(label.textContent!==city)label.textContent=city;
     });
   }
 
@@ -27,9 +29,16 @@
   `;
   document.head.append(style);
 
-  document.addEventListener('click',event=>{
-    if(event.target.closest('[data-day],[data-nav="trip"]'))setTimeout(enhanceDayStrip,0);
+  const strip=document.getElementById('dayStrip');
+  if(strip){
+    const observer=new MutationObserver(()=>requestAnimationFrame(enhanceDayStrip));
+    observer.observe(strip,{childList:true});
+  }
+
+  window.addEventListener('pageshow',enhanceDayStrip);
+  document.addEventListener('visibilitychange',()=>{
+    if(!document.hidden)enhanceDayStrip();
   });
 
-  setTimeout(enhanceDayStrip,0);
+  requestAnimationFrame(enhanceDayStrip);
 })();
