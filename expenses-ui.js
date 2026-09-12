@@ -1,7 +1,7 @@
-/* Japan Trip 2026 · compact expense controls · v10.0.6 */
+/* Japan Trip 2026 · compact expense controls · v10.0.8 */
 (() => {
   'use strict';
-  const VERSION='10.0.6';
+  const VERSION='10.0.8';
   let openPanel=null;
 
   function isExpensesPage(page){
@@ -39,6 +39,9 @@
       btn.classList.toggle('active',active);
       btn.setAttribute('aria-expanded',String(active));
     });
+
+    const hotelFilter=body.querySelector('.filter-row [data-exp-filter="🏨 לינה"]');
+    if(hotelFilter)hotelFilter.textContent='🏨 מלונות';
   }
 
   function togglePanel(which){
