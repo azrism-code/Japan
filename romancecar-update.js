@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · Romancecar plan · v10.2.2 */
+/* Japan Trip 2026 · Romancecar plan · v10.2.3 */
 (() => {
   'use strict';
   const T=window.TRIP_DATA;
@@ -6,7 +6,28 @@
 
   const day=T.days?.find(d=>d.date==='08/11');
   if(day){
-    const ride=day.stops?.find(s=>/Shinjuku → Odawara|Romancecar/.test(s.title||''));
+    const stops=day.stops||[];
+    let rideIndex=stops.findIndex(s=>/Shinjuku → Odawara|Romancecar/.test(s.title||''));
+    let checkout=stops.find(s=>/Check-out.*Shinjuku Prince Hotel/.test(s.title||''));
+    if(!checkout){
+      checkout={
+        time:'08:50',
+        icon:'🏨',
+        title:'Check-out · Shinjuku Prince Hotel',
+        text:'Check-out ויציאה עם המזוודות לכיוון Odakyu Shinjuku Station לקראת ה-Romancecar של 09:20.'
+      };
+      stops.splice(rideIndex>=0?rideIndex:0,0,checkout);
+      rideIndex=stops.indexOf(checkout)+1;
+    }else{
+      Object.assign(checkout,{
+        time:'08:50',
+        icon:'🏨',
+        title:'Check-out · Shinjuku Prince Hotel',
+        text:'Check-out ויציאה עם המזוודות לכיוון Odakyu Shinjuku Station לקראת ה-Romancecar של 09:20.'
+      });
+    }
+
+    const ride=stops.find(s=>/Shinjuku → Odawara|Romancecar/.test(s.title||''));
     if(ride)Object.assign(ride,{
       time:'09:20',
       icon:'🚆',
@@ -18,6 +39,6 @@
 
   if(Array.isArray(T.trains)){
     const row=T.trains.find(x=>Array.isArray(x)&&/^8\/11 · Shinjuku → Odawara/.test(x[0]||''));
-    if(row)row[1]='Romancecar Hakone 7 · 09:20 Shinjuku → 10:35 Odawara · מושב שמור. איסוף הרכב ב-11:00.';
+    if(row)row[1]='08:50 Check-out מ-Shinjuku Prince Hotel ויציאה ל-Odakyu Shinjuku · Romancecar Hakone 7 · 09:20 Shinjuku → 10:35 Odawara · מושב שמור. איסוף הרכב ב-11:00.';
   }
 })();
