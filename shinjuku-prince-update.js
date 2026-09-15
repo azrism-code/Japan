@@ -99,11 +99,17 @@
       const title=row.querySelector('b')?.textContent||'';
       const text=row.querySelector('span');
       if(!text)return;
-      if(/^East \/ 東口/.test(title))text.textContent='Shinjuku Prince Hotel, Kabukicho, Isetan ואזור חיי הלילה והקניות במזרח.';
+      if(/^East \/ 東口/.test(title)){
+        const wanted='Shinjuku Prince Hotel, Kabukicho, Isetan ואזור חיי הלילה והקניות במזרח.';
+        if(text.textContent!==wanted)text.textContent=wanted;
+      }
       if(/^South \/ 南口/.test(title)&&/JR Kyushu|מלון/.test(text.textContent||''))text.textContent='NEWoMan, Takashimaya והצד הדרומי של התחנה.';
     });
     station?.querySelectorAll('.station-route span').forEach(line=>{
-      if(/המלון שלנו|South Exit/.test(line.textContent||''))line.textContent='• המלון שלנו: East / Kabukicho · כ־5 דקות; Seibu-Shinjuku מחובר למלון.';
+      if(/המלון שלנו|South Exit/.test(line.textContent||'')){
+        const wanted='• המלון שלנו: East / Kabukicho · כ־5 דקות; Seibu-Shinjuku מחובר למלון.';
+        if(line.textContent!==wanted)line.textContent=wanted;
+      }
     });
 
     document.querySelectorAll('.station-exit-hint span').forEach(span=>{
