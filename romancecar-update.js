@@ -1,8 +1,10 @@
-/* Japan Trip 2026 · Romancecar plan · v10.2.3 */
+/* Japan Trip 2026 · Romancecar plan · v10.2.4 */
 (() => {
   'use strict';
   const T=window.TRIP_DATA;
   if(!T)return;
+
+  const seatTip='💡 טיפ להזמנה: במערכת Odakyu המושבים הרלוונטיים הם C ו-D. מושב D הוא מושב החלון בצד של הר פוג׳י, ו-C הוא המושב הסמוך לו במעבר. בנסיעה הלוך מטוקיו להאקונה מומלץ לבחור בשורה עם מספר אי-זוגי כדי לקבל חלון פנורמי גדול וללא חסימות של עמודי המסגרת של הרכבת.';
 
   const day=T.days?.find(d=>d.date==='08/11');
   if(day){
@@ -32,13 +34,13 @@
       time:'09:20',
       icon:'🚆',
       title:'Romancecar · Shinjuku → Odawara',
-      text:'Hakone 7 · יציאה 09:20 מ-Odakyu Shinjuku · הגעה 10:35 ל-Odawara. איסוף הרכב ב-11:00, כך שנשארות כ־25 דקות.',
+      text:'Hakone 7 · יציאה 09:20 מ-Odakyu Shinjuku · הגעה 10:35 ל-Odawara. איסוף הרכב ב-11:00, כך שנשארות כ־25 דקות. '+seatTip,
       tag:'⭐ הרכבת המתוכננת'
     });
   }
 
   if(Array.isArray(T.trains)){
     const row=T.trains.find(x=>Array.isArray(x)&&/^8\/11 · Shinjuku → Odawara/.test(x[0]||''));
-    if(row)row[1]='08:50 Check-out מ-Shinjuku Prince Hotel ויציאה ל-Odakyu Shinjuku · Romancecar Hakone 7 · 09:20 Shinjuku → 10:35 Odawara · מושב שמור. איסוף הרכב ב-11:00.';
+    if(row)row[1]='08:50 Check-out מ-Shinjuku Prince Hotel ויציאה ל-Odakyu Shinjuku · Romancecar Hakone 7 · 09:20 Shinjuku → 10:35 Odawara · מושב שמור. איסוף הרכב ב-11:00. '+seatTip;
   }
 })();
