@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · booking planner · v10.2.0
+/* Japan Trip 2026 · booking planner · v10.2.1
    Enhanced reservation checklist with type badges, prices, booking windows,
    provider links, filters, Drive confirmations and cloud-synced completion state. */
 (() => {
@@ -22,13 +22,22 @@
       priority:1
     },
     {
+      id:'narita-transfer-shinjuku-prince', docKey:'narita-transfer-shinjuku-prince', type:'car', icon:'🚕', typeLabel:'מונית / הסעה',
+      title:'הסעה · Narita → Shinjuku Prince Hotel', tripDate:'4/11 · נחיתה 13:10 · יעד משוער 14:27', required:true,
+      price:'חינם · ₪0',
+      when:'עכשיו', whenNote:'הטבת Booking.com להזמנה הנוכחית · Standard · עד 2 נוסעים · 3 מזוודות · כולל מעקב טיסה.',
+      provider:'Booking.com · Powered by Carzen+',
+      bookingUrl:'https://www.booking.com/taxi/index.html',
+      priority:2
+    },
+    {
       id:'teamlab-kyoto', docKey:'teamlab-biovortex-kyoto', type:'attraction', icon:'🎨', typeLabel:'אטרקציה',
       title:'teamLab Biovortex Kyoto', tripDate:'12/11 · ערב', required:true,
       price:'מ־¥3,800 לאדם · כ־¥7,600 לזוג',
       when:'עכשיו', whenNote:'כרטיס כניסה לפי שעה; עלול להימכר מראש.',
       provider:'האתר הרשמי של teamLab',
       bookingUrl:'https://www.teamlab.art/e/kyoto/',
-      priority:2
+      priority:3
     },
     {
       id:'romancecar-shinjuku-odawara', docKey:'romancecar-shinjuku-odawara', type:'train', icon:'🚆', typeLabel:'רכבת',
@@ -37,7 +46,7 @@
       when:'8/10 · 10:00 יפן (04:00 ישראל)', whenNote:'המכירה נפתחת חודש לפני. כל המקומות שמורים.',
       provider:'Odakyu · e-Romancecar',
       bookingUrl:'https://www.odakyu.jp/romancecar/booking/',
-      priority:3
+      priority:4
     },
     {
       id:'shinkansen-odawara-kyoto', docKey:'shinkansen-odawara-kyoto', type:'shinkansen', icon:'🚄', typeLabel:'Shinkansen',
@@ -46,7 +55,7 @@
       when:'אפשר להזמין כבר עכשיו', whenNote:'ב־SmartEX ניתן להזמין מוקדם; רכבת/מושב נקבעים סופית סביב 10/10.',
       provider:'SmartEX',
       bookingUrl:'https://smart-ex.jp/en/',
-      priority:4
+      priority:5
     },
     {
       id:'aoniyoshi-kyoto-nara', docKey:'aoniyoshi-kyoto-nara', type:'train', icon:'🚆', typeLabel:'רכבת מיוחדת',
@@ -55,7 +64,7 @@
       when:'14/10 · 10:30 יפן (04:30 ישראל)', whenNote:'מומלץ להזמין מיד בפתיחת המכירה כדי לקבל Twin Seats.',
       provider:'Kintetsu · Limited Express e-ticket',
       bookingUrl:'https://www.ticket.kintetsu.co.jp/vs/en/T/TZZ/TZZ10.do?op=tDisplayVisitorMenu',
-      priority:5
+      priority:6
     },
     {
       id:'shinkansen-osaka-tokyo', docKey:'shinkansen-osaka-tokyo', type:'shinkansen', icon:'🚄', typeLabel:'Shinkansen',
@@ -64,7 +73,7 @@
       when:'אפשר להזמין כבר עכשיו', whenNote:'אישור רכבת/מושב סביב 16/10; אם רוצים צד Fuji כדאי לבחור מושב כשמתאפשר.',
       provider:'SmartEX',
       bookingUrl:'https://smart-ex.jp/en/',
-      priority:6
+      priority:7
     },
     {
       id:'shibuya-sky', docKey:'shibuya-sky-0611', type:'attraction', icon:'🌇', typeLabel:'תצפית',
@@ -73,7 +82,7 @@
       when:'סביב 23/10', whenNote:'הכרטיסים נמכרים כשבועיים קדימה; ערב מבוקש יותר.',
       provider:'SHIBUYA SKY · האתר הרשמי',
       bookingUrl:'https://www.shibuya-scramble-square.com/sky/ticket/',
-      priority:7
+      priority:8
     },
     {
       id:'car-odawara', docKey:'car-nippon-odawara', type:'car', icon:'🚗', typeLabel:'רכב',
@@ -86,7 +95,7 @@
   ];
 
   const TYPE_ORDER=['all','hotel','attraction','train','shinkansen','car'];
-  const TYPE_NAMES={all:'כל הסוגים',hotel:'מלון',attraction:'אטרקציות / תצפית',train:'רכבות',shinkansen:'Shinkansen',car:'רכב'};
+  const TYPE_NAMES={all:'כל הסוגים',hotel:'מלון',attraction:'אטרקציות / תצפית',train:'רכבות',shinkansen:'Shinkansen',car:'רכב / מונית'};
 
   function readSettings(){
     try{const s=JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}');return s&&typeof s==='object'&&!Array.isArray(s)?s:{}}catch(_){return {}}
