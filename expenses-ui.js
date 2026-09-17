@@ -1,9 +1,10 @@
-/* Japan Trip 2026 · compact expense controls + budget summary · v10.2.8 */
+/* Japan Trip 2026 · compact expense controls + budget summary · v10.2.9 */
 (() => {
   'use strict';
-  const VERSION='10.2.8';
+  const VERSION='10.2.9';
   const EXP_KEY='japanTrip_expenses_v1';
   const SETTINGS_KEY='japanTrip_expense_settings_v1';
+  const TRASH_KEY='japanTrip_expenses_trash_v1';
   const TRAIN_SEED_VERSION=1;
   let openPanel=null, uiPending=false, editingId=null;
 
@@ -130,19 +131,46 @@
   }
 
   function enhanceExpenseCards(body){
-    if(!canWrite())return;
+    const items=read(EXP_KEY,[]);
     body.querySelectorAll('.expense-card').forEach(card=>{
-      if(card.querySelector('[data-exp-edit]'))return;
       const id=card.dataset.expId;
-      const actions=card.querySelector('.stop-actions');
-      if(!id||!actions)return;
-      const del=actions.querySelector('[data-exp-delete]');
-      const edit=document.createElement('button');
-      edit.type='button';
-      edit.className='small-btn expense-edit-btn';
-      edit.dataset.expEdit=id;
-      edit.textContent='✏️ ערוך';
-      if(del)del.before(edit);else actions.append(edit);
+      if(!id)return;
+      const item=Array.isArray(items)?items.find(x=>String(x.id)===String(id)):null;
+      card.classList.add('compact-expense-card');
+
+      const meta=card.querySelector('.expense-meta');
+      let mark=meta?.querySelector('.expense-budget-mark');
+      if(meta&&!mark){
+        mark=document.createElement('span');
+        mark.className='expense-budget-mark';
+        meta.append(' · ',mark);
+      }
+      if(mark){
+        const included=item?.included!==false;
+        mark.className='expense-budget-mark '+(included?'included':'excluded');
+        mark.textContent=included?'✓':'⊘';
+        mark.title=included?'כלול בתקציב':'לא כלול בתקציב';
+        mark.setAttribute('aria-label',mark.title);
+      }
+
+      card.querySelector('.stop-actions')?.remove();
+
+      const head=card.querySelector('.expense-head');
+      let edit=card.querySelector('[data-exp-edit]');
+      if(!canWrite()){
+        edit?.remove();
+        return;
+      }
+      if(!edit&&head){
+        edit=document.createElement('button');
+        edit.type='button';
+        edit.className='expense-edit-icon';
+        edit.dataset.expEdit=id;
+        edit.textContent='✏️';
+        edit.title='ערוך הוצאה';
+        edit.setAttribute('aria-label','ערוך הוצאה');
+        head.append(edit);
+      }
     });
   }
 
@@ -185,6 +213,20 @@
     }
     if(payment)payment.value=item.payment||'';
 
+    let editOptions=panel.querySelector('.expense-edit-options');
+    if(!editOptions){
+      editOptions=document.createElement('div');
+      editOptions.className='expense-edit-options';
+      editOptions.innerHTML=`
+        <label class="expense-edit-include"><input type="checkbox" id="expIncludedEdit"> <span>כלול בתקציב</span></label>
+        <button type="button" class="expense-edit-delete" data-exp-edit-delete="">🗑️ מחק הוצאה</button>`;
+      note?.closest('.field')?.after(editOptions);
+    }
+    const include=editOptions.querySelector('#expIncludedEdit');
+    if(include)include.checked=item.included!==false;
+    const deleteButton=editOptions.querySelector('[data-exp-edit-delete]');
+    if(deleteButton)deleteButton.dataset.expEditDelete=editingId;
+
     const save=panel.querySelector('[data-action="add-expense"]');
     if(save){
       delete save.dataset.action;
@@ -214,6 +256,7 @@
     if(!Array.isArray(items))return;
     const item=items.find(x=>String(x.id)===String(id));
     if(!item)return;
+    const include=panel.querySelector('#expIncludedEdit');
     Object.assign(item,{
       name,
       amount,
@@ -221,8 +264,25 @@
       status:panel.querySelector('#expStatus')?.value||item.status,
       category:panel.querySelector('#expCategory')?.value||item.category,
       payment:panel.querySelector('#expPayment')?.value.trim()||'',
-      note:panel.querySelector('#expNote')?.value.trim()||''
+      note:panel.querySelector('#expNote')?.value.trim()||'',
+      included:include?include.checked:item.included!==false
     });
+    if(!writeExpenses(items))return;
+    editingId=null;openPanel=null;
+    window.JapanTripApp?.openPage?.('expenses');
+    setTimeout(scheduleEnhance,0);
+  }
+
+  function deleteEdit(id){
+    if(!canWrite()){window.JapanCloud?.deny?.();return}
+    const items=read(EXP_KEY,[]);
+    if(!Array.isArray(items))return;
+    const index=items.findIndex(x=>String(x.id)===String(id));
+    if(index<0)return;
+    const item=items[index];
+    if(!window.confirm(`למחוק את "${item.name||'ההוצאה הזו'}"?`))return;
+    localStorage.setItem(TRASH_KEY,JSON.stringify({item,index,deletedAt:new Date().toISOString()}));
+    items.splice(index,1);
     if(!writeExpenses(items))return;
     editingId=null;openPanel=null;
     window.JapanTripApp?.openPage?.('expenses');
@@ -296,19 +356,17 @@
       e.preventDefault();e.stopImmediatePropagation();
       saveEdit(save.dataset.expEditSave);return;
     }
+    const remove=e.target.closest('[data-exp-edit-delete]');
+    if(remove){
+      e.preventDefault();e.stopImmediatePropagation();
+      deleteEdit(remove.dataset.expEditDelete);return;
+    }
     const cancel=e.target.closest('[data-exp-edit-cancel]');
     if(cancel){
       e.preventDefault();e.stopImmediatePropagation();
       editingId=null;openPanel=null;
       window.JapanTripApp?.openPage?.('expenses');
       setTimeout(scheduleEnhance,0);return;
-    }
-    const del=e.target.closest('[data-exp-delete]');
-    if(!del)return;
-    const name=del.closest('.expense-card')?.querySelector('.expense-head b')?.textContent?.trim()||'ההוצאה הזו';
-    if(!window.confirm(`למחוק את "${name}"?`)){
-      e.preventDefault();
-      e.stopImmediatePropagation();
     }
   },true);
 
@@ -320,15 +378,12 @@
       return;
     }
 
-    const trigger=e.target.closest('[data-page="expenses"],[data-exp-filter],[data-exp-delete],[data-action="save-exp-settings"],[data-action="add-expense"]');
+    const trigger=e.target.closest('[data-page="expenses"],[data-exp-filter],[data-action="save-exp-settings"],[data-action="add-expense"]');
     if(!trigger)return;
     if(trigger.dataset.action==='save-exp-settings'||trigger.dataset.action==='add-expense'){openPanel=null;editingId=null}
     setTimeout(scheduleEnhance,0);
   });
 
-  document.addEventListener('change',e=>{
-    if(e.target.matches('[data-exp-include]'))setTimeout(scheduleEnhance,0);
-  });
   document.addEventListener('japan:cloudApplied',()=>setTimeout(()=>{
     seedTrainEstimates();
     scheduleEnhance();
@@ -349,7 +404,16 @@
     .budget-legend span{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:5px;row-gap:1px;font-size:10px;min-width:0}
     .budget-legend small{grid-column:2;color:#776c65;font-size:9.5px;white-space:nowrap}
     .legend-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
-    .expense-edit-btn{white-space:nowrap}.expense-edit-cancel{margin-top:7px}
+    .compact-expense-card{padding:9px 10px!important;margin:7px 0!important}
+    .compact-expense-card .expense-head{gap:7px;align-items:center}
+    .compact-expense-card .expense-meta{margin-top:2px;line-height:1.25}
+    .compact-expense-card .expense-note{margin-top:4px;line-height:1.35}
+    .expense-edit-icon{width:28px;height:28px;min-width:28px;border:1px solid #e2d8d1;background:#fff;border-radius:9px;display:inline-grid;place-items:center;padding:0;font-size:13px;cursor:pointer}
+    .expense-budget-mark{display:inline-block;font-weight:1000;font-size:10px;line-height:1}.expense-budget-mark.included{color:#2f855a}.expense-budget-mark.excluded{color:#9ca3af}
+    .expense-edit-options{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px;padding:9px 10px;background:#faf7f4;border:1px solid #eadfd8;border-radius:11px}
+    .expense-edit-include{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:900}.expense-edit-include input{width:18px;height:18px;accent-color:#2f855a}
+    .expense-edit-delete{border:1px solid #e7b7b7;background:#fff5f5;color:#a12b2b;border-radius:9px;padding:7px 9px;font-size:10.5px;font-weight:900}
+    .expense-edit-cancel{margin-top:7px}
     @media(min-width:520px){.expense-summary-v2{grid-template-columns:repeat(5,minmax(0,1fr))}.expense-summary-v2 .remaining-kpi{grid-column:auto}.budget-chart{grid-column:1/-1}}
   `;
   document.head.append(style);
