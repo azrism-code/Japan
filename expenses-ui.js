@@ -171,9 +171,6 @@
   `;
   document.head.append(style);
 
-  const sheet=document.getElementById('sheetPage');
-  if(sheet)new MutationObserver(scheduleEnhance).observe(sheet,{childList:true,subtree:true});
-
   if(window.TRIP_DATA)window.TRIP_DATA.version=VERSION;
   document.documentElement.dataset.appReady='v'+VERSION;
   scheduleEnhance();
