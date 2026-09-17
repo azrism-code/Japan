@@ -1,10 +1,18 @@
-/* Japan Trip 2026 · compact expense controls + budget summary · v10.2.7 */
+/* Japan Trip 2026 · compact expense controls + budget summary · v10.2.8 */
 (() => {
   'use strict';
-  const VERSION='10.2.7';
+  const VERSION='10.2.8';
   const EXP_KEY='japanTrip_expenses_v1';
   const SETTINGS_KEY='japanTrip_expense_settings_v1';
-  let openPanel=null, uiPending=false;
+  const TRAIN_SEED_VERSION=1;
+  let openPanel=null, uiPending=false, editingId=null;
+
+  const TRAIN_ESTIMATES=[
+    {bookingId:'romancecar-shinjuku-odawara',amount:3700,note:'8/11 · הערכה לזוג לפי תפריט הזמנות · ≈ ¥3,700'},
+    {bookingId:'shinkansen-odawara-kyoto',amount:25300,note:'10/11 · הערכה לזוג · טווח בתפריט הזמנות ¥24,600–26,000 · בתקציב נלקח אמצע הטווח'},
+    {bookingId:'aoniyoshi-kyoto-nara',amount:2980,note:'14/11 · הערכה לזוג ב-Twin Seats · ¥2,980'},
+    {bookingId:'shinkansen-osaka-tokyo',amount:29500,note:'16/11 · הערכה לזוג · טווח בתפריט הזמנות ¥29,000–30,000 · בתקציב נלקח אמצע הטווח'}
+  ];
 
   function isExpensesPage(page){
     return /הוצאות/.test(page?.querySelector('.page-head h2')?.textContent||'');
@@ -12,6 +20,58 @@
 
   function read(key,fallback){
     try{const v=JSON.parse(localStorage.getItem(key)||'null');return v??fallback}catch(_){return fallback}
+  }
+
+  function canWrite(){
+    return !window.JapanCloud||window.JapanCloud.canWrite?.()!==false;
+  }
+
+  function writeExpenses(items){
+    if(!canWrite()){window.JapanCloud?.deny?.();return false}
+    localStorage.setItem(EXP_KEY,JSON.stringify(items));
+    document.dispatchEvent(new CustomEvent('japan:stateChanged'));
+    return true;
+  }
+
+  function seedTrainEstimates(){
+    if(!canWrite())return false;
+    const T=window.TRIP_DATA||{};
+    const rawSettings=read(SETTINGS_KEY,null);
+    const settings=rawSettings&&typeof rawSettings==='object'&&!Array.isArray(rawSettings)
+      ? rawSettings
+      : {budget:32027,rates:{USD:3,EUR:3.5,JPY:Number(T.rateJpyIls)||0.0196773,ILS:1}};
+    if(Number(settings.trainBookingEstimatesVersion||0)>=TRAIN_SEED_VERSION)return false;
+
+    const items=read(EXP_KEY,[]);
+    if(!Array.isArray(items))return false;
+    const bookingItems=window.JapanBookingPlanner?.items||[];
+    let changed=false;
+
+    for(const spec of TRAIN_ESTIMATES){
+      const booking=bookingItems.find(x=>x.id===spec.bookingId);
+      const name=booking?.title||spec.bookingId;
+      const exists=items.some(x=>x?.sourceBookingId===spec.bookingId||x?.id==='budget-'+spec.bookingId||x?.name===name);
+      if(exists)continue;
+      items.push({
+        id:'budget-'+spec.bookingId,
+        sourceBookingId:spec.bookingId,
+        name,
+        status:'הערכה',
+        payment:'טרם שולם',
+        currency:'JPY',
+        amount:spec.amount,
+        category:'🚗 תחבורה',
+        included:true,
+        note:spec.note
+      });
+      changed=true;
+    }
+
+    settings.trainBookingEstimatesVersion=TRAIN_SEED_VERSION;
+    localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings));
+    if(changed)localStorage.setItem(EXP_KEY,JSON.stringify(items));
+    document.dispatchEvent(new CustomEvent('japan:stateChanged'));
+    return changed;
   }
 
   function budgetData(){
@@ -69,6 +129,106 @@
       </div>`;
   }
 
+  function enhanceExpenseCards(body){
+    if(!canWrite())return;
+    body.querySelectorAll('.expense-card').forEach(card=>{
+      if(card.querySelector('[data-exp-edit]'))return;
+      const id=card.dataset.expId;
+      const actions=card.querySelector('.stop-actions');
+      if(!id||!actions)return;
+      const del=actions.querySelector('[data-exp-delete]');
+      const edit=document.createElement('button');
+      edit.type='button';
+      edit.className='small-btn expense-edit-btn';
+      edit.dataset.expEdit=id;
+      edit.textContent='✏️ ערוך';
+      if(del)del.before(edit);else actions.append(edit);
+    });
+  }
+
+  function addOptionIfMissing(select,value){
+    if(!select||!value)return;
+    if(![...select.options].some(o=>o.value===value))select.add(new Option(value,value));
+    select.value=value;
+  }
+
+  function renderEditForm(id){
+    const items=read(EXP_KEY,[]);
+    const item=Array.isArray(items)?items.find(x=>String(x.id)===String(id)):null;
+    if(!item)return;
+    editingId=String(id);
+    openPanel='add';
+    enhanceExpenses();
+
+    const panel=document.querySelector('#sheetPage.open .expense-add-panel');
+    if(!panel)return;
+    const title=panel.querySelector('h3');
+    if(title)title.textContent='✏️ עריכת הוצאה';
+
+    const name=panel.querySelector('#expName'), amount=panel.querySelector('#expAmount');
+    const currency=panel.querySelector('#expCurrency'), status=panel.querySelector('#expStatus');
+    const category=panel.querySelector('#expCategory'), note=panel.querySelector('#expNote');
+    if(name)name.value=item.name||'';
+    if(amount)amount.value=Number(item.amount)||0;
+    addOptionIfMissing(currency,item.currency||'ILS');
+    addOptionIfMissing(status,item.status||'הערכה');
+    addOptionIfMissing(category,item.category||'📦 אחר');
+    if(note)note.value=item.note||'';
+
+    let payment=panel.querySelector('#expPayment');
+    if(!payment){
+      const field=document.createElement('div');
+      field.className='field';
+      field.innerHTML='<label>אמצעי / מצב תשלום</label><input id="expPayment">';
+      category?.closest('.field')?.after(field);
+      payment=field.querySelector('#expPayment');
+    }
+    if(payment)payment.value=item.payment||'';
+
+    const save=panel.querySelector('[data-action="add-expense"]');
+    if(save){
+      delete save.dataset.action;
+      save.dataset.expEditSave=editingId;
+      save.textContent='שמור שינויים';
+    }
+    if(!panel.querySelector('[data-exp-edit-cancel]')){
+      const cancel=document.createElement('button');
+      cancel.type='button';
+      cancel.className='secondary-wide expense-edit-cancel';
+      cancel.dataset.expEditCancel='1';
+      cancel.textContent='ביטול';
+      save?.after(cancel);
+    }
+    panel.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  function saveEdit(id){
+    if(!canWrite()){window.JapanCloud?.deny?.();return}
+    const panel=document.querySelector('#sheetPage.open .expense-add-panel');
+    if(!panel)return;
+    const name=panel.querySelector('#expName')?.value.trim();
+    const amount=Number(panel.querySelector('#expAmount')?.value);
+    if(!name||!amount)return;
+
+    const items=read(EXP_KEY,[]);
+    if(!Array.isArray(items))return;
+    const item=items.find(x=>String(x.id)===String(id));
+    if(!item)return;
+    Object.assign(item,{
+      name,
+      amount,
+      currency:panel.querySelector('#expCurrency')?.value||item.currency,
+      status:panel.querySelector('#expStatus')?.value||item.status,
+      category:panel.querySelector('#expCategory')?.value||item.category,
+      payment:panel.querySelector('#expPayment')?.value.trim()||'',
+      note:panel.querySelector('#expNote')?.value.trim()||''
+    });
+    if(!writeExpenses(items))return;
+    editingId=null;openPanel=null;
+    window.JapanTripApp?.openPage?.('expenses');
+    setTimeout(scheduleEnhance,0);
+  }
+
   function enhanceExpenses(){
     const page=document.querySelector('#sheetPage.open');
     if(!page||!isExpensesPage(page))return;
@@ -79,7 +239,7 @@
 
     const cards=[...body.querySelectorAll(':scope > .card')];
     const settings=cards.find(c=>/שערים ותקציב/.test(c.querySelector('h3')?.textContent||''));
-    const add=cards.find(c=>/הוסף הוצאה/.test(c.querySelector('h3')?.textContent||''));
+    const add=cards.find(c=>/הוסף הוצאה|עריכת הוצאה/.test(c.querySelector('h3')?.textContent||''));
     if(!settings||!add)return;
 
     settings.classList.add('expense-panel','expense-settings-panel');
@@ -105,6 +265,7 @@
 
     const hotelFilter=body.querySelector('.filter-row [data-exp-filter="🏨 לינה"]');
     if(hotelFilter)hotelFilter.textContent='🏨 מלונות';
+    enhanceExpenseCards(body);
   }
 
   function scheduleEnhance(){
@@ -114,6 +275,7 @@
   }
 
   function togglePanel(which){
+    if(which==='add')editingId=null;
     openPanel=openPanel===which?null:which;
     enhanceExpenses();
     if(openPanel){
@@ -122,8 +284,25 @@
     }
   }
 
-  // Capture before app.js handles the delete, so accidental taps can be cancelled safely.
   document.addEventListener('click',e=>{
+    const edit=e.target.closest('[data-exp-edit]');
+    if(edit){
+      e.preventDefault();e.stopImmediatePropagation();
+      if(!canWrite()){window.JapanCloud?.deny?.();return}
+      renderEditForm(edit.dataset.expEdit);return;
+    }
+    const save=e.target.closest('[data-exp-edit-save]');
+    if(save){
+      e.preventDefault();e.stopImmediatePropagation();
+      saveEdit(save.dataset.expEditSave);return;
+    }
+    const cancel=e.target.closest('[data-exp-edit-cancel]');
+    if(cancel){
+      e.preventDefault();e.stopImmediatePropagation();
+      editingId=null;openPanel=null;
+      window.JapanTripApp?.openPage?.('expenses');
+      setTimeout(scheduleEnhance,0);return;
+    }
     const del=e.target.closest('[data-exp-delete]');
     if(!del)return;
     const name=del.closest('.expense-card')?.querySelector('.expense-head b')?.textContent?.trim()||'ההוצאה הזו';
@@ -143,14 +322,17 @@
 
     const trigger=e.target.closest('[data-page="expenses"],[data-exp-filter],[data-exp-delete],[data-action="save-exp-settings"],[data-action="add-expense"]');
     if(!trigger)return;
-    if(trigger.dataset.action==='save-exp-settings'||trigger.dataset.action==='add-expense')openPanel=null;
+    if(trigger.dataset.action==='save-exp-settings'||trigger.dataset.action==='add-expense'){openPanel=null;editingId=null}
     setTimeout(scheduleEnhance,0);
   });
 
   document.addEventListener('change',e=>{
     if(e.target.matches('[data-exp-include]'))setTimeout(scheduleEnhance,0);
   });
-  document.addEventListener('japan:cloudApplied',()=>setTimeout(scheduleEnhance,0));
+  document.addEventListener('japan:cloudApplied',()=>setTimeout(()=>{
+    seedTrainEstimates();
+    scheduleEnhance();
+  },0));
 
   const style=document.createElement('style');
   style.textContent=`
@@ -167,10 +349,12 @@
     .budget-legend span{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:5px;row-gap:1px;font-size:10px;min-width:0}
     .budget-legend small{grid-column:2;color:#776c65;font-size:9.5px;white-space:nowrap}
     .legend-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+    .expense-edit-btn{white-space:nowrap}.expense-edit-cancel{margin-top:7px}
     @media(min-width:520px){.expense-summary-v2{grid-template-columns:repeat(5,minmax(0,1fr))}.expense-summary-v2 .remaining-kpi{grid-column:auto}.budget-chart{grid-column:1/-1}}
   `;
   document.head.append(style);
 
+  seedTrainEstimates();
   if(window.TRIP_DATA)window.TRIP_DATA.version=VERSION;
   document.documentElement.dataset.appReady='v'+VERSION;
   scheduleEnhance();
