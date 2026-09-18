@@ -1,6 +1,6 @@
-/* Japan Trip 2026 · service worker · v10.2.9
+/* Japan Trip 2026 · service worker · v10.3.0
    Simple offline cache. No source rewriting, module merging or forced navigation. */
-const CACHE='japan-trip-v10-2-9';
+const CACHE='japan-trip-v10-3-0';
 const CORE=[
   './','./index.html','./styles.css','./place-content.css','./station-guides.css','./expenses-ui.css','./trip-data.js','./place-content.js','./firebase-config.js','./firestore-sync.js','./shinjuku-prince-update.js','./romancecar-update.js','./kyoto-hotel-update.js','./app.js','./day-strip-city.js','./hotel-compact.js','./car-rental.js','./drive.js','./booking-planner.js','./romancecar-booking-update.js','./station-guides.js','./expense-safety.js','./expenses-ui.js','./manifest.json','./icon.svg',
   './assets/train-infographic.svg',
