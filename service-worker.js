@@ -1,8 +1,8 @@
 /* Japan Trip 2026 · service worker · v10.3.5
    Simple offline cache. No source rewriting, module merging or forced navigation. */
-const CACHE='japan-trip-v10-3-5';
+const CACHE='japan-trip-v10-3-5-approved-icon';
 const CORE=[
-  './','./index.html','./styles.css','./place-content.css','./station-guides.css','./expenses-ui.css','./trip-data.js','./place-content.js','./firebase-config.js','./firestore-sync.js','./shinjuku-prince-update.js','./romancecar-update.js','./kyoto-hotel-update.js','./app.js','./day-strip-city.js','./hotel-compact.js','./car-rental.js','./drive.js','./booking-planner.js','./romancecar-booking-update.js','./station-guides.js','./expense-safety.js','./expenses-ui.js','./manifest.json?v=10.3.5','./icon.svg?v=10.3.5','./header-logo.svg?v=10.3.5',
+  './','./index.html','./styles.css','./place-content.css','./station-guides.css','./expenses-ui.css','./trip-data.js','./place-content.js','./firebase-config.js','./firestore-sync.js','./shinjuku-prince-update.js','./romancecar-update.js','./kyoto-hotel-update.js','./app.js','./day-strip-city.js','./hotel-compact.js','./car-rental.js','./drive.js','./booking-planner.js','./romancecar-booking-update.js','./station-guides.js','./expense-safety.js','./expenses-ui.js','./manifest.json?v=10.3.5','./assets/icons/app-icon-192.png?v=10.3.5','./assets/icons/app-icon-512.png?v=10.3.5','./assets/icons/apple-touch-icon.png?v=10.3.5','./assets/icons/header-icon.png?v=10.3.5',
   './assets/train-infographic.svg',
   './images/evening-walks/asakusa.jpg','./images/evening-walks/ueno-akihabara.jpg','./images/evening-walks/shibuya.jpg','./images/evening-walks/marunouchi-ginza.jpg'
 ];
