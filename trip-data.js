@@ -298,7 +298,7 @@
   ];
 
   window.TRIP_DATA = {
-    version:'10.0.0', title:'Japan Trip', year:2026, travelers:'עזרי ואיילי',
+    version:'10.3.8', title:'Japan Trip', year:2026, travelers:'עזרי ואיילי',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
     hotels, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
     maps:{search:G,directions:D}
