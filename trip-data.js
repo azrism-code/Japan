@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · canonical data · v10.3.7
+/* Japan Trip 2026 · canonical data · v10.3.8
    One source of truth. No runtime hotel/place replacement patches. */
 (() => {
   'use strict';
@@ -151,7 +151,7 @@
       {time:'10:45',icon:'🏙️',title:'Harajuku',text:'Takeshita Street והרחובות מסביב.',place:'Harajuku'},
       {time:'12:30',icon:'☕',title:'Omotesando',text:'שדרה אלגנטית עם אדריכלות, בתי קפה וחנויות.',place:'Omotesando'},
       {time:'15:00',icon:'🚦',title:'Shibuya Crossing',text:'מעבר החצייה האייקוני של Tokyo.',place:'Shibuya Crossing'},
-      {time:'אחה״צ / ערב',icon:'🌇',title:'תצפית על Tokyo · טרם הוחלט',text:'נחליט לפי הראות בין Tokyo Metropolitan Government Building, Roppongi Hills Tokyo City View או Shibuya Sky.'}
+      {time:'אחה״צ / ערב',icon:'🌇',title:'תצפית על Tokyo · בחירה באותו יום',text:'נחליט לפי הראות והחשק בין Tokyo Metropolitan Government Building, Roppongi Hills Tokyo City View או Shibuya Sky.',optional:true,tag:'לבחירה באותו יום'}
     ],route:D('Meiji Jingu Tokyo','Shibuya Scramble Crossing',['Takeshita Street Harajuku','Omotesando Tokyo'])},
     {date:'07/11',dow:'שבת',city:'Tokyo',title:'שווקים ומרכז Tokyo',summary:'Tsukiji → Ginza → Imperial Palace → Tokyo Station / Marunouchi',hotel:'hotel-jr-kyushu-shinjuku',evening:'shibuya',stops:[
       {time:'09:00',icon:'🛍️',title:'Tsukiji Outer Market',text:'שוק אוכל, סכינים, כלי מטבח, תה ודוכנים.',place:'Tsukiji Outer Market'},
@@ -169,13 +169,12 @@
     {date:'09/11',dow:'שני',city:'Hakone / Fuji',title:'Hakone · Fuji',summary:'Owakudani → Ropeway → Kawaguchiko לפי הראות / Open-Air Museum',hotel:'hotel-hakone',stops:[
       {time:'09:00',icon:'🗻',title:'Owakudani',text:'עמק געשי פעיל ותצפית אפשרית ל-Fuji.',place:'Owakudani'},
       {time:'10:30',icon:'🚡',title:'Hakone Ropeway',text:'הרכבל מעל האזור הגעשי.',place:'Hakone Ropeway'},
-      {time:'צהריים',icon:'🏞️',title:'Kawaguchiko',text:'אם הראות טובה — עדיפות לתצפיות Fuji באזור האגם.',place:'Kawaguchiko'},
-      {time:'אופציה',icon:'🖼️',title:'Hakone Open-Air Museum',text:'פסלים ואמנות בנוף ההרים.',place:'Hakone Open-Air Museum'}
+      {time:'אופציה A',icon:'🏞️',title:'Kawaguchiko',text:'אם הראות טובה — עדיפות לתצפיות Fuji באזור האגם.',place:'Kawaguchiko',optional:true,tag:'☀️ לבחור אם Fuji פתוח וברור'},
+      {time:'אופציה B',icon:'🖼️',title:'Hakone Open-Air Museum',text:'חלופה טובה אם הראות פחות מוצלחת או אם רוצים להישאר באזור Hakone.',place:'Hakone Open-Air Museum',optional:true,tag:'☁️ חלופה ל-Kawaguchiko'}
     ],route:D('Owakudani Hakone','Hakone Open-Air Museum',['Hakone Ropeway','Lake Kawaguchiko'])},
     {date:'10/11',dow:'שלישי',city:'Kyoto',title:'Hakone / Fuji → Kyoto',summary:'החזרת רכב → Odawara → Shinkansen → Kyoto → Gion',hotel:'hotel-daiwa-kyoto-shijo',evening:'gion',stops:[
       {time:'בוקר',icon:'🚗',title:'החזרת רכב · Odawara',text:'החזרת הרכב ליד התחנה לפני ה-Shinkansen.',place:'Odawara'},
       {time:'צהריים',icon:'🚄',title:'Shinkansen → Kyoto',text:'Odawara → Kyoto. את השעה הסופית נבחר קרוב יותר לטיול.'},
-      {time:'אחה״צ',icon:'🏨',title:'Check-in · Daiwa Roynet Hotel Kyoto Shijo Karasuma',text:'המלון צמוד כמעט ל-Shijo Exit 5.'},
       {time:'ערב',icon:'🏮',title:'Gion',text:'ערב ראשון ברובע המסורתי של Kyoto.',place:'Gion'}
     ],route:D('Odawara Station','Gion Kyoto',['Kyoto Station'])},
     {date:'11/11',dow:'רביעי',city:'Kyoto',title:'מזרח Kyoto',summary:'Kiyomizu-dera → Sannenzaka / Ninenzaka → Higashiyama → Gion → Pontocho',hotel:'hotel-daiwa-kyoto-shijo',evening:'pontocho',stops:[
@@ -202,11 +201,10 @@
     {date:'14/11',dow:'שבת',city:'Kyoto · Nara · Osaka',title:'Kyoto → Nara → Osaka',summary:'מזוודות → AONIYOSHI → Nara → Osaka-Namba → Hozenji → Dotonbori',hotel:'hotel-royal-classic-osaka',stops:[
       {time:'בוקר',icon:'🧳',title:'Check-out + טיפול במזוודות',text:'נבדוק עם Daiwa אפשרות לשליחה באותו יום ל-Hotel Royal Classic Osaka. אם השירות לא מאושר בפועל, ניקח אותן איתנו/נשתמש בפתרון חלופי.'},
       {time:'10:55',icon:'🚆',title:'AONIYOSHI · Kyoto → Kintetsu-Nara',text:'רכבת התיירות המיוחדת. לפי לוח מרץ 2026: 10:55 → 11:31; נוודא שוב סמוך לפתיחת המכירה.',tag:'⭐ Twin Seats מומלצים לזוג'},
-      {time:'11:35',icon:'🧳',title:'Coin Locker · Kintetsu-Nara',text:'אם נשאר איתנו trolley קטן, מכניסים אותו ללוקר ויוצאים לטייל בידיים חופשיות.'},
+      {time:'אם צריך',icon:'🧳',title:'Coin Locker · Kintetsu-Nara · גיבוי',text:'רק אם המזוודות נשארות איתנו: מכניסים trolley ללוקר ויוצאים לטייל בידיים חופשיות.',optional:true,tag:'Fallback בלבד'},
       {time:'12:00',icon:'🦌',title:'Nara Park',text:'Nara Park → Tōdai-ji → ארוחת צהריים. Naramachi רק אם נשאר זמן.',place:'Nara Park'},
       {time:'13:00',icon:'🏯',title:'Tōdai-ji',text:'אולם הבודהה הגדול והמקדש המרכזי של Nara.',place:'Tōdai-ji'},
       {time:'16:00–16:30',icon:'🚆',title:'Kintetsu-Nara → Osaka-Namba',text:'Kintetsu Express / Rapid Express רגילה וישירה, בערך 40 דקות.'},
-      {time:'אחה״צ–ערב',icon:'🏨',title:'Check-in · Hotel Royal Classic Osaka',text:'המלון מחובר ישירות ל-Namba Exit 12.'},
       {time:'19:00',icon:'🏮',title:'Hozenji Temple + Hozenji Yokocho',text:'סמטת אבן, פנסים ומקדש קטן אחרי הצ׳ק-אין.',place:'Hozenji Yokocho'},
       {time:'19:45',icon:'🌃',title:'Dotonbori · ערב ראשון ב-Osaka',text:'טיול לאורך התעלה, שלטי הניאון ו-Glico Man.',place:'Dotonbori'},
       {time:'20:30',icon:'🍽️',title:'ארוחת ערב · Namba / Dotonbori',text:'לבחור לפי החשק — Okonomiyaki, Teppanyaki או אוכל יפני מבושל.',place:'Namba'}
@@ -220,7 +218,6 @@
     ],route:D('Osaka Castle','Dotonbori Osaka',['Umeda Osaka','Shinsaibashi Osaka'])},
     {date:'16/11',dow:'שני',city:'Tokyo',title:'Osaka → Tokyo',summary:'Namba → Shin-Osaka → Shinkansen → Hotel Metropolitan → Nihonbashi → Tokyo Station → Marunouchi',hotel:'hotel-metropolitan-marunouchi',evening:'marunouchi',stops:[
       {time:'בוקר',icon:'🚄',title:'Osaka → Tokyo',text:'Namba → Shin-Osaka ב-Midosuji Line, ואז Shinkansen ל-Tokyo. אם הראות טובה, שווה לשבת בצד המתאים ל-Fuji.'},
-      {time:'אחה״צ',icon:'🏨',title:'Check-in · Hotel Metropolitan Tokyo Marunouchi',text:'המלון ב-Sapia Tower, ליד Nihombashi Exit של Tokyo Station.'},
       {time:'15:00',icon:'🏮',title:'Nihonbashi · Tokyo של פעם',text:'Nihonbashi Bridge, רחובות ותיקים ו-COREDO Muromachi.',place:'Nihonbashi'},
       {time:'17:00',icon:'🛍️',title:'Tokyo Station · Gransta / Character Street',text:'מתנות, ממתקים והשלמות אחרונות בלי להתרחק מהמלון.',place:'Gransta / Character Street'},
       {time:'18:30',icon:'🌃',title:'KITTE + Marunouchi Naka-dori',text:'Rooftop Garden של KITTE והליכה קצרה ב-Marunouchi.',place:'KITTE Marunouchi'},
@@ -229,7 +226,7 @@
     {date:'17/11',dow:'שלישי',city:'Tokyo',title:'יום אחרון וטיסה',summary:'בוקר חופשי → JINS / השלמות → Narita → טיסה',hotel:'hotel-metropolitan-marunouchi',stops:[
       {time:'בוקר',icon:'🏨',title:'Check-out · Hotel Metropolitan Tokyo Marunouchi',text:'Check-out והשארת מזוודות אם צריך עד היציאה ל-Narita.'},
       {time:'בוקר',icon:'☕',title:'בוקר חופשי',text:'לפי מה שנשאר ומה שמתחשק.'},
-      {time:'אופציה',icon:'👓',title:'JINS Shinjuku',text:'איסוף משקפיים אם הוזמנו בתחילת הטיול.',place:'JINS Shinjuku'},
+      {time:'גיבוי',icon:'👓',title:'JINS Shinjuku · איסוף רק אם לא הושלם קודם',text:'עדיף לאסוף לפני שעוזבים את Shinjuku ב־8/11 אם המשקפיים מוכנים. חוזרים לכאן ב־17/11 רק אם עדיין צריך.',place:'JINS Shinjuku',optional:true,tag:'גיבוי ליום האחרון'},
       {time:'אחה״צ',icon:'🚆',title:'יציאה ל-Narita',text:'להשאיר מרווח נדיב לנסיעה ולבידוק.',place:'Narita Airport'},
       {time:'21:30',icon:'✈️',title:'Narita → Dubai',text:'EK321 · Emirates · מושבים: Azriel 32K · Ayala 32J · Narita T2 → DXB T3.'}
     ],route:D('Hotel Metropolitan Tokyo Marunouchi','Narita International Airport')}
