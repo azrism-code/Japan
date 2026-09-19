@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · canonical data · v10.3.8
+/* Japan Trip 2026 · canonical data · v10.3.9
    One source of truth. No runtime hotel/place replacement patches. */
 (() => {
   'use strict';
@@ -131,13 +131,9 @@
       {time:'22:45',icon:'✈️',title:'Dubai → Tokyo Narita',text:'EK320 · Emirates · מושבים: Azriel 48K · Ayala 48J · DXB T3 → Narita T2.',tag:'⭐ להיות בשער בזמן'},
       {time:'מחר 13:10',icon:'🇯🇵',title:'נחיתה Narita',text:'הנחיתה ביפן מופיעה בתחילת היום הבא.'}
     ],route:null},
-    {date:'04/11',dow:'רביעי',city:'Tokyo',title:'נחיתה והתאקלמות',summary:'Narita → מלון → JINS → 3D Cat → Godzilla → ערב Shinjuku',hotel:'hotel-jr-kyushu-shinjuku',stops:[
-      {time:'13:10',icon:'✈️',title:'נחיתה Narita',text:'ביקורת גבולות, מזוודות ויציאה לעיר.',place:'Narita Airport'},
-      {time:'ערב',icon:'👓',title:'JINS Shinjuku',text:'בדיקת ראייה, בחירת מסגרת והזמנת משקפיים מוקדם בטיול.',place:'JINS Shinjuku'},
-      {time:'ערב',icon:'🐈',title:'3D Cat · Cross Shinjuku Vision',text:'עצירת חובה קצרה מול המסך הענק ליד East Exit של Shinjuku Station.',place:'Cross Shinjuku Vision – 3D Cat'},
-      {time:'ערב',icon:'🦖',title:'Godzilla Head · Kabukicho',text:'ממשיכים ל-Kabukicho לצילום קצר ליד Shinjuku Toho Building.',place:'Godzilla Head'},
-      {time:'ערב',icon:'🏙️',title:'Shinjuku · ארוחת ערב ושיטוט',text:'Kabukicho והרחובות סביב המלון; Hanazono Shrine, Golden Gai ו-Omoide Yokocho נשארים כאופציות לפי הכוח.',place:'Shinjuku'}
-    ],route:D('Narita International Airport','Shinjuku Tokyo')},
+    {date:'04/11',dow:'רביעי',city:'Tokyo',title:'נחיתה והתאקלמות',summary:'Narita → מלון → טיול ערב Shinjuku',hotel:'hotel-jr-kyushu-shinjuku',evening:'shinjuku',stops:[
+      {time:'13:10',icon:'✈️',title:'נחיתה Narita',text:'ביקורת גבולות, מזוודות ויציאה לעיר.',place:'Narita Airport'}
+    ],route:D('Narita International Airport','Shinjuku Prince Hotel Tokyo')},
     {date:'05/11',dow:'חמישי',city:'Tokyo',title:'Asakusa · Ueno · Akihabara',summary:'Kaminarimon → Nakamise → Sensō-ji → Ueno → Ameyoko → Akihabara',hotel:'hotel-jr-kyushu-shinjuku',evening:'asakusa',stops:[
       {time:'09:00',icon:'⛩️',title:'Kaminarimon',text:'שער הרעם והכניסה הסמלית לאסקוסה.',place:'Kaminarimon'},
       {time:'09:15',icon:'🛍️',title:'Nakamise',text:'רחוב שוק מסורתי עם דוכנים, מזכרות וממתקים.',place:'Nakamise'},
@@ -233,6 +229,7 @@
   ];
 
   const eveningWalks = {
+    shinjuku:{title:'Shinjuku First Night',start:'17:30',primary:true,duration:'כ־2.5–3.5 שעות, גמיש לפי העייפות אחרי הטיסה',out:'🚶 מתחילים מהמלון / JINS באזור Shinjuku. כל המסלול ברובו בהליכה קצרה בין נקודות מרכזיות בשכונה.',back:'🚶 מסיימים באזור Omoide Yokocho / Shinjuku Station וחוזרים למלון ברגל.',stops:[['JINS Shinjuku','בדיקת ראייה והזמנת משקפיים בתחילת הטיול.'],['Cross Shinjuku Vision · 3D Cat','עצירת חובה קצרה מול המסך המעוקל ליד East Exit.'],['Godzilla Head · Kabukicho','צילום קצר בדרך בתוך Kabukicho.'],['Hanazono Shrine','אופציונלי — מקדש קטן ונעים אם נשאר כוח.'],['Golden Gai','אופציונלי — מעבר קצר בסמטאות והאווירה.'],['Omoide Yokocho','אופציונלי — מתאים במיוחד לארוחת ערב או לסיום הערב.']],dinner:'🍽️ ארוחת ערב: Omoide Yokocho / Kabukicho / ליד המלון — לפי החשק והעייפות.',map:'https://www.google.com/maps/dir/?api=1&origin=JINS+Shinjuku+Tokyo&destination=Omoide+Yokocho+Tokyo&waypoints=Cross+Shinjuku+Vision+Tokyo%7CGodzilla+Head+Shinjuku%7CHanazono+Shrine+Tokyo%7CShinjuku+Golden+Gai+Tokyo&travelmode=walking'},
     asakusa:{title:'Asakusa Lights',duration:'כ־3–3.5 שעות כולל נסיעות וארוחת ערב',out:'🚆 יציאה 19:30 מהמלון · Shinjuku → Kanda ב-JR Chuo Line, החלפה ל-Tokyo Metro Ginza Line → Asakusa. כ־30–35 דק׳.',back:'🚆 חזרה · Asakusa → Kanda ב-Ginza Line, החלפה ל-JR Chuo Line → Shinjuku. כ־30–35 דק׳.',stops:[['Sensō-ji','המקדש והאזור המואר בלילה.'],['Nakamise & side streets','סמטאות Asakusa באווירת ערב רגועה.'],['Sumida River Promenade','הליכה לאורך הנהר והגשרים.'],['Skytree view','סיום מול ה-Skytree המואר.']],dinner:'🍽️ ארוחת ערב: באזור Asakusa.',map:'https://www.google.com/maps/dir/?api=1&origin=Senso-ji+Tokyo&destination=Sumida+Park+Tokyo&waypoints=Nakamise+Shopping+Street+Tokyo&travelmode=walking',image:'images/evening-walks/asakusa.jpg'},
     ueno:{title:'Ueno → Akihabara',duration:'כ־3–3.5 שעות כולל נסיעות וארוחת ערב',out:'🚆 יציאה 19:30 מהמלון · Shinjuku → Ueno ב-JR Yamanote Line. כ־25 דק׳.',back:'🚆 חזרה · Akihabara → Shinjuku ב-JR Chuo-Sobu Line. כ־20 דק׳.',stops:[['Ueno Park','מתחילים בפארק Ueno כשהאזור כבר מואר.'],['Ameyoko Market','השוק והרחובות התוססים.'],['Okachimachi','הליכה דרומה ברחובות המקומיים.'],['Akihabara Electric Town','מסיימים בניאון, אלקטרוניקה ואנימה.']],dinner:'🍽️ ארוחת ערב: Ameyoko או Akihabara.',map:'https://www.google.com/maps/dir/?api=1&origin=Ueno+Park+Tokyo&destination=Akihabara+Electric+Town&waypoints=Ameyoko+Shopping+District+Tokyo%7COkachimachi+Station&travelmode=walking',image:'images/evening-walks/ueno-akihabara.jpg'},
     shibuya:{title:'Shibuya After Dark',duration:'כ־3 שעות כולל נסיעות וארוחת ערב',out:'🚆 יציאה 19:30 מהמלון · Shinjuku → Shibuya ב-JR Yamanote Line. כ־7 דק׳.',back:'🚆 חזרה · Shibuya → Shinjuku ב-JR Yamanote Line. כ־7 דק׳.',stops:[['Hachikō + Shibuya Crossing','פתיחה בכיכר ובמעבר החצייה כשהמסכים מוארים.'],['Center-gai','רחובות צפופים, אוכל ואנרגיה עירונית.'],['Nonbei Yokocho','סמטת ברים קטנה ליד פסי הרכבת.'],['Miyashita Park','סיום באזור המודרני.']],dinner:'🍽️ ארוחת ערב: Shibuya.',map:'https://www.google.com/maps/dir/?api=1&origin=Hachiko+Memorial+Statue&destination=Miyashita+Park&waypoints=Shibuya+Center-gai%7CNonbei+Yokocho&travelmode=walking',image:'images/evening-walks/shibuya.jpg'},
@@ -298,7 +295,7 @@
   ];
 
   window.TRIP_DATA = {
-    version:'10.3.8', title:'Japan Trip', year:2026, travelers:'עזרי ואיילי',
+    version:'10.3.9', title:'Japan Trip', year:2026, travelers:'עזרי ואיילי',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
     hotels, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
     maps:{search:G,directions:D}
