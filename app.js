@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · application · v10.3.6
+/* Japan Trip 2026 · application · v10.3.8
    Deterministic render from TRIP_DATA. No patch modules, DOM observers or runtime source rewriting. */
 (() => {
 'use strict';
@@ -97,7 +97,29 @@ function normalizeExpenses(){let a=parseStorage(keys.expenses,null);if(!Array.is
 function renderDayStrip(){const root=$('#dayStrip');root.innerHTML=T.days.map((d,i)=>`<button class="day-chip ${i===state.day?'active':''}" data-day="${i}"><span>${esc(d.dow)}</span><b>${esc(d.date.slice(0,2))}</b><small>${esc(d.date.slice(3))}/26</small></button>`).join('');markToday();setTimeout(()=>root.querySelector('.day-chip.active')?.scrollIntoView({inline:'center',block:'nearest'}),0)}
 function markToday(){const now=new Date(),start=new Date(T.tripStart+'T00:00:00'),end=new Date('2026-11-17T23:59:59');if(now>=start&&now<=end){const i=Math.floor((now-start)/86400000),b=$(`[data-day="${i}"]`);if(b&&!b.querySelector('.today-pill'))b.insertAdjacentHTML('beforeend','<em class="today-pill">היום</em>')}}
 function flightLogistics(index,stops){let out=stops.map(x=>({...x}));if(index===0){out.unshift({time:'09:50',icon:'🚗',title:'יציאה לנתב״ג',text:'יציאה מהבית כ־4 שעות לפני ההמראה כדי להגיע לשדה בנחת.',kind:'logistics'},{time:'10:50',icon:'🛫',title:'הגעה לנתב״ג',text:'הגעה לטרמינל 3 כ־3 שעות לפני ההמראה · צ׳ק-אין, כבודה ובידוק ללא לחץ.',kind:'logistics'})}if(index===14){out=out.filter(s=>!/יציאה ל[-– ]?Narita/i.test(s.title||''));const pos=out.findIndex(s=>/המראה.*Tokyo|המראה מטוקיו|EK321/i.test((s.title||'')+' '+(s.text||'')));const add=[{time:'17:30',icon:'🚆',title:'יציאה ל-Narita',text:'יציאה מאזור Tokyo Station כ־4 שעות לפני ההמראה. נבחר Narita Express / חלופה לפי לוח הזמנים בזמן אמת.',kind:'logistics',place:'Narita Airport'},{time:'18:30',icon:'🛫',title:'הגעה ל-Narita · Terminal 2',text:'הגעה לשדה כ־3 שעות לפני ההמראה · החזרת Tax Free אם צריך, כבודה, בידוק והגעה רגועה לשער.',kind:'logistics',place:'Narita Airport'}];if(pos>=0)out.splice(pos,0,...add);else out.push(...add)}return out}
-function stopHtml(s){const p=s.place&&T.places[s.place],guide=p?`<button class="guide-btn" data-place="${esc(s.place)}">ℹ️ מדריך וטיפים</button>`:'',img=p?placeImage(s.place,p):'';return `<div class="stop ${s.kind==='logistics'?'logistics-stop':''}"><div class="time">${esc(s.time)}</div><div class="rail"><i>${esc(s.icon||'📍')}</i></div><div class="stop-card">${img?`<img class="stop-thumb" loading="lazy" src="${img}" alt="${esc(p.name||s.title)}">`:''}<h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.tag?`<span class="trip-tag">${esc(s.tag)}</span>`:''}${guide?`<div class="stop-actions">${guide}</div>`:''}</div></div>`}
+function stopTypeMeta(s,p){
+  const title=(s.title||'').toLowerCase();
+  if(/ארוחת|restaurant|ramen|tantan|אוכל/.test(title))return ['🍽️','מסעדה / אוכל','food'];
+  if(/check-in|check-out|מלון|hotel/.test(title))return ['🏨','מלון','hotel'];
+  if(/shinkansen|romancecar|רכבת|narita|odawara|→/.test(title)&&/🚆|🚄|✈️|🛫/.test(s.icon||''))return ['🚆','תחבורה','transport'];
+  if(/מזוודות|locker/.test(title))return ['🧳','מזוודות','luggage'];
+  const byCat={
+    'מסעדות':['🍽️','מסעדה','food'],
+    'מקדשים':['⛩️','מקדש','temple'],
+    'שווקים וקניות':['🛍️','קניות / שוק','shopping'],
+    'מוזיאונים':['🖼️','מוזיאון','museum'],
+    'טבע':['🌿','טבע','nature'],
+    'תצפיות':['🌇','תצפית','viewpoint'],
+    'אתרים':['📍','אתר','site']
+  };
+  return byCat[p?.cat]||null;
+}
+function stopHtml(s){
+  const p=s.place&&T.places[s.place],guide=p?`<button class="guide-btn" data-place="${esc(s.place)}">ℹ️ מדריך וטיפים</button>`:'',img=p?placeImage(s.place,p):'';
+  const meta=stopTypeMeta(s,p),typeBadge=meta?`<span class="stop-type-badge ${meta[2]}">${meta[0]} ${meta[1]}</span>`:'';
+  const isOptional=!!s.optional||/^אופציה/.test(s.time||'')||!!p?.optionalSchedule;
+  const optionalBadge=isOptional?`<span class="stop-option-badge">לבחירה / אופציונלי</span>`:'';
+  return `<div class="stop ${s.kind==='logistics'?'logistics-stop':''}"><div class="time">${esc(s.time)}</div><div class="rail"><i>${esc(s.icon||'📍')}</i></div><div class="stop-card">${img?`<img class="stop-thumb" loading="lazy" src="${img}" alt="${esc(p.name||s.title)}">`:''}<div class="stop-card-badges">${typeBadge}${optionalBadge}</div><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.tag?`<span class="trip-tag">${esc(s.tag)}</span>`:''}${guide?`<div class="stop-actions">${guide}</div>`:''}</div></div>`}
 function hotelMiniHtml(key){const h=hotelByKey(key);if(!h)return'';if(!h.booked)return `<div class="stop"><div class="time">לינה</div><div class="rail"><i>🏨</i></div><div class="stop-card hotel-mini"><h3>${esc(h.name)}<span class="status-badge pending">טרם הוזמן</span></h3><p>${esc(h.arrival)}</p><div class="stop-actions"><button class="guide-btn" data-page="hotels">פרטים נוספים</button></div></div></div>`;return `<div class="stop"><div class="time">לינה</div><div class="rail"><i>🏨</i></div><div class="stop-card hotel-mini"><h3>${esc(h.name)}<span class="status-badge">הוזמן</span></h3><p>📍 ${esc(h.address)}<br>🚉 ${esc(h.arrival)}</p><div class="stop-actions hotel-more"><button class="guide-btn" data-hotel-open="${esc(h.key)}">פרטים נוספים</button></div></div></div>`}
 function eveningHtml(key){const w=T.eveningWalks[key];if(!w)return'';return `<div class="stop evening-stop"><div class="time">19:30</div><div class="rail"><i>🌙</i></div><div class="stop-card"><h3>🌙 המלצה לטיול ערב · ${esc(w.title)}</h3><p>אופציונלי בלבד — התוכנית המקורית של היום נשארת. יציאה מהמלון ב־19:30.</p><div class="stop-actions"><button class="guide-btn" data-evening="${esc(key)}">פתח המלצת ערב</button></div></div></div>`}
 function renderTrip(){const d=T.days[state.day],root=$('#tripRoot'),stops=flightLogistics(state.day,d.stops);const map=`<div class="map-view ${state.view==='map'?'active':''}"><div class="route-card"><h3>🗺️ מסלול היום ב-Google Maps</h3>${d.route?`<p>פותח את מסלול היום לפי הסדר שתכננו.</p><a class="primary-link" href="${d.route}" target="_blank" rel="noopener">פתח את מסלול היום ↗</a>`:'<p>ליום הטיסה אין מסלול עירוני.</p>'}</div></div>`;root.innerHTML=`<section class="day"><div class="day-heading"><small>${esc(d.city)}</small><h2>${esc(d.title)}</h2><span>${esc(d.dow)} · ${esc(d.date)} · Day ${state.day+1}</span></div><div class="summary">${esc(d.summary)}</div><div class="view-tabs"><button data-view="list" class="${state.view==='list'?'active':''}">📋 רשימה</button><button data-view="map" class="${state.view==='map'?'active':''}">🗺️ מפה</button></div><div class="list-view ${state.view==='map'?'hidden':''}">${stops.map(stopHtml).join('')}${d.hotel?hotelMiniHtml(d.hotel):''}${d.evening?eveningHtml(d.evening):''}</div>${map}</section>`;renderDayStrip()}
