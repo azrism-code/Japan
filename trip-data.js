@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · canonical data · v10.3.6
+/* Japan Trip 2026 · canonical data · v10.3.7
    One source of truth. No runtime hotel/place replacement patches. */
 (() => {
   'use strict';
@@ -53,6 +53,12 @@
   const places = {
     'Narita Airport':{name:'Narita International Airport',icon:'✈️',city:'Tokyo / Chiba',cat:'אתרים',desc:'שדה התעופה הבינלאומי שבו נוחתים וממנו ממריאים. Narita Express הוא אחת האפשרויות הנוחות להגיע ישירות ל-Shinjuku עם מזוודות.',tip:'ביום החזרה משאירים מרווח גדול לנסיעה, לבידוק ול-Terminal 2.',map:G('Narita International Airport Terminal 2')},
     'Shinjuku':{name:'Shinjuku',icon:'🏙️',city:'Tokyo',cat:'אתרים',schedule:'04/11 · ערב',desc:'אזור ענק סביב אחת התחנות העמוסות בעולם: קניות, מסעדות, גורדי שחקים וחיי לילה. מערב Shinjuku מתאים לתצפית ולבנייני המשרדים, והמזרח לאווירת ערב.',tip:'בודקים מראש את ה-Exit הנכון בתחנה; יציאה לא נכונה יכולה להוסיף הליכה מיותרת.',map:G('Shinjuku Tokyo')},
+    'Cross Shinjuku Vision – 3D Cat':{name:'Cross Shinjuku Vision · 3D Cat',icon:'🐈',city:'Tokyo · Shinjuku',cat:'אתרים',schedule:'04/11 · ערב',desc:'המסך המעוקל המפורסם מול East Exit של Shinjuku Station, שבו מופיע חתול הענק בתלת־ממד.',tip:'לעמוד ברחבה מול East Exit בזווית הנכונה ולחכות למחזור של החתול; זו עצירה קצרה וחינמית.',map:G('Cross Shinjuku Vision 3D Cat Tokyo')},
+    'Godzilla Head':{name:'Godzilla Head · Shinjuku Toho Building',icon:'🦖',city:'Tokyo · Shinjuku',cat:'אתרים',schedule:'04/11 · ערב',desc:'ראש Godzilla האייקוני מעל Shinjuku Toho Building בלב Kabukicho, כמה דקות מהמלון ומהאזור של 3D Cat.',tip:'מספיק לעצור לצילום קצר בדרך בתוך Kabukicho; אין צורך להקדיש לזה זמן רב.',map:G('Godzilla Head Shinjuku Toho Building Tokyo')},
+    'Hanazono Shrine':{name:'Hanazono Shrine',icon:'⛩️',city:'Tokyo · Shinjuku',cat:'מקדשים',optionalSchedule:'04/11 · ערב',desc:'מקדש שינטו היסטורי בקצה Kabukicho, קרוב ל-Golden Gai ולמסלול הערב בשינג׳וקו.',tip:'אופציה טובה אם נשאר כוח אחרי JINS והאורות של Kabukicho; לא חובה ביום הנחיתה.',map:G('Hanazono Shrine Shinjuku Tokyo')},
+    'Shinjuku Golden Gai':{name:'Shinjuku Golden Gai',icon:'🏮',city:'Tokyo · Shinjuku',cat:'אתרים',optionalSchedule:'04/11 · ערב מאוחר',desc:'מקבץ סמטאות צפופות עם ברים זעירים ואווירת Tokyo ישנה בלב Shinjuku.',tip:'רוב הברים מתעוררים מאוחר; גם מעבר קצר בסמטאות מספיק. לא מצלמים אנשים או פנים של ברים בלי רשות.',map:G('Shinjuku Golden Gai Tokyo')},
+    'Omoide Yokocho':{name:'Omoide Yokocho',icon:'🍢',city:'Tokyo · Shinjuku',cat:'אתרים',optionalSchedule:'04/11 · ארוחת ערב',desc:'סמטאות צרות ליד West Exit עם דוכני yakitori ומסעדות קטנות באווירה נוסטלגית.',tip:'אופציה טובה לארוחת ערב או מעבר קצר; אם עייפים מהטיסה אפשר לדלג בלי לפגוע במסלול.',map:G('Omoide Yokocho Shinjuku Tokyo')},
+    'Shinjuku Gyoen':{name:'Shinjuku Gyoen National Garden',icon:'🌳',city:'Tokyo · Shinjuku',cat:'טבע',optionalSchedule:'06/11 · אופציה בשעות היום',desc:'גן לאומי גדול ושקט בלב Shinjuku, עם גנים יפניים ומרחבים ירוקים.',tip:'מתאים רק אם רוצים להחליף חלק מיום Meiji / Harajuku / Shibuya בחוויה רגועה יותר; לא מתאים למסלול הלילה.',map:G('Shinjuku Gyoen National Garden Tokyo')},
     'JINS Shinjuku':{name:'JINS Shinjuku',icon:'👓',city:'Tokyo',cat:'שווקים וקניות',schedule:'04/11 · ערב / איסוף 17/11 אם צריך',desc:'חנות משקפיים של JINS בשינג׳וקו. התוכנית היא לבצע בדיקת ראייה ולהזמין מוקדם בטיול כדי להשאיר זמן להכנה ולאיסוף.',tip:'להגיע עם המרשם הקיים אם יש, ולוודא בזמן ההזמנה מתי המשקפיים יהיו מוכנים.',map:G('JINS Shinjuku Tokyo')},
     'Kaminarimon':{name:'Kaminarimon',icon:'⛩️',city:'Tokyo',cat:'מקדשים',schedule:'05/11 · 09:00',desc:'שער הרעם האדום והכניסה האייקונית לאזור Sensō-ji ו-Nakamise באסקוסה.',tip:'בבוקר מוקדם האזור רגוע יותר; בהמשך היום הוא נעשה צפוף מאוד.',map:G('Kaminarimon Tokyo')},
     'Nakamise':{name:'Nakamise Shopping Street',icon:'🛍️',city:'Tokyo',cat:'שווקים וקניות',schedule:'05/11 · 09:15',desc:'רחוב שוק מסורתי המוביל מ-Kaminarimon ל-Sensō-ji, עם מזכרות, ממתקים ומוצרים יפניים.',tip:'לא חייבים לעצור בכל דוכן; עדיף לעבור בנחת ולשמור זמן למקדש.',map:G('Nakamise Shopping Street Tokyo')},
@@ -125,11 +131,12 @@
       {time:'22:45',icon:'✈️',title:'Dubai → Tokyo Narita',text:'EK320 · Emirates · מושבים: Azriel 48K · Ayala 48J · DXB T3 → Narita T2.',tag:'⭐ להיות בשער בזמן'},
       {time:'מחר 13:10',icon:'🇯🇵',title:'נחיתה Narita',text:'הנחיתה ביפן מופיעה בתחילת היום הבא.'}
     ],route:null},
-    {date:'04/11',dow:'רביעי',city:'Tokyo',title:'נחיתה והתאקלמות',summary:'Narita → מלון → ערב קל ב-Shinjuku → JINS',hotel:'hotel-jr-kyushu-shinjuku',stops:[
+    {date:'04/11',dow:'רביעי',city:'Tokyo',title:'נחיתה והתאקלמות',summary:'Narita → מלון → JINS → 3D Cat → Godzilla → ערב Shinjuku',hotel:'hotel-jr-kyushu-shinjuku',stops:[
       {time:'13:10',icon:'✈️',title:'נחיתה Narita',text:'ביקורת גבולות, מזוודות ויציאה לעיר.',place:'Narita Airport'},
-      {time:'אחה״צ',icon:'🏨',title:'Check-in · JR Kyushu Hotel Blossom Shinjuku',text:'התארגנות ומנוחה קצרה לפני ערב ראשון בעיר.'},
-      {time:'ערב',icon:'🏙️',title:'Shinjuku',text:'שיטוט ראשון, ארוחת ערב ואורות העיר.',place:'Shinjuku'},
-      {time:'ערב',icon:'👓',title:'JINS Shinjuku',text:'בדיקת ראייה, בחירת מסגרת והזמנת משקפיים מוקדם בטיול.',place:'JINS Shinjuku'}
+      {time:'ערב',icon:'👓',title:'JINS Shinjuku',text:'בדיקת ראייה, בחירת מסגרת והזמנת משקפיים מוקדם בטיול.',place:'JINS Shinjuku'},
+      {time:'ערב',icon:'🐈',title:'3D Cat · Cross Shinjuku Vision',text:'עצירת חובה קצרה מול המסך הענק ליד East Exit של Shinjuku Station.',place:'Cross Shinjuku Vision – 3D Cat'},
+      {time:'ערב',icon:'🦖',title:'Godzilla Head · Kabukicho',text:'ממשיכים ל-Kabukicho לצילום קצר ליד Shinjuku Toho Building.',place:'Godzilla Head'},
+      {time:'ערב',icon:'🏙️',title:'Shinjuku · ארוחת ערב ושיטוט',text:'Kabukicho והרחובות סביב המלון; Hanazono Shrine, Golden Gai ו-Omoide Yokocho נשארים כאופציות לפי הכוח.',place:'Shinjuku'}
     ],route:D('Narita International Airport','Shinjuku Tokyo')},
     {date:'05/11',dow:'חמישי',city:'Tokyo',title:'Asakusa · Ueno · Akihabara',summary:'Kaminarimon → Nakamise → Sensō-ji → Ueno → Ameyoko → Akihabara',hotel:'hotel-jr-kyushu-shinjuku',evening:'asakusa',stops:[
       {time:'09:00',icon:'⛩️',title:'Kaminarimon',text:'שער הרעם והכניסה הסמלית לאסקוסה.',place:'Kaminarimon'},
