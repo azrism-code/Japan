@@ -43,7 +43,7 @@
       id:'romancecar-shinjuku-odawara', docKey:'romancecar-shinjuku-odawara', type:'train', icon:'🚆', typeLabel:'רכבת',
       title:'Romancecar · Shinjuku → Odawara', tripDate:'8/11 · בוקר', required:false,
       price:'≈ ¥1,850 לאדם · ≈ ¥3,700 לזוג',
-      when:'8/10 · 10:00 יפן (04:00 ישראל)', whenNote:'המכירה נפתחת חודש לפני. כל המקומות שמורים.',
+      when:'8/10 · 10:00 יפן (04:00 ישראל)', whenNote:'המכירה נפתחת חודש לפני. באתר מזמינים את כרטיס ה-Limited Express והמושב השמור; את ה-Basic Fare משלמים בנפרד עם Suica/IC בכניסה וביציאה.',
       provider:'Odakyu · e-Romancecar',
       bookingUrl:'https://www.odakyu.jp/romancecar/booking/',
       priority:4
@@ -61,7 +61,7 @@
       id:'aoniyoshi-kyoto-nara', docKey:'aoniyoshi-kyoto-nara', type:'train', icon:'🚆', typeLabel:'רכבת מיוחדת',
       title:'AONIYOSHI · Kyoto → Nara', tripDate:'14/11 · 10:55 → 11:31', required:true,
       price:'¥1,490 לאדם · ¥2,980 לזוג ב־Twin Seats',
-      when:'14/10 · 10:30 יפן (04:30 ישראל)', whenNote:'מומלץ להזמין מיד בפתיחת המכירה כדי לקבל Twin Seats.',
+      when:'14/10 · 10:30 יפן (04:30 ישראל)', whenNote:'מומלץ להזמין מיד בפתיחת המכירה כדי לקבל Twin Seats. באתר מזמינים את ה-Limited Express והמושב/רכב המיוחד; את ה-Basic Fare משלמים בנפרד עם Suica/IC בכניסה וביציאה.',
       provider:'Kintetsu · Limited Express e-ticket',
       bookingUrl:'https://www.ticket.kintetsu.co.jp/vs/en/T/TZZ/TZZ10.do?op=tDisplayVisitorMenu',
       priority:6
