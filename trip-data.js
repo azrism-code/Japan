@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · canonical data · v10.3.10
+/* Japan Trip 2026 · canonical data · v10.3.11
    One source of truth. No runtime hotel/place replacement patches. */
 (() => {
   'use strict';
@@ -87,8 +87,12 @@
     'Kiyomizu-dera':{name:'Kiyomizu-dera',icon:'🏯',city:'Kyoto',cat:'מקדשים',schedule:'11/11 · 09:00',desc:'מקדש מפורסם על צלע ההר עם מרפסת עץ ונוף לעיר.',tip:'להגיע מוקדם ואז לרדת ברגל דרך Sannenzaka ו-Ninenzaka.',map:G('Kiyomizu-dera Kyoto')},
     'Sannenzaka & Ninenzaka':{name:'Sannenzaka & Ninenzaka',icon:'🏘️',city:'Kyoto',cat:'אתרים',schedule:'11/11 · 10:30',desc:'רחובות היסטוריים עם בתי עץ, חנויות, תה ומדרגות בין Kiyomizu ל-Higashiyama.',tip:'השילוב הטוב הוא בירידה מהמקדש ולא כנסיעה נפרדת.',map:G('Sannenzaka Kyoto')},
     'Higashiyama':{name:'Higashiyama',icon:'🏞️',city:'Kyoto',cat:'אתרים',schedule:'11/11 · 12:30',desc:'אזור היסטורי במזרח Kyoto שמחבר מקדשים, סמטאות ורחובות מסורתיים.',tip:'זה יום שמתאים בעיקר להליכה; נעליים נוחות חשובות יותר מתכנון של רכבת לכל קטע.',map:G('Higashiyama Kyoto')},
+    'Yasaka Pagoda':{name:'Yasaka Pagoda · Hōkan-ji',icon:'🗼',city:'Kyoto · Higashiyama',cat:'אתרים',optionalSchedule:'11/11 · בדרך בין Sannenzaka / Ninenzaka ל-Higashiyama',desc:'פגודה בת חמש קומות שמופיעה באחד המראות המזוהים ביותר עם Kyoto, בין הרחובות המסורתיים של Higashiyama.',worth:'זו עצירה קצרה כמעט בלי סטייה שנותנת את אחת מתמונות הרחוב היפות והקלאסיות ביותר של Kyoto.',tip:'לא צריך לבנות סביבה ביקור ארוך; מספיק לעבור בנקודת התצפית ברחוב ולצלם בדרך.',map:G('Yasaka Pagoda Hokanji Kyoto')},
+    'Higashiyama Tea House':{name:'Tea House · Higashiyama / Gion',icon:'🍵',city:'Kyoto · Higashiyama / Gion',cat:'מסעדות',optionalSchedule:'11/11 · צהריים / אחה״צ',desc:'עצירת תה יפנית מסורתית באזור Higashiyama או Gion, עם matcha, wagashi וקינוחים יפניים באווירה של machiya.',worth:'זו דרך קלה להוסיף למסלול חוויית אוכל יפנית רגועה ולא רק עוד אתר, והיא משתלבת טבעית ביום ההליכה במזרח Kyoto.',tip:'לא לבחור מקום רק לפי תור ארוך; יש הרבה בתי תה טובים באזור. עדיף לעצור כשמתאים לקצב היום.',map:G('tea house Higashiyama Kyoto')},
+    'Kyoto Kaiseki Dinner':{name:'Kaiseki Dinner · Gion / Pontocho',icon:'🍱',city:'Kyoto · Gion / Pontocho',cat:'מסעדות',optionalSchedule:'11/11 · ערב',desc:'ארוחת kaiseki היא ארוחה יפנית רב-שלבית עונתית, עם מנות קטנות, הגשה מוקפדת ודגש על חומרי גלם מקומיים.',worth:'זו אחת מחוויות האוכל היפניות המיוחדות ביותר ויכולה להפוך ערב אחד בקיוטו לחוויה בפני עצמה.',tip:'אם בוחרים Kaiseki, כדאי להזמין מראש ולבדוק שהתפריט מתאים להעדפה שלכם לאוכל מבושל ופחות דג נא.',map:G('kaiseki Gion Kyoto')},
     'Pontocho':{name:'Pontocho',icon:'🍜',city:'Kyoto',cat:'אתרים',schedule:'11/11 · 19:00',desc:'סמטת מסעדות צרה ליד נהר Kamo, יפה במיוחד בערב.',tip:'אפשר לאכול גם ברחובות הסמוכים אם המסעדות בסמטה עצמה מלאות.',map:G('Pontocho Alley Kyoto')},
     'Fushimi Inari':{name:'Fushimi Inari Taisha',icon:'⛩️',city:'Kyoto',cat:'מקדשים',schedule:'12/11 · 09:00',desc:'מקדש שינטו מפורסם בזכות אלפי שערי Torii אדומים לאורך שבילי הר Inari.',tip:'אין צורך להגיע לפסגה; נלך מספיק כדי לקבל את חוויית השערים והיער ואז נחזור.',map:G('Fushimi Inari Taisha Kyoto')},
+    'Fushimi Sake District':{name:'Fushimi Sake District',icon:'🍶',city:'Kyoto · Fushimi',cat:'מסעדות',optionalSchedule:'12/11 · אחרי Fushimi Inari אם יש זמן',desc:'רובע מבשלות הסאקה של Fushimi, עם רחובות מסורתיים, תעלות, מבשלות וחנויות שבהן אפשר להכיר ולטעום סאקה מקומי.',worth:'זו חוויה שונה מהמקדשים של היום ומוסיפה אוכל ושתייה מקומיים באזור שמזוהה במיוחד עם ייצור סאקה.',tip:'זו סטייה מהמסלול הראשי, לכן נכנסים רק אם יש זמן. אם טועמים סאקה, לא חייבים לעשות טעימה גדולה כדי ליהנות מהאזור.',map:G('Fushimi Sake District Kyoto')},
     'Tofuku-ji':{name:'Tofuku-ji',icon:'🍁',city:'Kyoto',cat:'מקדשים',schedule:'12/11 · 11:30',desc:'מקדש זן גדול סמוך ל-Fushimi Inari, מפורסם בגשרים, גנים ושלכת.',tip:'באמצע נובמבר עלול להיות עמוס; נחליט במקום לפי התורים.',map:G('Tofuku-ji Kyoto')},
     'Sanjusangen-do':{name:'Sanjūsangen-dō',icon:'🏯',city:'Kyoto',cat:'מקדשים',schedule:'12/11 · 14:00',desc:'אולם עץ ארוך ובו 1,001 פסלי Kannon, אחד האתרים המרשימים והייחודיים בקיוטו.',tip:'הצילום בפנים מוגבל; מגיעים בשביל האולם והפסלים עצמם.',map:G('Sanjusangendo Kyoto')},
     'Kyoto Station':{name:'Kyoto Station',icon:'🚉',city:'Kyoto',cat:'אתרים',schedule:'12/11 · 16:00',desc:'תחנה מרכזית ענקית עם אדריכלות מודרנית, חנויות ומסעדות. מתאימה לעצירה לפני פעילות ערב.',tip:'אם נשאר זמן אפשר לשלב את Higashi Hongan-ji הסמוך.',map:G('Kyoto Station')},
@@ -96,6 +100,10 @@
     'teamLab Biovortex Kyoto':{name:'teamLab Biovortex Kyoto',icon:'✨',city:'Kyoto',cat:'מוזיאונים',schedule:'12/11 · ערב',desc:'חוויית אמנות דיגיטלית immersive של teamLab בקיוטו, אחת מפעילויות החובה שסומנו לטיול.',tip:'להזמין מראש לשעת ערב מתאימה ולהשאיר מרווח מהפעילות הקודמת.',map:G('teamLab Biovortex Kyoto')},
     'Arashiyama / Okusaga':{name:'Arashiyama / Okusaga · חוויית במבוק',icon:'🎋',city:'Kyoto',cat:'טבע',schedule:'13/11 · 09:00',desc:'אזור טבע במערב Kyoto. אם Bamboo Grove המרכזי עמוס, ממשיכים ל-Okusaga, Giōji או Adashino לחוויה רגועה יותר.',tip:'לא לבזבז זמן על ניסיון לצלם את היער הראשי בלי אנשים; האלטרנטיבות השקטות עדיפות אם עמוס.',map:G('Arashiyama Kyoto')},
     'Tenryu-ji':{name:'Tenryu-ji',icon:'🏯',city:'Kyoto',cat:'מקדשים',schedule:'13/11 · בוקר',desc:'מקדש זן מרכזי ב-Arashiyama עם גן שמשתלב בנוף ההרים.',tip:'נוח לעבור דרך הגן ולהמשיך ממנו ישירות לכיוון אזור הבמבוק.',map:G('Tenryu-ji Kyoto')},
+    'Togetsukyo Bridge':{name:'Togetsukyo Bridge',icon:'🌉',city:'Kyoto · Arashiyama',cat:'אתרים',optionalSchedule:'13/11 · בוקר',desc:'הגשר האייקוני של Arashiyama מעל נהר Katsura, עם הרים ונוף פתוח משני הצדדים.',worth:'הוא נמצא בלב אזור Arashiyama ולכן קל מאוד לשלב אותו, והנוף נותן הפסקה יפה מהבמבוק והמקדשים.',tip:'אם האזור עמוס, לא צריך להתעכב; מעבר קצר ותצפית מהגשר או מהטיילת מספיקים.',map:G('Togetsukyo Bridge Kyoto')},
+    'Arashiyama Riverside Cafe':{name:'Riverside Café · Arashiyama',icon:'☕',city:'Kyoto · Arashiyama',cat:'מסעדות',optionalSchedule:'13/11 · בוקר / צהריים',desc:'עצירת קפה או קינוח ליד נהר Katsura באזור Arashiyama, עם אפשרות לשבת מול הנוף ולהוריד קצב בין האתרים.',worth:'אחרי הליכה בבמבוק ובמקדש, זו עצירה נעימה שנותנת גם חוויית אוכל וגם זמן ליהנות מהנוף במקום רק לעבור בו.',tip:'לבחור לפי מקום פנוי ונוף ולא להיתקע בתור ארוך; מספיק 30–45 דקות.',map:G('riverside cafe Arashiyama Kyoto')},
+    'Ryoan-ji':{name:'Ryōan-ji',icon:'🪨',city:'Kyoto',cat:'מקדשים',optionalSchedule:'13/11 · בין Arashiyama ל-Kinkaku-ji',desc:'מקדש זן מפורסם בזכות גן הסלעים המינימליסטי שלו, בדרך הגיונית יחסית בין Arashiyama ל-Kinkaku-ji.',worth:'הוא מוסיף חוויה שונה לגמרי ממקדש הזהב ומהבמבוק: מקום שקט, מופשט ומאוד יפני באופי שלו.',tip:'להוסיף רק אם הקצב טוב; אם היום מתארך, Kinkaku-ji נשאר בעדיפות גבוהה יותר.',map:G('Ryoanji Kyoto')},
+    'Kyoto Local Izakaya':{name:'Local Izakaya · Gion / Kawaramachi',icon:'🍢',city:'Kyoto · Gion / Kawaramachi',cat:'מסעדות',optionalSchedule:'13/11 · ערב',desc:'פאב-מסעדה יפני מקומי עם מנות קטנות לשיתוף, yakitori, ירקות, טופו, בשר ודגים מבושלים, באווירה לא פורמלית.',worth:'זו חוויית אוכל יומיומית ומקומית יותר מ-Kaiseki, ומתאימה לערב שבו רוצים פשוט לאכול טוב ולנסות כמה מנות.',tip:'אפשר לבחור מקום לפי החשק באותו ערב; עדיף izakaya עם תפריט מגוון כדי שיהיו מספיק אפשרויות מבושלות.',map:G('izakaya Gion Kawaramachi Kyoto')},
     'Kinkaku-ji':{name:'Kinkaku-ji · Golden Pavilion',icon:'🏯',city:'Kyoto',cat:'מקדשים',schedule:'13/11 · 12:30',desc:'מקדש הזהב, אחד הסמלים המפורסמים של Kyoto, סביב בריכה וגן מסודר.',tip:'הביקור קומפקטי; שעה בדרך כלל מספיקה.',map:G('Kinkaku-ji Kyoto')},
     'Nishiki Market':{name:'Nishiki Market',icon:'🛍️',city:'Kyoto',cat:'שווקים וקניות',schedule:'13/11 · 15:30',desc:'שוק מקורה ארוך עם אוכל, תה, תבלינים, ממתקים וכלי מטבח.',tip:'מתאים לשיטוט וטעימות; לא חייבים להפוך אותו לארוחה מלאה.',map:G('Nishiki Market Kyoto')},
     'Giōji Temple':{name:'Giōji Temple',icon:'🌿',city:'Kyoto · Okusaga',cat:'טבע',optionalSchedule:'13/11',desc:'מקדש קטן ושקט עם גן טחב, במבוק ועצי מייפל באזור Okusaga.',tip:'האלטרנטיבה המועדפת אם Bamboo Grove המרכזי עמוס.',map:G('Gioji Temple Kyoto')},
@@ -176,12 +184,16 @@
     {date:'11/11',dow:'רביעי',city:'Kyoto',title:'מזרח Kyoto',summary:'Kiyomizu-dera → Sannenzaka / Ninenzaka → Higashiyama → Gion → Pontocho',hotel:'hotel-daiwa-kyoto-shijo',evening:'pontocho',stops:[
       {time:'09:00',icon:'🏯',title:'Kiyomizu-dera',text:'מקדש מפורסם על צלע ההר עם תצפית על העיר.',place:'Kiyomizu-dera'},
       {time:'10:30',icon:'🏘️',title:'Sannenzaka & Ninenzaka',text:'רחובות היסטוריים עם בתי עץ, חנויות ותה.',place:'Sannenzaka & Ninenzaka'},
+      {time:'אופציה',icon:'🗼',title:'Yasaka Pagoda · Hōkan-ji',text:'עצירה קצרה בדרך — אחד המראות הקלאסיים של Kyoto.',place:'Yasaka Pagoda',optional:true},
+      {time:'אופציה',icon:'🍵',title:'Tea House · Higashiyama / Gion',text:'עצירת matcha, wagashi או קינוח יפני לפי הקצב והרעב.',place:'Higashiyama Tea House',optional:true},
       {time:'12:30',icon:'🏞️',title:'Higashiyama',text:'שיטוט באזור ההיסטורי.',place:'Higashiyama'},
       {time:'17:00',icon:'🏮',title:'Gion',text:'הרובע המסורתי יפה במיוחד לקראת ערב.',place:'Gion'},
-      {time:'19:00',icon:'🍜',title:'Pontocho',text:'סמטת מסעדות ליד נהר Kamo.',place:'Pontocho'}
+      {time:'19:00',icon:'🍜',title:'Pontocho',text:'סמטת מסעדות ליד נהר Kamo.',place:'Pontocho'},
+      {time:'אופציה בערב',icon:'🍱',title:'Kaiseki Dinner · Gion / Pontocho',text:'ארוחה יפנית רב-שלבית וחגיגית אם נרצה ערב אוכל מיוחד.',place:'Kyoto Kaiseki Dinner',optional:true}
     ],route:D('Kiyomizu-dera Kyoto','Pontocho Kyoto',['Sannenzaka Kyoto','Higashiyama Kyoto','Gion Kyoto'])},
     {date:'12/11',dow:'חמישי',city:'Kyoto',title:'Fushimi Inari · Tofuku-ji · Sanjūsangen-dō · teamLab',summary:'Fushimi Inari → Tofuku-ji → Sanjūsangen-dō → Kyoto Station → teamLab Biovortex Kyoto',hotel:'hotel-daiwa-kyoto-shijo',stops:[
       {time:'09:00',icon:'⛩️',title:'Fushimi Inari Taisha',text:'בוקר בין אלפי שערי Torii. אין צורך לעלות לפסגה.',place:'Fushimi Inari'},
+      {time:'אופציה',icon:'🍶',title:'Fushimi Sake District',text:'אם יש זמן ורוצים חוויית אוכל/שתייה מקומית — מבשלות, תעלות וטעימות סאקה. דורש סטייה קצרה מהמסלול הראשי.',place:'Fushimi Sake District',optional:true},
       {time:'11:30',icon:'🍁',title:'Tofuku-ji',text:'מקדש זן סמוך ל-Fushimi Inari, חזק במיוחד בעונת השלכת.',place:'Tofuku-ji'},
       {time:'14:00',icon:'🏯',title:'Sanjūsangen-dō',text:'אולם עץ ארוך ובו 1,001 פסלי Kannon.',place:'Sanjusangen-do'},
       {time:'16:00',icon:'🚉',title:'Kyoto Station + Higashi Hongan-ji',text:'סיום רגוע באזור התחנה; Higashi Hongan-ji רק אם נשאר זמן.',place:'Kyoto Station'},
@@ -190,9 +202,13 @@
     {date:'13/11',dow:'שישי',city:'Kyoto',title:'Arashiyama · Kinkaku-ji · Nishiki',summary:'Arashiyama / Okusaga → Tenryu-ji → Kinkaku-ji → 66tantan → Nishiki',hotel:'hotel-daiwa-kyoto-shijo',evening:'gion',stops:[
       {time:'09:00',icon:'🎋',title:'Arashiyama / Okusaga · חוויית במבוק',text:'אם ה-Bamboo Grove המרכזי סביר נעבור בו בקצרה; אם עמוס נמשיך ל-Giōji או Adashino.',place:'Arashiyama / Okusaga'},
       {time:'10:00',icon:'🏯',title:'Tenryu-ji',text:'מקדש וגן בסמוך לאזור הבמבוק.',place:'Tenryu-ji'},
+      {time:'אופציה',icon:'🌉',title:'Togetsukyo Bridge',text:'הגשר והטיילת על נהר Katsura — קל לשלב בלי להתחייב לביקור ארוך.',place:'Togetsukyo Bridge',optional:true},
+      {time:'אופציה',icon:'☕',title:'Riverside Café · Arashiyama',text:'קפה או קינוח מול הנהר אם מתחשק לעצור וליהנות מהאזור.',place:'Arashiyama Riverside Cafe',optional:true},
+      {time:'אופציה',icon:'🪨',title:'Ryōan-ji',text:'גן הסלעים המפורסם; מתאים אם הקצב טוב בדרך מ-Arashiyama ל-Kinkaku-ji.',place:'Ryoan-ji',optional:true},
       {time:'12:30',icon:'🏯',title:'Kinkaku-ji',text:'מקדש הזהב — אחד האתרים האייקוניים של Kyoto.',place:'Kinkaku-ji'},
       {time:'13:45',icon:'🍜',title:'66tantan (Rokuroku Tantan)',text:'Tantanmen קטן ומיוחד בגיון.',place:'66tantan'},
-      {time:'15:30',icon:'🛍️',title:'Nishiki Market',text:'שוק מקורה עם אוכל, תה, תבלינים וכלי מטבח.',place:'Nishiki Market'}
+      {time:'15:30',icon:'🛍️',title:'Nishiki Market',text:'שוק מקורה עם אוכל, תה, תבלינים וכלי מטבח.',place:'Nishiki Market'},
+      {time:'אופציה בערב',icon:'🍢',title:'Local Izakaya · Gion / Kawaramachi',text:'ארוחת ערב מקומית ולא פורמלית עם מנות קטנות לשיתוף.',place:'Kyoto Local Izakaya',optional:true}
     ],route:D('Arashiyama Kyoto','Nishiki Market Kyoto',['Tenryu-ji Kyoto','Kinkaku-ji Kyoto'])},
     {date:'14/11',dow:'שבת',city:'Kyoto · Nara · Osaka',title:'Kyoto → Nara → Osaka',summary:'מזוודות → AONIYOSHI → Nara → Osaka-Namba → Hozenji → Dotonbori',hotel:'hotel-royal-classic-osaka',stops:[
       {time:'בוקר',icon:'🧳',title:'Check-out + טיפול במזוודות',text:'נבדוק עם Daiwa אפשרות לשליחה באותו יום ל-Hotel Royal Classic Osaka. אם השירות לא מאושר בפועל, ניקח אותן איתנו/נשתמש בפתרון חלופי.'},
@@ -295,7 +311,7 @@
   ];
 
   window.TRIP_DATA = {
-    version:'10.3.10', title:'Japan Trip', year:2026, travelers:'עזרי ואיילי',
+    version:'10.3.11', title:'Japan Trip', year:2026, travelers:'עזרי ואיילי',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
     hotels, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
     maps:{search:G,directions:D}
