@@ -7,18 +7,18 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Japan Trip">
-  <title>Japan Trip 2026 · v10.3.12</title>
-  <link rel="manifest" href="manifest.json?v=10.3.12">
-  <link rel="icon" href="assets/icons/app-icon-192.png?v=10.3.12" type="image/png">
-  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=10.3.12">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="place-content.css">
-  <link rel="stylesheet" href="station-guides.css">
-  <link rel="stylesheet" href="expenses-ui.css">
+  <title>Japan Trip 2026 · v10.3.13</title>
+  <link rel="manifest" href="manifest.json?v=10.3.13">
+  <link rel="icon" href="assets/icons/app-icon-192.png?v=10.3.13" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=10.3.13">
+  <link rel="stylesheet" href="styles.css?v=10.3.13">
+  <link rel="stylesheet" href="place-content.css?v=10.3.13">
+  <link rel="stylesheet" href="station-guides.css?v=10.3.13">
+  <link rel="stylesheet" href="expenses-ui.css?v=10.3.13">
 </head>
 <body>
   <header class="app-header">
-    <div class="brand"><img class="brand-logo" src="assets/icons/header-icon.png?v=10.3.12" alt=""><b>Japan Trip</b><small>2026 · v10.3.12</small></div>
+    <div class="brand"><img class="brand-logo" src="assets/icons/header-icon.png?v=10.3.13" alt=""><b>Japan Trip</b><small>2026 · v10.3.13</small></div>
     <button class="icon-button" id="menuButton" aria-label="תפריט">☰</button>
   </header>
   <div class="day-strip" id="dayStrip" aria-label="ימי הטיול"></div>
@@ -70,26 +70,26 @@
     <button class="image-close" data-action="close-image">✕</button>
     <img id="overlayImage" alt="">
   </div>
-  <script src="trip-data.js"></script>
-  <script src="place-content.js"></script>
+  <script src="trip-data.js?v=10.3.13"></script>
+  <script src="place-content.js?v=10.3.13"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-  <script src="firebase-config.js"></script>
-  <script src="firestore-sync.js"></script>
-  <script src="shinjuku-prince-update.js"></script>
-  <script src="romancecar-update.js"></script>
-  <script src="kyoto-hotel-update.js"></script>
-  <script src="app.js"></script>
-  <script src="day-strip-city.js"></script>
-  <script src="hotel-compact.js"></script>
-  <script src="car-rental.js"></script>
-  <script src="drive.js"></script>
-  <script src="booking-planner.js"></script>
-  <script src="romancecar-booking-update.js"></script>
-  <script src="station-guides.js"></script>
-  <script src="expense-safety.js"></script>
-  <script src="expenses-ui.js"></script>
+  <script src="firebase-config.js?v=10.3.13"></script>
+  <script src="firestore-sync.js?v=10.3.13"></script>
+  <script src="shinjuku-prince-update.js?v=10.3.13"></script>
+  <script src="romancecar-update.js?v=10.3.13"></script>
+  <script src="kyoto-hotel-update.js?v=10.3.13"></script>
+  <script src="app.js?v=10.3.13"></script>
+  <script src="day-strip-city.js?v=10.3.13"></script>
+  <script src="hotel-compact.js?v=10.3.13"></script>
+  <script src="car-rental.js?v=10.3.13"></script>
+  <script src="drive.js?v=10.3.13"></script>
+  <script src="booking-planner.js?v=10.3.13"></script>
+  <script src="romancecar-booking-update.js?v=10.3.13"></script>
+  <script src="station-guides.js?v=10.3.13"></script>
+  <script src="expense-safety.js?v=10.3.13"></script>
+  <script src="expenses-ui.js?v=10.3.13"></script>
   <script>
     document.addEventListener('click',e=>{
       if(!e.target.closest('[data-station-guide]'))return;

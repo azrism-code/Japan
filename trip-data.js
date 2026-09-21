@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · canonical data · v10.3.12
+/* Japan Trip 2026 · canonical data · v10.3.13
    One source of truth. No runtime hotel/place replacement patches. */
 (() => {
   'use strict';
@@ -326,7 +326,7 @@
   ];
 
   window.TRIP_DATA = {
-    version:'10.3.12', title:'Japan Trip', year:2026, travelers:'עזרי ואיילי',
+    version:'10.3.13', title:'Japan Trip', year:2026, travelers:'עזרי ואיילי',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
     hotels, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
     maps:{search:G,directions:D}
