@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · application · v10.3.14
+/* Japan Trip 2026 · application · v10.3.15
    Deterministic render from TRIP_DATA. No patch modules, DOM observers or runtime source rewriting. */
 (() => {
 'use strict';
@@ -168,7 +168,7 @@ document.addEventListener('change',e=>{if(e.target.matches('[data-take-check]'))
 document.addEventListener('input',e=>{if(e.target.id==='placeSearch'){state.placeSearch=e.target.value;applyPlaceFilters();return}if(e.target.id==='ilsAmount'){const v=Number(e.target.value);$('#jpyAmount').value=v?Math.round(v/T.rateJpyIls):'';$('#moneyResult').textContent=v?`₪${fmt(v)} ≈ ¥${fmt(v/T.rateJpyIls)}`:'הכנס סכום להמרה';return}if(e.target.id==='jpyAmount'){const v=Number(e.target.value);$('#ilsAmount').value=v?(v*T.rateJpyIls).toFixed(2):'';$('#moneyResult').textContent=v?`¥${fmt(v)} ≈ ₪${fmt(v*T.rateJpyIls)}`:'הכנס סכום להמרה';return}});
 $('#overlay').addEventListener('click',closeMenu);$('#infoModal').addEventListener('click',e=>{if(e.target.id==='infoModal')closeModal('#infoModal')});$('#eveningModal').addEventListener('click',e=>{if(e.target.id==='eveningModal')closeModal('#eveningModal')});$('#imageOverlay').addEventListener('click',e=>{if(e.target.id==='imageOverlay')closeImage()});$('#menuButton').addEventListener('click',openMenu);
 document.addEventListener('japan:cloudApplied',()=>{take=listFromStorage(keys.take,T.takeDefault);shop=listFromStorage(keys.shop,T.shoppingDefault);if(state.page)openPage(state.page);else renderTrip()});
-state.day=currentTripDay();renderTrip();document.documentElement.dataset.appReady='v10.3.14';
+state.day=currentTripDay();renderTrip();document.documentElement.dataset.appReady='v10.3.15';
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').then(r=>r.update()).catch(console.warn));
 window.JapanTripApp={openPage,closePage,renderTrip,renderHotels,renderBookings,keys};
 })();

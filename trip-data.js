@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · canonical data · v10.3.14
+/* Japan Trip 2026 · canonical data · v10.3.15
    One source of truth. No runtime hotel/place replacement patches. */
 (() => {
   'use strict';
@@ -64,11 +64,14 @@
     'Kaminarimon':{name:'Kaminarimon',icon:'⛩️',city:'Tokyo',cat:'מקדשים',schedule:'05/11 · 09:00',desc:'שער הרעם האדום והכניסה האייקונית לאזור Sensō-ji ו-Nakamise באסקוסה.',tip:'בבוקר מוקדם האזור רגוע יותר; בהמשך היום הוא נעשה צפוף מאוד.',map:G('Kaminarimon Tokyo')},
     'Nakamise':{name:'Nakamise Shopping Street',icon:'🛍️',city:'Tokyo',cat:'שווקים וקניות',schedule:'05/11 · 09:15',desc:'רחוב שוק מסורתי המוביל מ-Kaminarimon ל-Sensō-ji, עם מזכרות, ממתקים ומוצרים יפניים.',tip:'לא חייבים לעצור בכל דוכן; עדיף לעבור בנחת ולשמור זמן למקדש.',map:G('Nakamise Shopping Street Tokyo')},
     'Sensō-ji':{name:'Sensō-ji',icon:'🏯',city:'Tokyo',cat:'מקדשים',schedule:'05/11 · 09:30',desc:'המקדש הבודהיסטי העתיק והמפורסם ביותר בטוקיו, בלב Asakusa.',tip:'שווה להמשיך גם לצדדים של המתחם ולא רק לצלם את האולם המרכזי.',map:G('Sensoji Tokyo')},
+    'Gyoza no Ousama':{name:'Gyoza no Ousama · Asakusa',icon:'🥟',city:'Tokyo · Asakusa',cat:'מסעדות',optionalSchedule:'05/11 · על הדרך ב-Asakusa',desc:'מסעדה ותיקה שמתמחה בגיוזה ומנות סיניות פשוטות, קרובה לאזור Sensō-ji ו-Asakusa.',worth:'עצירת גיוזה קלה לשילוב בלי נסיעה מיוחדת — אפשר להיכנס רק לכמה גיוזות ולהמשיך במסלול.',tip:'לא להתייחס אליה כארוחת צהריים חובה; אם עוברים והיא פתוחה ואין תור ארוך, זו עצירת נשנוש מצוינת.',map:G('Gyoza no Ousama Asakusa Tokyo'),type:'Gyoza / Dumplings'},
     'Ueno':{name:'Ueno',icon:'🌳',city:'Tokyo',cat:'אתרים',schedule:'05/11 · 12:00',desc:'אזור של פארק, מוזיאונים, תחבורה ושוק Ameyoko. הוא מתאים למעבר נוח מאסקוסה לכיוון Akihabara.',tip:'אם היום מתארך, הפארק עצמו יכול להיות עצירה קצרה ולא יעד של שעות.',map:G('Ueno Tokyo')},
     'Ameyoko Market':{name:'Ameyoko Market',icon:'🍜',city:'Tokyo',cat:'שווקים וקניות',schedule:'05/11 · 13:00',desc:'שוק רחוב צפוף וססגוני עם בגדים, נעליים, קוסמטיקה, ממתקים, תבלינים ואוכל.',tip:'שווה כחוויה גם בלי לקנות; עדיף להשאיר ידיים פנויות לפני Akihabara.',map:G('Ameyoko Shopping District Tokyo')},
+    'Chuka Chinman':{name:'Chuka Chinman · Okachimachi',icon:'🥟',city:'Tokyo · Ueno / Okachimachi',cat:'מסעדות',optionalSchedule:'05/11 · על הדרך Ueno → Akihabara',desc:'מסעדה סינית ותיקה ליד Okachimachi הידועה גם בגיוזה שלה, ממש על הרצף בין Ueno/Ameyoko ל-Akihabara.',worth:'כמעט בלי סטייה מהמסלול שלנו, ולכן אפשר לעצור לכמה גיוזות גם אם זו לא שעת ארוחה.',tip:'אם כבר עצרנו לגיוזה באסקוסה אפשר לדלג; המטרה היא הזדמנות בדרך, לא להספיק את כל המקומות.',map:G('Chuka Chinman Okachimachi Tokyo'),type:'Gyoza / Chinese'},
     'Akihabara':{name:'Akihabara',icon:'🎮',city:'Tokyo',cat:'אתרים',schedule:'05/11 · 16:30',desc:'רובע אלקטרוניקה, משחקים, אנימה ואספנות עם בניינים שלמים של חנויות וניאון.',tip:'לבחור 1–2 חנויות שמעניינות באמת ולא לנסות להיכנס לכל מקום.',map:G('Akihabara Electric Town Tokyo')},
     'Meiji Shrine':{name:'Meiji Shrine',icon:'⛩️',city:'Tokyo',cat:'מקדשים',schedule:'06/11 · 09:00',desc:'מקדש שינטו גדול בתוך יער בלב טוקיו, ליד Harajuku. המעבר מהעיר ליער הוא חלק מרכזי מהחוויה.',tip:'מתחילים מוקדם ואז ממשיכים ברגל ל-Harajuku ו-Omotesando.',map:G('Meiji Jingu Tokyo')},
     'Harajuku':{name:'Harajuku',icon:'🏙️',city:'Tokyo',cat:'אתרים',schedule:'06/11 · 10:45',desc:'אזור אופנה ותרבות צעירה סביב Takeshita Street והרחובות הצדדיים.',tip:'Takeshita יכולה להיות עמוסה; הרחובות הצדדיים נעימים יותר לשיטוט.',map:G('Takeshita Street Harajuku Tokyo')},
+    'Harajuku Gyoza Lou':{name:'Harajuku Gyoza Lou',icon:'🥟',city:'Tokyo · Harajuku / Omotesando',cat:'מסעדות',optionalSchedule:'06/11 · על הדרך Harajuku → Omotesando',desc:'מקום מוכר עם תפריט ממוקד בגיוזה מטוגנת ומבושלת, באזור שבין Harajuku ל-Omotesando.',worth:'המיקום שלו מתאים בדיוק למסלול הרגלי שלנו, ולכן זו עצירת גיוזה טבעית בלי לתכנן סביב ארוחה.',tip:'אפשר להיכנס גם רק למנה קטנה ולהמשיך. אם יש תור משמעותי — מדלגים בלי לפגוע במסלול.',map:G('Harajuku Gyoza Lou Tokyo'),type:'Gyoza / Dumplings'},
     'Omotesando':{name:'Omotesando',icon:'☕',city:'Tokyo',cat:'שווקים וקניות',schedule:'06/11 · 12:30',desc:'שדרה אלגנטית עם אדריכלות, בתי קפה, חנויות ומותגים.',tip:'היא מחברת טבעית בין Harajuku לכיוון Shibuya, ולכן אין צורך בנסיעה נפרדת.',map:G('Omotesando Tokyo')},
     'Onitsuka Tiger Omotesando':{name:'Onitsuka Tiger Omotesando',icon:'👟',city:'Tokyo · Omotesando',cat:'שווקים וקניות',optionalSchedule:'06/11 · בדרך מ-Harajuku ל-Shibuya',storeOptional:true,desc:'חנות דגל באזור Omotesando של מותג הסניקרס היפני Onitsuka Tiger, עם דגמים קלאסיים ומהדורות מקומיות.',worth:'היא יושבת על ציר ההליכה שלנו ב-Omotesando ולכן זו הזדמנות טובה לראות נעלי ספורט יפניות בלי סטייה מיוחדת.',tip:'אם מחפשים מידה או דגם מסוים, לשאול מיד את הצוות ולא לבזבז זמן על כל הקומות.',map:G('Onitsuka Tiger Omotesando Tokyo')},
     'Shibuya LOFT':{name:'Shibuya LOFT',icon:'🛍️',city:'Tokyo · Shibuya',cat:'שווקים וקניות',optionalSchedule:'06/11 · סיור ערב Shibuya',storeOptional:true,desc:'כלבו יפני אהוב עם כלי כתיבה, קוסמטיקה, מוצרים לבית, גאדג׳טים ומתנות יפניות קטנות.',worth:'LOFT מצוין למתנות ודברים יפניים שימושיים שקשה לדעת מראש שרוצים, והוא משתלב ממש באזור Shibuya שבו אנחנו כבר נמצאים.',tip:'אם הזמן קצר, להתמקד בקומות של stationery, beauty ומתנות ולא לנסות לעבור על הכול.',map:G('Shibuya Loft Tokyo')},
@@ -83,6 +86,7 @@
     'MUJI Ginza':{name:'MUJI Ginza',icon:'🧺',city:'Tokyo · Ginza',cat:'שווקים וקניות',optionalSchedule:'07/11 · מועדף בזמן Ginza · גיבוי 16/11 בערב',storeOptional:true,desc:'חנות דגל גדולה של MUJI עם מוצרי בית, נסיעות, ארגון, כלי כתיבה, ביגוד ומזון בעיצוב מינימליסטי.',worth:'זה מקום מצוין למצוא ציוד נסיעות ומוצרים יפניים שימושיים, והוא משתלב באופן טבעי ביום Ginza.',tip:'שווה להסתכל במיוחד על מחלקות travel, organization וכלי כתיבה; לא חייבים לעבור על כל החנות.',map:G('MUJI Ginza Tokyo')},
     'Imperial Palace':{name:'Imperial Palace',icon:'🏰',city:'Tokyo',cat:'אתרים',schedule:'07/11 · 14:00',desc:'אזור הארמון הקיסרי על שטח טירת Edo לשעבר. החפירים, חומות האבן והמרחב הירוק נותנים ניגוד למרכז העסקי.',tip:'אם הזמן קצר מספיק לראות את אזור החפיר והגשר מבחוץ ולהמשיך ל-Marunouchi.',map:G('Imperial Palace Tokyo')},
     'Tokyo Station / Marunouchi':{name:'Tokyo Station / Marunouchi',icon:'🚉',city:'Tokyo',cat:'אתרים',schedule:'07/11 · 16:30',desc:'חזית הלבנים האדומות ההיסטורית של Tokyo Station והאזור העסקי האלגנטי של Marunouchi.',tip:'שעת ערב מתאימה במיוחד לחזית התחנה ול-Naka-dori.',map:G('Tokyo Station Marunouchi')},
+    'Tokyo Gyoza Stand Oolong':{name:'Tokyo Gyoza Stand Oolong · Gransta',icon:'🥟',city:'Tokyo · Tokyo Station',cat:'מסעדות',optionalSchedule:'16/11 · בתוך Tokyo Station / Gransta',desc:'דוכן־מסעדה בתוך Gransta Tokyo שמתמקד בגיוזה בעבודת יד, כולל גיוזה מטוגנת ומבושלת.',worth:'אנחנו כבר בתוך Tokyo Station ביום 16/11, ולכן זו עצירת גיוזה בלי שום נסיעה או סטייה מיוחדת.',tip:'מתאים במיוחד לנשנוש קצר תוך כדי המעבר בתחנה — לא צריך לחכות לשעת צהריים או ערב.',map:G('Tokyo Gyoza Stand Oolong Gransta Tokyo Station'),type:'Gyoza / Dumplings'},
     'Pokemon Center Tokyo DX':{name:'Pokémon Center Tokyo DX',icon:'⚡',city:'Tokyo · Nihonbashi',cat:'שווקים וקניות',optionalSchedule:'16/11 · במהלך Nihonbashi / Tokyo Station',storeOptional:true,desc:'Pokémon Center גדול באזור Nihonbashi עם מוצרים רשמיים, בובות, קלפים, פריטי אספנות ומתנות ייחודיות.',worth:'גם בלי להיות מעריצי Pokémon זו חנות יפנית צבעונית וכיפית, והיא נמצאת קרוב למסלול Nihonbashi–Tokyo Station שלנו.',tip:'אם לא מחפשים פריט מסוים, מספיק ביקור קצר; החנות יכולה להיות עמוסה בשעות אחר הצהריים.',map:G('Pokemon Center Tokyo DX Nihonbashi')},
     'Odawara':{name:'Odawara',icon:'🚄',city:'Hakone / Fuji',cat:'אתרים',desc:'נקודת המעבר בין Tokyo לאזור Hakone. כאן מתוכננים איסוף והחזרת הרכב, ומכאן גם עולים ל-Shinkansen לקיוטו.',tip:'עדיף לרכז את כל פעולות הרכב ליד התחנה כדי לא להסתבך עם מזוודות.',map:G('Odawara Station')},
     'Lake Ashi':{name:'Lake Ashi',icon:'🏞️',city:'Hakone / Fuji',cat:'טבע',schedule:'08/11 · 12:00',desc:'אגם הררי שהוא אחד מסמלי Hakone. ביום בהיר אפשר לראות ממנו את Fuji, ועל שפתו נמצא Hakone Shrine.',tip:'אם הראות לפוג׳י טובה בבוקר, נותנים לה עדיפות לפני שהעננות מתפתחת.',map:G('Lake Ashi Hakone')},
@@ -92,6 +96,8 @@
     'Kawaguchiko':{name:'Lake Kawaguchiko',icon:'🗻',city:'Hakone / Fuji',cat:'טבע',schedule:'09/11 · לפי הראות',desc:'אחד מחמשת אגמי Fuji ואחד המקומות הטובים לצפייה בהר מקרוב. בנובמבר יש גם שלכת.',tip:'נוסעים רק אם הראות מצדיקה את זה; ביום סגור עדיף להשקיע את הזמן ב-Hakone.',map:G('Lake Kawaguchiko Japan')},
     'Hakone Open-Air Museum':{name:'Hakone Open-Air Museum',icon:'🖼️',city:'Hakone / Fuji',cat:'מוזיאונים',schedule:'09/11 · אופציה',desc:'מוזיאון פתוח המשלב פסלים ואמנות עם נוף ההרים של Hakone.',tip:'חלופה טובה אם הראות לפוג׳י פחות מוצלחת או אם רוצים יום רגוע יותר.',map:G('Hakone Open-Air Museum')},
     'Gion':{name:'Gion',icon:'🏮',city:'Kyoto',cat:'אתרים',schedule:'10/11 + 11/11',desc:'הרובע המסורתי המפורסם של Kyoto, עם machiya, סמטאות, Hanamikoji ואזור Shirakawa.',tip:'הכי נעים לקראת ערב; שומרים על שקט וכבוד לתושבים ולא מצלמים אנשים באופן פולשני.',map:G('Gion Kyoto')},
+    'Kyoto Gyoza enen Gion':{name:'Kyoto Gyoza enen · Gion',icon:'🥟',city:'Kyoto · Gion',cat:'מסעדות',optionalSchedule:'10/11 או 11/11 · על הדרך ב-Gion',desc:'מסעדת גיוזה ייעודית סמוך מאוד ל-Gion-Shijo, עם גיוזה בעבודת יד ווריאציות יצירתיות.',worth:'היא ממש באזור שבו אנחנו מסתובבים ב-Gion, ולכן אפשר לעצור לכמה גיוזות בלי להפוך אותה לארוחה מתוכננת.',tip:'אם היא פתוחה בזמן שאנחנו עוברים ואין תור חריג — נכנסים. לא צריך לקבוע את כל הערב סביבה.',map:G('Kyoto Gyoza enen Gion Honten'),type:'Gyoza / Dumplings'},
+    'Gyoza Hohei Gion':{name:'Gyoza Hohei · Gion',icon:'🥟',city:'Kyoto · Gion',cat:'מסעדות',optionalSchedule:'10/11 או 11/11 · ערב Gion',desc:'מקום ותיק ומוכר שמתמחה בגיוזה בלב Gion, קרוב למסלול Hanamikoji ו-Gion-Shijo.',worth:'עוד אפשרות גיוזה חזקה ממש על מסלול הערב — בוחרים לפי מה שפתוח, התור והחשק באותו רגע.',tip:'לא צריך להספיק גם את enen וגם את Hohei. שניהם מסומנים כהזדמנויות בדרך.',map:G('Gyoza Hohei Gion Kyoto'),type:'Gyoza / Dumplings'},
     'Kiyomizu-dera':{name:'Kiyomizu-dera',icon:'🏯',city:'Kyoto',cat:'מקדשים',schedule:'11/11 · 09:00',desc:'מקדש מפורסם על צלע ההר עם מרפסת עץ ונוף לעיר.',tip:'להגיע מוקדם ואז לרדת ברגל דרך Sannenzaka ו-Ninenzaka.',map:G('Kiyomizu-dera Kyoto')},
     'Sannenzaka & Ninenzaka':{name:'Sannenzaka & Ninenzaka',icon:'🏘️',city:'Kyoto',cat:'אתרים',schedule:'11/11 · 10:30',desc:'רחובות היסטוריים עם בתי עץ, חנויות, תה ומדרגות בין Kiyomizu ל-Higashiyama.',tip:'השילוב הטוב הוא בירידה מהמקדש ולא כנסיעה נפרדת.',map:G('Sannenzaka Kyoto')},
     'Higashiyama':{name:'Higashiyama',icon:'🏞️',city:'Kyoto',cat:'אתרים',schedule:'11/11 · 12:30',desc:'אזור היסטורי במזרח Kyoto שמחבר מקדשים, סמטאות ורחובות מסורתיים.',tip:'זה יום שמתאים בעיקר להליכה; נעליים נוחות חשובות יותר מתכנון של רכבת לכל קטע.',map:G('Higashiyama Kyoto')},
@@ -114,6 +120,7 @@
     'Kyoto Local Izakaya':{name:'Local Izakaya · Gion / Kawaramachi',icon:'🍢',city:'Kyoto · Gion / Kawaramachi',cat:'מסעדות',optionalSchedule:'13/11 · ערב',desc:'פאב-מסעדה יפני מקומי עם מנות קטנות לשיתוף, yakitori, ירקות, טופו, בשר ודגים מבושלים, באווירה לא פורמלית.',worth:'זו חוויית אוכל יומיומית ומקומית יותר מ-Kaiseki, ומתאימה לערב שבו רוצים פשוט לאכול טוב ולנסות כמה מנות.',tip:'אפשר לבחור מקום לפי החשק באותו ערב; עדיף izakaya עם תפריט מגוון כדי שיהיו מספיק אפשרויות מבושלות.',map:G('izakaya Gion Kawaramachi Kyoto')},
     'Kinkaku-ji':{name:'Kinkaku-ji · Golden Pavilion',icon:'🏯',city:'Kyoto',cat:'מקדשים',schedule:'13/11 · 12:30',desc:'מקדש הזהב, אחד הסמלים המפורסמים של Kyoto, סביב בריכה וגן מסודר.',tip:'הביקור קומפקטי; שעה בדרך כלל מספיקה.',map:G('Kinkaku-ji Kyoto')},
     'Nishiki Market':{name:'Nishiki Market',icon:'🛍️',city:'Kyoto',cat:'שווקים וקניות',schedule:'13/11 · 15:30',desc:'שוק מקורה ארוך עם אוכל, תה, תבלינים, ממתקים וכלי מטבח.',tip:'מתאים לשיטוט וטעימות; לא חייבים להפוך אותו לארוחה מלאה.',map:G('Nishiki Market Kyoto')},
+    'JIJI GYOZA Nishiki':{name:'JIJI GYOZA · Nishiki',icon:'🥟',city:'Kyoto · Nishiki Market',cat:'מסעדות',optionalSchedule:'13/11 · תוך כדי Nishiki Market',desc:'מקום גיוזה בתוך אזור Nishiki Market, מתאים בדיוק לעצירה קטנה בזמן השיטוט בשוק.',worth:'זו כנראה עצירת הגיוזה הכי טבעית בקיוטו עבורנו — אנחנו עוברים ממש ליד ואין צורך לשנות את המסלול.',tip:'מעולה לנשנוש של כמה גיוזות גם באמצע אחר הצהריים, במיוחד אם לא רוצים ארוחה מלאה.',map:G('JIJI GYOZA Nishiki Kyoto'),type:'Gyoza / Street food'},
     'Giōji Temple':{name:'Giōji Temple',icon:'🌿',city:'Kyoto · Okusaga',cat:'טבע',optionalSchedule:'13/11',desc:'מקדש קטן ושקט עם גן טחב, במבוק ועצי מייפל באזור Okusaga.',tip:'האלטרנטיבה המועדפת אם Bamboo Grove המרכזי עמוס.',map:G('Gioji Temple Kyoto')},
     'Adashino Nenbutsu-ji':{name:'Adashino Nenbutsu-ji',icon:'🎋',city:'Kyoto · Okusaga',cat:'טבע',optionalSchedule:'13/11',desc:'מקדש באזור השקט של Okusaga עם אלפי פסלי אבן ושביל במבוק קטן.',tip:'מתאים אם יש זמן וכוח להמשיך מעט עמוק יותר לתוך Okusaga.',map:G('Adashino Nenbutsu-ji Kyoto')},
     '66tantan':{name:'66tantan (Rokuroku Tantan)',icon:'🍜',city:'Kyoto',cat:'מסעדות',optionalSchedule:'13/11 · ערב · Gion',desc:'Tantanmen קטן ומיוחד בגיון · 286-6 Gionmachi Kitagawa.',tip:'מקום קטן; אם יש תור חריג, לא לבזבז זמן רב על ההמתנה.',map:G('66tantan Rokuroku Tantan Kyoto'),rating:5.0,reviews:468,type:'Tantanmen / Dan Dan noodles'},
@@ -154,18 +161,21 @@
       {time:'09:00',icon:'⛩️',title:'Kaminarimon',text:'שער הרעם והכניסה הסמלית לאסקוסה.',place:'Kaminarimon'},
       {time:'09:15',icon:'🛍️',title:'Nakamise',text:'רחוב שוק מסורתי עם דוכנים, מזכרות וממתקים.',place:'Nakamise'},
       {time:'09:30',icon:'🏯',title:'Sensō-ji',text:'המקדש הבודהיסטי המפורסם של Tokyo.',place:'Sensō-ji'},
+      {time:'על הדרך',icon:'🥟',title:'Gyoza no Ousama · Asakusa',text:'עצירת גיוזה אופציונלית — גם אם זו לא שעת ארוחה.',place:'Gyoza no Ousama',optional:true,tag:'🥟 גיוזה על הדרך'},
       {time:'12:00',icon:'🌳',title:'Ueno',text:'מעבר לאזור Ueno והפסקת צהריים.',place:'Ueno'},
       {time:'13:00',icon:'🍜',title:'Ameyoko Market',text:'שוק רחוב תוסס — קניות, אוכל ואווירה מקומית.',place:'Ameyoko Market'},
+      {time:'על הדרך',icon:'🥟',title:'Chuka Chinman · Okachimachi',text:'עוד הזדמנות לגיוזה בדרך ל-Akihabara.',place:'Chuka Chinman',optional:true,tag:'🥟 גיוזה על הדרך'},
       {time:'16:30',icon:'🎮',title:'Akihabara',text:'אלקטרוניקה, משחקים, אנימה ואווירת ערב.',place:'Akihabara'}
-    ],route:D('Kaminarimon Tokyo','Akihabara Tokyo',['Nakamise Shopping Street Tokyo','Sensoji Tokyo','Ueno Tokyo','Ameyoko Tokyo'])},
+    ],route:D('Kaminarimon Tokyo','Akihabara Tokyo',['Nakamise Shopping Street Tokyo','Sensoji Tokyo','Gyoza no Ousama Asakusa Tokyo','Ueno Tokyo','Ameyoko Tokyo','Chuka Chinman Okachimachi Tokyo'])},
     {date:'06/11',dow:'שישי',city:'Tokyo',title:'Meiji · Harajuku · Shibuya',summary:'Meiji Shrine → Harajuku → Omotesando → Shibuya → תצפית לפי הראות → ערב Shibuya',hotel:'hotel-jr-kyushu-shinjuku',evening:'shibuya',stops:[
       {time:'09:00',icon:'⛩️',title:'Meiji Shrine',text:'מקדש שינטו בתוך יער גדול בלב העיר.',place:'Meiji Shrine'},
       {time:'10:45',icon:'🏙️',title:'Harajuku',text:'Takeshita Street והרחובות מסביב.',place:'Harajuku'},
+      {time:'על הדרך',icon:'🥟',title:'Harajuku Gyoza Lou',text:'עצירת גיוזה אופציונלית בדרך ל-Omotesando.',place:'Harajuku Gyoza Lou',optional:true,tag:'🥟 גיוזה על הדרך'},
       {time:'12:30',icon:'☕',title:'Omotesando',text:'שדרה אלגנטית עם אדריכלות, בתי קפה וחנויות.',place:'Omotesando'},
       {time:'אופציה',icon:'👟',title:'Onitsuka Tiger Omotesando',text:'חנות יפנית על הציר שלנו ב-Omotesando.',place:'Onitsuka Tiger Omotesando',optional:true,tag:'🛍️ חנות אופציונלית'},
       {time:'15:00',icon:'🚦',title:'Shibuya Crossing',text:'מעבר החצייה האייקוני של Tokyo.',place:'Shibuya Crossing'},
       {time:'אחה״צ / ערב',icon:'🌇',title:'תצפית על Tokyo · בחירה באותו יום',text:'נחליט לפי הראות והחשק בין Tokyo Metropolitan Government Building, Roppongi Hills Tokyo City View או Shibuya Sky.',optional:true,tag:'לבחירה באותו יום'}
-    ],route:D('Meiji Jingu Tokyo','Shibuya Scramble Crossing',['Takeshita Street Harajuku','Omotesando Tokyo'])},
+    ],route:D('Meiji Jingu Tokyo','Shibuya Scramble Crossing',['Takeshita Street Harajuku','Harajuku Gyoza Lou Tokyo','Omotesando Tokyo','Onitsuka Tiger Omotesando Tokyo'])},
     {date:'07/11',dow:'שבת',city:'Tokyo',title:'שווקים ומרכז Tokyo',summary:'Tsukiji → Ginza → Imperial Palace → Tokyo Station / Marunouchi',hotel:'hotel-jr-kyushu-shinjuku',stops:[
       {time:'09:00',icon:'🛍️',title:'Tsukiji Outer Market',text:'שוק אוכל, סכינים, כלי מטבח, תה ודוכנים.',place:'Tsukiji Outer Market'},
       {time:'11:30',icon:'🏙️',title:'Ginza',text:'שיטוט באזור הקניות האלגנטי ובתי הכלבו.',place:'Ginza'},
@@ -200,9 +210,11 @@
       {time:'אופציה',icon:'🍵',title:'Tea House · Higashiyama / Gion',text:'עצירת matcha, wagashi או קינוח יפני לפי הקצב והרעב.',place:'Higashiyama Tea House',optional:true},
       {time:'12:30',icon:'🏞️',title:'Higashiyama',text:'שיטוט באזור ההיסטורי.',place:'Higashiyama'},
       {time:'17:00',icon:'🏮',title:'Gion',text:'הרובע המסורתי יפה במיוחד לקראת ערב.',place:'Gion'},
+      {time:'אם פתוח בדרך',icon:'🥟',title:'Kyoto Gyoza enen · Gion',text:'עצירת גיוזה אופציונלית ליד Gion-Shijo.',place:'Kyoto Gyoza enen Gion',optional:true,tag:'🥟 גיוזה על הדרך'},
+      {time:'אם פתוח בדרך',icon:'🥟',title:'Gyoza Hohei · Gion',text:'חלופת גיוזה נוספת באזור — לא צריך להספיק את שתיהן.',place:'Gyoza Hohei Gion',optional:true,tag:'🥟 גיוזה על הדרך'},
       {time:'19:00',icon:'🍜',title:'Pontocho',text:'סמטת מסעדות ליד נהר Kamo.',place:'Pontocho'},
       {time:'אופציה בערב',icon:'🍱',title:'Kaiseki Dinner · Gion / Pontocho',text:'ארוחה יפנית רב-שלבית וחגיגית אם נרצה ערב אוכל מיוחד.',place:'Kyoto Kaiseki Dinner',optional:true}
-    ],route:D('Kiyomizu-dera Kyoto','Pontocho Kyoto',['Sannenzaka Kyoto','Higashiyama Kyoto','Gion Kyoto'])},
+    ],route:D('Kiyomizu-dera Kyoto','Pontocho Kyoto',['Sannenzaka Kyoto','Yasaka Pagoda Hokanji Kyoto','Higashiyama Kyoto','Gion Kyoto','Kyoto Gyoza enen Gion Honten','Gyoza Hohei Gion Kyoto'])},
     {date:'12/11',dow:'חמישי',city:'Kyoto',title:'Fushimi Inari · Tofuku-ji · Sanjūsangen-dō · teamLab',summary:'Fushimi Inari → Tofuku-ji → Sanjūsangen-dō → Kyoto Station → teamLab Biovortex Kyoto',hotel:'hotel-daiwa-kyoto-shijo',stops:[
       {time:'09:00',icon:'⛩️',title:'Fushimi Inari Taisha',text:'בוקר בין אלפי שערי Torii. אין צורך לעלות לפסגה.',place:'Fushimi Inari'},
       {time:'אופציה',icon:'🍶',title:'Fushimi Sake District',text:'אם יש זמן ורוצים חוויית אוכל/שתייה מקומית — מבשלות, תעלות וטעימות סאקה. דורש סטייה קצרה מהמסלול הראשי.',place:'Fushimi Sake District',optional:true},
@@ -218,8 +230,9 @@
       {time:'אופציה',icon:'☕',title:'Riverside Café · Arashiyama',text:'קפה או קינוח מול הנהר אם מתחשק לעצור וליהנות מהאזור.',place:'Arashiyama Riverside Cafe',optional:true},
       {time:'אופציה',icon:'🪨',title:'Ryōan-ji',text:'גן הסלעים המפורסם; מתאים אם הקצב טוב בדרך מ-Arashiyama ל-Kinkaku-ji.',place:'Ryoan-ji',optional:true},
       {time:'12:30',icon:'🏯',title:'Kinkaku-ji',text:'מקדש הזהב — אחד האתרים האייקוניים של Kyoto.',place:'Kinkaku-ji'},
-      {time:'15:30',icon:'🛍️',title:'Nishiki Market',text:'שוק מקורה עם אוכל, תה, תבלינים וכלי מטבח.',place:'Nishiki Market'}
-    ],route:D('Arashiyama Kyoto','Nishiki Market Kyoto',['Tenryu-ji Kyoto','Kinkaku-ji Kyoto'])},
+      {time:'15:30',icon:'🛍️',title:'Nishiki Market',text:'שוק מקורה עם אוכל, תה, תבלינים וכלי מטבח.',place:'Nishiki Market'},
+      {time:'על הדרך',icon:'🥟',title:'JIJI GYOZA · Nishiki',text:'כמה גיוזות תוך כדי השיטוט בשוק — לא חייב להיות בזמן ארוחה.',place:'JIJI GYOZA Nishiki',optional:true,tag:'🥟 גיוזה על הדרך'}
+    ],route:D('Arashiyama Kyoto','JIJI GYOZA Nishiki Kyoto',['Tenryu-ji Kyoto','Kinkaku-ji Kyoto','Nishiki Market Kyoto'])},
     {date:'14/11',dow:'שבת',city:'Kyoto · Nara · Osaka',title:'Kyoto → Nara → Osaka',summary:'מזוודות → AONIYOSHI → Nara → Osaka-Namba → Hozenji → Dotonbori',hotel:'hotel-royal-classic-osaka',stops:[
       {time:'בוקר',icon:'🧳',title:'Check-out + טיפול במזוודות',text:'נבדוק עם Daiwa אפשרות לשליחה באותו יום ל-Hotel Royal Classic Osaka. אם השירות לא מאושר בפועל, ניקח אותן איתנו/נשתמש בפתרון חלופי.'},
       {time:'10:55',icon:'🚆',title:'AONIYOSHI · Kyoto → Kintetsu-Nara',text:'רכבת התיירות המיוחדת. לפי לוח מרץ 2026: 10:55 → 11:31; נוודא שוב סמוך לפתיחת המכירה.',tag:'⭐ Twin Seats מומלצים לזוג'},
@@ -243,9 +256,10 @@
       {time:'15:00',icon:'🏮',title:'Nihonbashi · Tokyo של פעם',text:'Nihonbashi Bridge, רחובות ותיקים ו-COREDO Muromachi.',place:'Nihonbashi'},
       {time:'אופציה',icon:'⚡',title:'Pokémon Center Tokyo DX',text:'חנות Pokémon גדולה באזור Nihonbashi, קרובה למסלול שלנו.',place:'Pokemon Center Tokyo DX',optional:true,tag:'🛍️ חנות אופציונלית'},
       {time:'17:00',icon:'🛍️',title:'Tokyo Station · Gransta / Character Street',text:'מתנות, ממתקים והשלמות אחרונות בלי להתרחק מהמלון.',place:'Gransta / Character Street'},
+      {time:'על הדרך',icon:'🥟',title:'Tokyo Gyoza Stand Oolong',text:'גיוזה בתוך Gransta — עצירה קצרה בזמן שעוברים בתחנה.',place:'Tokyo Gyoza Stand Oolong',optional:true,tag:'🥟 גיוזה על הדרך'},
       {time:'18:30',icon:'🌃',title:'KITTE + Marunouchi Naka-dori',text:'Rooftop Garden של KITTE והליכה קצרה ב-Marunouchi.',place:'KITTE Marunouchi'},
       {time:'אופציה',icon:'🛍️',title:'Ginza · רק אם נשאר משהו לקנות',text:'קרובה מאוד ל-Tokyo Station; רק אם יש קנייה ספציפית שלא הספקנו.',place:'Ginza'}
-    ],route:D('Hotel Metropolitan Tokyo Marunouchi','Marunouchi Naka-dori Tokyo',['Nihonbashi Bridge Tokyo','Tokyo Station','KITTE Marunouchi'])},
+    ],route:D('Hotel Metropolitan Tokyo Marunouchi','Marunouchi Naka-dori Tokyo',['Nihonbashi Bridge Tokyo','Pokemon Center Tokyo DX Nihonbashi','Tokyo Station','Tokyo Gyoza Stand Oolong Gransta Tokyo Station','KITTE Marunouchi'])},
     {date:'17/11',dow:'שלישי',city:'Tokyo',title:'יום אחרון וטיסה',summary:'בוקר חופשי → JINS / השלמות → Narita → טיסה',hotel:'hotel-metropolitan-marunouchi',stops:[
       {time:'בוקר',icon:'🏨',title:'Check-out · Hotel Metropolitan Tokyo Marunouchi',text:'Check-out והשארת מזוודות אם צריך עד היציאה ל-Narita.'},
       {time:'בוקר',icon:'☕',title:'בוקר חופשי',text:'לפי מה שנשאר ומה שמתחשק.'},
@@ -323,7 +337,7 @@
   ];
 
   window.TRIP_DATA = {
-    version:'10.3.14', title:'Japan Trip', year:2026, travelers:'עזרי ואיילי',
+    version:'10.3.15', title:'Japan Trip', year:2026, travelers:'עזרי ואיילי',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
     hotels, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
     maps:{search:G,directions:D}
