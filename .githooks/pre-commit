@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "gitleaks is required for commits in this repository." >&2
+  echo "Install gitleaks, then retry the commit." >&2
+  exit 1
+fi
+
+exec gitleaks protect --staged --redact --config=.gitleaks.toml
