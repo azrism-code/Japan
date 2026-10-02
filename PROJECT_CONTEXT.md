@@ -390,7 +390,7 @@ Evening: Pontocho / Kiyamachi / Kawaramachi.
 08:00 is intentionally the earliest planned start; do not shift earlier unless the user explicitly changes the constraint.
 
 ### 13/11 · Kyoto
-Arashiyama / Okusaga → Tenryu-ji → optional Togetsukyo → optional riverside café → **Otagi Nenbutsu-ji preferred optional** → optional Gion Duck Noodles → Ryōan-ji secondary optional → Kinkaku-ji → Nishiki → JIJI GYOZA optional → Gion Food Evening.
+Arashiyama / Okusaga → Tenryu-ji → optional Togetsukyo → optional riverside café → **Otagi Nenbutsu-ji preferred optional** → optional Gion Duck Noodles → Ryōan-ji secondary optional → Kinkaku-ji → Nishiki → MOTOI Gyoza optional → Gion Food Evening.
 
 Priority rule:
 If choosing between Otagi and Ryōan-ji, **Otagi is preferred**.
@@ -488,7 +488,7 @@ Current notable optional additions:
 ### Kyoto
 - Kyoto Gyoza enen · Gion
 - Gyoza Hohei · Gion
-- JIJI GYOZA · Nishiki
+- MOTOI Gyoza
 - Gion Duck Noodles · Arashiyama
 - 66tantan
 - Local Izakaya alternative
