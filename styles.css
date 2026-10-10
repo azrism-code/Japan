@@ -10,5 +10,76 @@
 .toolbar{display:flex;gap:7px;margin-bottom:8px}.toolbar input{flex:1}.toolbar button{width:42px;border:0;border-radius:11px;background:var(--accent);color:#fff;font-size:20px}.take-item{display:flex;align-items:center;gap:8px;padding:10px}.take-item input{width:20px;height:20px}.take-item .grow{flex:1}.row-actions{display:flex;gap:4px}.row-actions button{border:0;background:#f3f0ee;border-radius:8px;width:30px;height:30px}.done{text-decoration:line-through;opacity:.55}.shopping-item-head{display:flex;align-items:flex-start;gap:8px}.shopping-item-head input{width:20px;height:20px}.shopping-copy{flex:1}.shopping-copy small{display:block;color:var(--muted);margin-top:3px}.backup-row{display:flex;gap:8px;margin-top:12px}.backup-row button,.backup-row label{flex:1;border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px;text-align:center;font-weight:800;font-size:11px}.tool-card h3{margin:0 0 6px}.tool-card p{font-size:12px;line-height:1.55;color:var(--muted)}.money-grid,.rate-grid,.form-grid,.expense-summary{display:grid;grid-template-columns:1fr 1fr;gap:8px}.tool-result{margin-top:9px;background:#fff6e9;border-radius:11px;padding:10px;font-weight:800;text-align:center}.quick-phrases{display:flex;gap:5px;overflow:auto;margin-top:7px}.quick-phrases button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 8px;white-space:nowrap;font-size:10px}.notice{background:#f6f8fb;border:1px solid #dde3ea;border-radius:12px;padding:10px;font-size:12px;line-height:1.55;margin:8px 0}.book-card{display:grid;grid-template-columns:auto 1fr;gap:5px 8px;align-items:center}.book-card b{font-size:13px}.book-card small{grid-column:2;color:var(--muted)}.priority-red,.priority-yellow,.priority-green{font-size:10px;border-radius:99px;padding:4px 7px;font-weight:900}.priority-red{background:#fff0f0;color:#9b1c1c}.priority-yellow{background:#fff7df;color:#8a5c00}.priority-green{background:var(--green);color:var(--green-text)}
 .expense-summary{margin-bottom:12px}.kpi{background:#fff;border:1px solid var(--line);border-radius:15px;padding:11px}.kpi span{display:block;color:var(--muted);font-size:10px}.kpi b{font-size:17px}.kpi.wide{grid-column:1/-1}.kpi.paid-kpi{background:var(--green);border-color:#cfe6d4}.progress{height:8px;background:#ece8e4;border-radius:99px;overflow:hidden;margin-top:8px}.progress i{display:block;height:100%;background:var(--accent)}.field label{display:block;font-size:10px;color:var(--muted);margin-bottom:3px}.field.full{grid-column:1/-1}.primary-button{width:100%;border:0;background:var(--accent);color:#fff;border-radius:11px;padding:10px;font-weight:900}.expense-card.alt{opacity:.62}.expense-card.expense-paid{background:var(--green);border-color:#cfe6d4}.expense-card.expense-booked{background:var(--blue);border-color:#cfe0ef}.expense-head{display:flex;gap:8px}.expense-head .grow{flex:1}.expense-head b{font-size:13px}.expense-head strong{white-space:nowrap}.expense-meta,.expense-note{font-size:10px;color:var(--muted);margin-top:4px}.expense-status{display:inline-block;border-radius:99px;padding:2px 6px;font-weight:900}.expense-status.paid{background:#cfead6;color:#216837}.expense-status.booked{background:#cfe5fb;color:#245f95}.expense-status.estimate{background:#eee9e4;color:#6f655e}
 .modal-backdrop{display:none;position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.48);padding:18px;align-items:center;justify-content:center}.modal-backdrop.open{display:flex}.modal-card{width:min(100%,460px);max-height:88vh;overflow:auto;background:#fff;border-radius:22px;padding:18px;position:relative;direction:rtl;box-shadow:0 20px 60px rgba(0,0,0,.26)}.modal-close{position:absolute;left:12px;top:12px;border:0;background:#f3f1ef;width:34px;height:34px;border-radius:50%;z-index:2}.info-image{width:calc(100% + 36px);height:180px;object-fit:cover;margin:-18px -18px 12px;border-radius:22px 22px 0 0;background:#eee}.modal-icon{font-size:28px}.modal-card h2{margin:6px 0}.modal-meta{font-size:11px;color:var(--muted)}.modal-card>p{font-size:13px;line-height:1.7;color:#5e5651}.modal-worth{margin:10px 0;padding:11px 12px;background:#fff8ed;border:1px solid #f0d7b7;border-radius:11px;color:#6d4c26;font-size:12.5px;line-height:1.6}.modal-worth b{display:block;margin-bottom:4px;color:#9a570e}.modal-tip{background:#fff6e8;border:1px solid #f2dfc5;border-radius:12px;padding:9px;font-size:12px;line-height:1.55}.evening-dinner{font-weight:800;padding:8px 0}.evening-point{display:flex;gap:10px;margin:10px 0}.evening-point>b{min-width:25px;height:25px;border-radius:50%;background:#fff0df;color:#a8560b;display:grid;place-items:center}.image-overlay{display:none;position:fixed;inset:0;z-index:110;background:#000e;align-items:center;justify-content:center;padding:14px}.image-overlay.open{display:flex}.image-overlay img{max-width:100%;max-height:92vh;object-fit:contain}.image-close{position:fixed;top:12px;right:12px;width:40px;height:40px;border:0;border-radius:50%;font-size:22px}
-@media(min-width:760px){.day,.page-body{max-width:760px}.stop-thumb,.place-thumb{height:210px}}
+/* Tablet layout: phone styles above stay unchanged. */
+.tablet-overview{display:none}
+.day-main-grid,.day-primary{min-width:0}
+
+@media(min-width:760px){
+  .app-header{padding-inline:22px}
+  .day-strip{padding-inline:18px;gap:6px}
+  .day-chip{min-width:58px}
+  .day{max-width:960px;padding:18px 16px 28px}
+  .page-body{max-width:1040px;padding:16px}
+  .stop-thumb,.place-thumb{height:210px}
+  .modal-card{width:min(92vw,620px)}
+  .side-menu{width:min(46vw,360px)}
+  .places-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+
+  #sheetPage[data-page-name="flights"] .page-body,
+  #sheetPage[data-page-name="bookings"] .page-body,
+  #sheetPage[data-page-name="hotels"] .page-body,
+  #sheetPage[data-page-name="pocket"] .page-body,
+  #sheetPage[data-page-name="expenses"] .page-body{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+    align-items:start
+  }
+  #sheetPage[data-page-name="flights"] .ticket-summary,
+  #sheetPage[data-page-name="flights"] .connection-card,
+  #sheetPage[data-page-name="expenses"] .expense-summary,
+  #sheetPage[data-page-name="expenses"] .card,
+  #sheetPage[data-page-name="expenses"] .filter-row{grid-column:1/-1}
+  #sheetPage[data-page-name="flights"] .flight-card,
+  #sheetPage[data-page-name="bookings"] .book-card,
+  #sheetPage[data-page-name="hotels"] .hotel-city,
+  #sheetPage[data-page-name="pocket"] .tool-card,
+  #sheetPage[data-page-name="expenses"] .expense-card{margin:0}
+  #sheetPage[data-page-name="pocket"] .tool-card:last-child{grid-column:1/-1}
+  #sheetPage[data-page-name="take"] .page-body,
+  #sheetPage[data-page-name="shopping"] .page-body{max-width:900px}
+}
+
+@media(min-width:900px){
+  .day{max-width:1160px}
+  .day-main-grid{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:18px;align-items:start}
+  .tablet-overview{display:grid;gap:10px;position:sticky;top:132px;align-self:start}
+  .tablet-overview-card{background:#fff;border:1px solid #eee5df;border-radius:16px;padding:14px;box-shadow:var(--shadow)}
+  .tablet-overview-card h3{margin:0 0 7px;font-size:15px}
+  .tablet-overview-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
+  .tablet-overview-card .primary-link{margin-top:10px}
+  .tablet-overview-actions{display:grid;gap:7px;margin-top:10px}
+  .tablet-overview-actions button{width:100%;border:0;border-radius:10px;padding:10px;background:var(--soft);color:var(--accent-dark);font-weight:900}
+}
+
+@media(min-width:1024px) and (orientation:landscape){
+  body{padding-left:88px;padding-bottom:20px}
+  .bottom-nav{
+    top:0;bottom:0;left:0;right:auto;width:88px;
+    grid-template-columns:1fr;grid-template-rows:repeat(4,72px);
+    align-content:center;gap:7px;padding:14px 8px;
+    border-top:0;border-right:1px solid #e6ddd7;
+    box-shadow:4px 0 18px #0000000a
+  }
+  .bottom-nav button{font-size:22px;justify-content:center;border-radius:14px;padding:8px 4px}
+  .bottom-nav button.active{background:var(--soft)}
+  .bottom-nav span{font-size:11px}
+  .sheet-page{inset:0 0 0 88px;padding-bottom:24px}
+  .page-body{max-width:1180px;padding:18px 22px}
+  .day{max-width:1220px;padding-inline:22px}
+  .day-main-grid{grid-template-columns:minmax(0,1fr) 340px;gap:22px}
+  .tablet-overview{top:136px}
+  .modal-card{width:min(78vw,660px)}
+  .stop-card,.route-card,.card,.hotel-card,.flight-card,.book-card,.tool-card,.expense-card{padding:14px}
+}
 .cloud-account{margin-top:14px;padding:11px;background:#f7f3ee;border-radius:12px;font-size:11px;display:grid;gap:7px}.cloud-account button{border:0;border-radius:9px;padding:9px;background:#fff;color:#574d47;font-weight:800}.cloud-account [data-cloud-status]{font-weight:800;color:#6b625c}html[data-role="viewer"] .cloud-account [data-copy-share],html[data-role="offline"] .cloud-account [data-copy-share]{display:none}
