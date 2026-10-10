@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** rewritten main after the v10.3.18 security cleanup on 2026-09-27.
-> **Current app version:** **v10.3.18**.  
+> **Verified against:** current main after the v10.3.19 tablet-responsive release on 2026-10-10.
+> **Current app version:** **v10.3.19**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -539,6 +539,20 @@ Current train estimate seeds for the couple are maintained in `expenses-ui.js`.
 The Hakone hotel expense is now **Hakone Kowakien TEN-YU · US$1,036.91 · מוזמן · תשלום מאוחר**. `expenses-ui.js` includes a non-destructive migration that replaces the old Hakone placeholder after local or Firestore state is applied, without clearing other expense data.
 
 Do not remove user expense data or reseed destructively.
+
+---
+
+## 16A. Tablet responsive layout — v10.3.19
+
+The same PWA now adapts automatically to tablets; there is no separate tablet app.
+
+- Phone layout below 760px remains unchanged.
+- Tablet portrait widens content, uses two-column grids on suitable secondary pages, and shows larger imagery/modals.
+- From 900px, the daily itinerary adds a sticky companion panel with day summary, hotel access, route link and evening shortcut while keeping the timeline readable.
+- Tablet landscape from 1024px moves the four primary navigation items into a fixed left-side rail and removes the phone bottom-navigation footprint.
+- Hotels, flights, bookings, tools and expenses use two-column layouts where practical; Places uses a two-column card grid.
+- The manifest orientation is now `any`, so installed PWA works in both portrait and landscape.
+- Mobile behavior and data model are unchanged.
 
 ---
 
