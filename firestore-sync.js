@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · Firestore state, auth and privacy-safe sync · v10.3.18 */
+/* Japan Trip 2026 · Firestore state, auth and privacy-safe sync · v10.3.22 */
 (() => {
   'use strict';
   const F=window.JAPAN_FIREBASE_CONFIG||{}, C=window.JAPAN_CLOUD_CONFIG||{};
@@ -32,7 +32,8 @@
     if(!s||typeof s!=='object')return;
     localStorage.setItem(PRIVATE_SECRETS_KEY,JSON.stringify(s));
     if(!window.TRIP_DATA)return;
-    if(s.flightBooking!==undefined)window.TRIP_DATA.flights.booking=s.flightBooking||'';
+    // Flight booking/PNR stays private in Firestore/localStorage and is never injected into the UI runtime.
+    if(window.TRIP_DATA.flights)window.TRIP_DATA.flights.booking='';
     (s.flightLegSeats||[]).forEach((v,i)=>{if(window.TRIP_DATA.flights.legs[i])window.TRIP_DATA.flights.legs[i].seats=v||''});
     for(const h of window.TRIP_DATA.hotels||[]){
       const x=s.hotels?.[h.key];
