@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.20 confirmed-flight update on 2026-10-18.
-> **Current app version:** **v10.3.20**.  
+> **Verified against:** current main after the v10.3.21 dual-return planning update on 2026-10-18.
+> **Current app version:** **v10.3.21**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -422,17 +422,21 @@ Evening: Umeda Night Lights is still defined/assigned.
 
 Do not add Himeji unless the user explicitly chooses to replace part of this Osaka day; do not stack it on top.
 
-### 16/11 · return flight now departs Japan
-Latest confirmed ticket has **EK321 · NRT 21:30 → DXB 04:40 (+1) on 16–17/11**.
+### 16/11 · Osaka → Tokyo · current confirmed flight option
+The user explicitly wants to keep the **Osaka → Tokyo Shinkansen on 16/11 in every scenario**.
 
-The previous 16–17/11 Tokyo overnight plan is therefore no longer compatible with the confirmed flight. Do **not** finalize a replacement day-by-day sequence yet: the user is still deciding whether the missing night should be taken from Hakone or Kyoto so Osaka can stay substantial.
+Latest confirmed ticket has **EK321 · NRT 21:30 → DXB 04:40 (+1) on 16–17/11**. In the app this is shown as **Option A / currently confirmed**.
 
-### 17/11
-Latest confirmation reaches Dubai at 04:40. The onward **DXB → TLV** segment is not present in the latest confirmation currently available, so do not invent or restore the old Flydubai segment until a new confirmed itinerary shows it.
+The existing **Hotel Metropolitan Tokyo Marunouchi booking for 16–17/11 stays in place for now**. Do not remove it. If the 16/11 flight remains final, the user simply will not use that night; if Emirates restores the return to 17/11, the hotel and Tokyo evening remain useful.
 
-JINS should be completed/collected earlier in Tokyo if possible; the old 17/11 Shinjuku backup is no longer a valid plan.
+### 17/11 · retained as planning alternative
+Keep the full 17/11 Tokyo day in the app. It is a valid **Option B** in case Emirates restores the older 17/11 return date.
 
----
+The 17/11 EK321 entry is shown only as a **planning alternative / not currently confirmed**. Do not present it as ticketed unless a new airline confirmation says so.
+
+Latest confirmation reaches Dubai at 04:40 after the currently confirmed 16/11 departure. The onward **DXB → TLV** segment is not present in the latest confirmation currently available, so do not invent or restore an old Flydubai segment until a new confirmed itinerary shows it.
+
+JINS should preferably be completed/collected earlier in Tokyo, but the 17/11 JINS backup remains in the plan because the whole day is intentionally being retained.
 
 ---
 
