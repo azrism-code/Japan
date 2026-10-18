@@ -177,8 +177,9 @@
     ],route:null},
     {date:'04/11',dow:'רביעי',city:'Tokyo · Shinjuku',title:'נחיתה · Shinjuku First Day',summary:'Narita → מלון → JINS → 3D Cat → Kabukicho → ערב Shinjuku',hotel:'hotel-jr-kyushu-shinjuku',evening:'shinjuku',stops:[
       {time:'11:40',icon:'✈️',title:'נחיתה Narita',text:'ביקורת גבולות, מזוודות ויציאה לעיר.',place:'Narita Airport'},
-      {time:'אחרי היציאה מהשדה',icon:'🚆',title:'Narita → Shinjuku',text:'נסיעה ל-Shinjuku לפי האפשרות הנוחה בזמן אמת. המטרה היא להיות במלון בערך סביב 14:30–15:30.'},
-      {time:'14:30–15:30',icon:'🏨',title:'Check-in · JR Kyushu Hotel Blossom Shinjuku',text:'צ׳ק־אין, הנחת מזוודות והתרעננות קצרה לפני היציאה הראשונה.'},
+      {time:'אחרי איסוף המזוודות',icon:'🚕',title:'Narita → המלון · מונית ישירה מועדפת',text:'מונית Airport Taxi בתעריף קבוע לאזור המלון (Zone D): ¥31,500–¥32,500 לפי המסלול + אגרות כביש. אין צורך בהזמנה מראש; מבקשים fixed-fare taxi בעמדת המוניות. נוח במיוחד ביום הנחיתה עם המזוודות.',tag:'🚕 מועדף לנוחות'},
+      {time:'חלופה',icon:'🚆',title:'Narita Express → Shinjuku',text:'אם לא רוצים מונית: NEX ישיר לכיוון Shinjuku, ואז הליכה קצרה/מונית קצרה למלון. בוחרים לפי זמן היציאה מהטרמינל.',optional:true,tag:'🚆 חלופה חסכונית'},
+      {time:'14:30–15:30',icon:'🏨',title:'Check-in · JR Kyushu Hotel Blossom Shinjuku',text:'יעד סביר אם היציאה מהשדה זורמת; בפועל תלוי בביקורת גבולות, מזוודות ותנועה. צ׳ק־אין, הנחת מזוודות והתרעננות קצרה לפני היציאה הראשונה.'},
       {time:'15:30',icon:'👓',title:'JINS Shinjuku',text:'בדיקת ראייה, בחירת מסגרת והזמנת משקפיים כבר בתחילת הטיול כדי להשאיר זמן להכנה.',place:'JINS Shinjuku'},
       {time:'16:30',icon:'🐈',title:'Cross Shinjuku Vision · 3D Cat',text:'עצירה קצרה מול המסך המעוקל ליד East Exit.',place:'Cross Shinjuku Vision – 3D Cat'},
       {time:'16:50',icon:'🦖',title:'Godzilla Head · Kabukicho',text:'צילום קצר והמשך דרך הרחובות של Kabukicho.',place:'Godzilla Head'},
