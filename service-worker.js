@@ -1,8 +1,8 @@
-/* Japan Trip 2026 · service worker · v10.3.20
+/* Japan Trip 2026 · service worker · v10.3.21
    Simple offline cache. No source rewriting, module merging or forced navigation. */
-const CACHE='japan-trip-v10-3-20-flights';
+const CACHE='japan-trip-v10-3-21-dual-return';
 const CORE=[
-  './','./index.html','./styles.css?v=10.3.20','./place-content.css?v=10.3.20','./station-guides.css?v=10.3.20','./expenses-ui.css?v=10.3.20','./trip-data.js?v=10.3.20','./place-content.js?v=10.3.20','./firebase-config.js?v=10.3.20','./firestore-sync.js?v=10.3.20','./shinjuku-prince-update.js?v=10.3.20','./romancecar-update.js?v=10.3.20','./kyoto-hotel-update.js?v=10.3.20','./app.js?v=10.3.20','./day-strip-city.js?v=10.3.20','./hotel-compact.js?v=10.3.20','./car-rental.js?v=10.3.20','./drive.js?v=10.3.20','./booking-planner.js?v=10.3.20','./romancecar-booking-update.js?v=10.3.20','./station-guides.js?v=10.3.20','./expense-safety.js?v=10.3.20','./expenses-ui.js?v=10.3.20','./manifest.json?v=10.3.20','./assets/icons/app-icon-192.png?v=10.3.20','./assets/icons/app-icon-512.png?v=10.3.20','./assets/icons/apple-touch-icon.png?v=10.3.20','./assets/icons/header-icon.png?v=10.3.20',
+  './','./index.html','./styles.css?v=10.3.21','./place-content.css?v=10.3.21','./station-guides.css?v=10.3.21','./expenses-ui.css?v=10.3.21','./trip-data.js?v=10.3.21','./place-content.js?v=10.3.21','./firebase-config.js?v=10.3.21','./firestore-sync.js?v=10.3.21','./shinjuku-prince-update.js?v=10.3.21','./romancecar-update.js?v=10.3.21','./kyoto-hotel-update.js?v=10.3.21','./app.js?v=10.3.21','./day-strip-city.js?v=10.3.21','./hotel-compact.js?v=10.3.21','./car-rental.js?v=10.3.21','./drive.js?v=10.3.21','./booking-planner.js?v=10.3.21','./romancecar-booking-update.js?v=10.3.21','./station-guides.js?v=10.3.21','./expense-safety.js?v=10.3.21','./expenses-ui.js?v=10.3.21','./manifest.json?v=10.3.21','./assets/icons/app-icon-192.png?v=10.3.21','./assets/icons/app-icon-512.png?v=10.3.21','./assets/icons/apple-touch-icon.png?v=10.3.21','./assets/icons/header-icon.png?v=10.3.21',
   './assets/train-infographic.svg',
   './images/evening-walks/asakusa.jpg','./images/evening-walks/ueno-akihabara.jpg','./images/evening-walks/shibuya.jpg','./images/evening-walks/marunouchi-ginza.jpg'
 ];
