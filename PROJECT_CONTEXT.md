@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.22 flight-PNR privacy fix on 2026-10-18.
-> **Current app version:** **v10.3.22**.  
+> **Verified against:** current main after the v10.3.23 first-Tokyo-day update on 2026-10-19.
+> **Current app version:** **v10.3.23**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -316,11 +316,20 @@ Latest confirmed flights from the 18 Oct Emirates itinerary:
 - Connection in Abu Dhabi: 1:55.
 - EY800 · AUH 21:05 → NRT 11:40 (+1) · Etihad Airways · Airbus A380-800.
 
-### 04/11 · Tokyo
-Narita → Shinjuku Prince Hotel → **Shinjuku First Night**.
+### 04/11 · Tokyo · Shinjuku First Day
+Narita 11:40 → **JR Kyushu Hotel Blossom Shinjuku** → first afternoon/evening in Shinjuku.
 
-Evening walk:
-JINS → 3D Cat → Godzilla Head → optional Don Quijote → Hanazono → Golden Gai → Omoide Yokocho.
+Airport transfer:
+- preferred comfort option: fixed-fare Airport Taxi from Narita directly to the hotel,
+- current Narita official Zone D fare: **¥31,500–¥32,500 + expressway tolls**, no advance reservation required,
+- NEX → Shinjuku remains the cheaper fallback,
+- target hotel/check-in window is roughly 14:30–15:30, but depends on immigration, baggage and road/rail conditions.
+
+Afternoon:
+JINS → 3D Cat → Godzilla Head → optional Tokyu Kabukicho Tower.
+
+Evening walk is deliberately shorter and has no duplicates from the afternoon:
+optional Don Quijote → Hanazono Shrine → Golden Gai → Omoide Yokocho / dinner.
 
 ### 05/11 · Tokyo
 Asakusa → Ueno → Ameyoko → Akihabara.
@@ -331,7 +340,7 @@ Current optional additions:
 - Chuka Chinman,
 - Kikanbo Kanda Honten.
 
-Evening: **Asakusa Lights**.
+**No separate Asakusa evening walk is assigned anymore.** The route already visits Asakusa in the morning, so the day now finishes naturally in Akihabara/Kanda after the neon comes on, with dinner there. This avoids a duplicate trip back to Asakusa.
 
 ### 06/11 · Tokyo
 Meiji Shrine → Harajuku → Omotesando → Shibuya → viewpoint choice → **Shibuya After Dark**.
@@ -443,7 +452,7 @@ JINS should preferably be completed/collected earlier in Tokyo, but the 17/11 JI
 ## 12. Evening walks currently defined
 
 - `shinjuku` — assigned 04/11.
-- `asakusa` — assigned 05/11.
+- `asakusa` — still defined but currently not assigned (removed from 05/11 to avoid repeating Asakusa).
 - `ueno` — still defined but currently not assigned.
 - `shibuya` — assigned 06/11.
 - `gion` — assigned 10/11.
