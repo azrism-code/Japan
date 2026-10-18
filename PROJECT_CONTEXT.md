@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.19 tablet-responsive release on 2026-10-10.
-> **Current app version:** **v10.3.19**.  
+> **Verified against:** current main after the v10.3.20 confirmed-flight update on 2026-10-18.
+> **Current app version:** **v10.3.20**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -309,7 +309,12 @@ Shin-Osaka → Tokyo. Exact train/time still to be finalized; consider Fuji-side
 ## 11. Current day-by-day itinerary
 
 ### 03/11 · Israel → Japan
-TLV → Dubai → Narita.
+TLV → Abu Dhabi → Narita.
+
+Latest confirmed flights from the 18 Oct Emirates itinerary:
+- EY594 · TLV 14:00 → AUH 19:10 · Etihad Airways · Airbus A321neo.
+- Connection in Abu Dhabi: 1:55.
+- EY800 · AUH 21:05 → NRT 11:40 (+1) · Etihad Airways · Airbus A380-800.
 
 ### 04/11 · Tokyo
 Narita → Shinjuku Prince Hotel → **Shinjuku First Night**.
@@ -417,20 +422,17 @@ Evening: Umeda Night Lights is still defined/assigned.
 
 Do not add Himeji unless the user explicitly chooses to replace part of this Osaka day; do not stack it on top.
 
-### 16/11 · Tokyo
-Osaka → Tokyo → Hotel Metropolitan → Nihonbashi → optional Pokémon Center Tokyo DX → Tokyo Station / Gransta / Character Street → optional Tokyo Gyoza Stand Oolong → KITTE / Marunouchi → optional Ginza backup.
+### 16/11 · return flight now departs Japan
+Latest confirmed ticket has **EK321 · NRT 21:30 → DXB 04:40 (+1) on 16–17/11**.
 
-Evening walk: **Marunouchi → Ginza**.
+The previous 16–17/11 Tokyo overnight plan is therefore no longer compatible with the confirmed flight. Do **not** finalize a replacement day-by-day sequence yet: the user is still deciding whether the missing night should be taken from Hakone or Kyoto so Osaka can stay substantial.
 
-GU and MUJI are backup shopping stops only if not completed on 7/11.
+### 17/11
+Latest confirmation reaches Dubai at 04:40. The onward **DXB → TLV** segment is not present in the latest confirmation currently available, so do not invent or restore the old Flydubai segment until a new confirmed itinerary shows it.
 
-### 17/11 · Tokyo
-Free morning → JINS backup only if still needed → Narita → departure.
+JINS should be completed/collected earlier in Tokyo if possible; the old 17/11 Shinjuku backup is no longer a valid plan.
 
-Preferred plan is to collect JINS before leaving Shinjuku earlier in the trip if ready, rather than return to Shinjuku on the final day.
-
-### 18/11
-Arrival in Israel.
+---
 
 ---
 
