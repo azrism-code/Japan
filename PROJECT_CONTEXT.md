@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.21 dual-return planning update on 2026-10-18.
-> **Current app version:** **v10.3.21**.  
+> **Verified against:** current main after the v10.3.22 flight-PNR privacy fix on 2026-10-18.
+> **Current app version:** **v10.3.22**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -621,6 +621,7 @@ Current-tree actions completed:
 Security enforcement and remaining follow-ups:
 - **Repository history:** old backup branches were removed; `main` is the only remaining remote branch and the only source of truth.
 - **Booking identifiers are forbidden in Git.** Flight PNRs, hotel booking/reference numbers, provider references, and rental booking identifiers live **only in Firestore private documents**.
+- **Flight PNR/booking references must never be rendered in the app UI**, even for the owner/editor. They may remain stored in the private Firestore/local cache, but `firestore-sync.js` must not inject them into `TRIP_DATA.flights.booking`, and `renderFlights()` must not display a Booking field.
 - `trip-data.js`, `car-rental.js`, and all other repository files must contain display-safe fields only.
 - Seat numbers are not treated as secrets; they may exist in display-safe trip data if desired.
 - `.gitleaks.toml` contains custom travel-booking rules.
