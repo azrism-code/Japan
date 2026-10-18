@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · canonical data · v10.3.19
+/* Japan Trip 2026 · canonical data · v10.3.20
    One source of truth. No runtime hotel/place replacement patches. */
 (() => {
   'use strict';
@@ -168,14 +168,14 @@
   };
 
   const days = [
-    {date:'03/11',dow:'שלישי',city:'ישראל → יפן',title:'עזרי ואיילי יוצאים לדרך ✈️',summary:'נתב״ג → Dubai → Tokyo · יום טיסה',stops:[
-      {time:'13:50',icon:'✈️',title:'TLV → Dubai',text:'EK2269 / FZ1636 · Flydubai · Economy Flex · TLV Terminal 3 → DXB Terminal 3.'},
-      {time:'18:55',icon:'🇦🇪',title:'נחיתה ב-Dubai',text:'קונקשן 3:50 שעות · אוכל, התרעננות והגעה רגועה לשער.'},
-      {time:'22:45',icon:'✈️',title:'Dubai → Tokyo Narita',text:'EK320 · Emirates · מושבים: Azriel 48K · Ayala 48J · DXB T3 → Narita T2.',tag:'⭐ להיות בשער בזמן'},
-      {time:'מחר 13:10',icon:'🇯🇵',title:'נחיתה Narita',text:'הנחיתה ביפן מופיעה בתחילת היום הבא.'}
+    {date:'03/11',dow:'שלישי',city:'ישראל → יפן',title:'עזרי ואיילי יוצאים לדרך ✈️',summary:'נתב״ג → Abu Dhabi → Tokyo · יום טיסה',stops:[
+      {time:'14:00',icon:'✈️',title:'TLV → Abu Dhabi',text:'EY594 · Etihad Airways · Economy · טיסה ישירה · כ־3:10 שעות.'},
+      {time:'19:10',icon:'🇦🇪',title:'נחיתה ב-Abu Dhabi',text:'קונקשן 1:55 שעות · מעבר לטיסת ההמשך ל-Tokyo.'},
+      {time:'21:05',icon:'✈️',title:'Abu Dhabi → Tokyo Narita',text:'EY800 · Etihad Airways · Airbus A380-800 · כ־9:35 שעות.',tag:'⭐ להיות בשער בזמן'},
+      {time:'מחר 11:40',icon:'🇯🇵',title:'נחיתה Narita',text:'הנחיתה ביפן מופיעה בתחילת היום הבא.'}
     ],route:null},
     {date:'04/11',dow:'רביעי',city:'Tokyo',title:'נחיתה והתאקלמות',summary:'Narita → מלון → טיול ערב Shinjuku',hotel:'hotel-jr-kyushu-shinjuku',evening:'shinjuku',stops:[
-      {time:'13:10',icon:'✈️',title:'נחיתה Narita',text:'ביקורת גבולות, מזוודות ויציאה לעיר.',place:'Narita Airport'}
+      {time:'11:40',icon:'✈️',title:'נחיתה Narita',text:'ביקורת גבולות, מזוודות ויציאה לעיר.',place:'Narita Airport'}
     ],route:D('Narita International Airport','Shinjuku Prince Hotel Tokyo')},
     {date:'05/11',dow:'חמישי',city:'Tokyo',title:'Asakusa · Ueno · Akihabara',summary:'Kaminarimon → Nakamise → Sensō-ji → Ueno → Ameyoko → Akihabara',hotel:'hotel-jr-kyushu-shinjuku',evening:'asakusa',stops:[
       {time:'09:00',icon:'⛩️',title:'Kaminarimon',text:'שער הרעם והכניסה הסמלית לאסקוסה.',place:'Kaminarimon'},
@@ -316,14 +316,14 @@
   };
 
   const flights = {
-    booking:'', cabin:'Economy Flex', passengers:'2 passengers', checked:'30 ק״ג לכל נוסע בכל מקטע', hand:'עד 7 ק״ג לנוסע',
+    booking:'', airlines:'Etihad + Emirates', cabin:'Economy', passengers:'2 passengers',
+    checked:'לפי הכרטיס המעודכן', hand:'לפי הכרטיס המעודכן',
+    note:'האישור העדכני כולל חזרה Narita → Dubai ב־16/11. מקטע המשך Dubai → Tel Aviv אינו מופיע באישור האחרון ולכן לא מוצג כאן עד לאישור.',
     legs:[
-      {date:'03/11',route:'TLV → DXB',time:'13:50 → 18:55',flight:'EK2269 / FZ1636',carrier:'Flydubai',terminals:'TLV T3 → DXB T3',duration:'כ־4:05 שעות'},
-      {connection:'Dubai · 3:50'},
-      {date:'03–04/11',route:'DXB → NRT',time:'22:45 → 13:10 (+1)',flight:'EK320',carrier:'Emirates',terminals:'DXB T3 → Narita T2',duration:'כ־9:25 שעות',seats:''},
-      {date:'17–18/11',route:'NRT → DXB',time:'21:30 → 04:40 (+1)',flight:'EK321',carrier:'Emirates',terminals:'Narita T2 → DXB T3',duration:'כ־12:10 שעות',seats:''},
-      {connection:'Dubai · 1:35'},
-      {date:'18/11',route:'DXB → TLV',time:'06:15 → 08:05',flight:'EK2120 / FZ1073',carrier:'Flydubai',terminals:'DXB T3 → TLV T3',duration:'כ־3:50 שעות'}
+      {date:'03/11',route:'TLV → AUH',time:'14:00 → 19:10',flight:'EY594',carrier:'Etihad Airways',duration:'03:10 שעות',aircraft:'Airbus A321neo'},
+      {connection:'Abu Dhabi · 1:55'},
+      {date:'03–04/11',route:'AUH → NRT',time:'21:05 → 11:40 (+1)',flight:'EY800',carrier:'Etihad Airways',duration:'09:35 שעות',aircraft:'Airbus A380-800',seats:''},
+      {date:'16–17/11',route:'NRT → DXB',time:'21:30 → 04:40 (+1)',flight:'EK321',carrier:'Emirates',duration:'12:10 שעות',aircraft:'Boeing 777-300ER',seats:''}
     ]
   };
 
@@ -371,7 +371,7 @@
   ];
 
   window.TRIP_DATA = {
-    version:'10.3.19', title:'Japan Trip', year:2026, travelers:'2 travelers',
+    version:'10.3.20', title:'Japan Trip', year:2026, travelers:'2 travelers',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
     hotels, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
     maps:{search:G,directions:D}
