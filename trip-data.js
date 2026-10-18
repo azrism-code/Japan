@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · canonical data · v10.3.20
+/* Japan Trip 2026 · canonical data · v10.3.21
    One source of truth. No runtime hotel/place replacement patches. */
 (() => {
   'use strict';
@@ -285,21 +285,24 @@
       {time:'ערב',icon:'🌃',title:'Dotonbori',text:'ערב נוסף לאוכל ושיטוט.',place:'Dotonbori'},
       {time:'אופציה',icon:'🍜',title:'Namba Ramen Ichiza',text:'מתחם ראמן ב-EDION Namba.',place:'Namba Ramen Ichiza'}
     ],route:D('Osaka Castle','Dotonbori Osaka',['Umeda Osaka','Shinsaibashi Osaka'])},
-    {date:'16/11',dow:'שני',city:'Tokyo',title:'Osaka → Tokyo',summary:'Namba → Shin-Osaka → Shinkansen → Hotel Metropolitan → Nihonbashi → Tokyo Station → Marunouchi',hotel:'hotel-metropolitan-marunouchi',evening:'marunouchi',stops:[
-      {time:'בוקר',icon:'🚄',title:'Osaka → Tokyo',text:'Namba → Shin-Osaka ב-Midosuji Line, ואז Shinkansen ל-Tokyo. אם הראות טובה, שווה לשבת בצד המתאים ל-Fuji.'},
-      {time:'15:00',icon:'🏮',title:'Nihonbashi · Tokyo של פעם',text:'Nihonbashi Bridge, רחובות ותיקים ו-COREDO Muromachi.',place:'Nihonbashi'},
+    {date:'16/11',dow:'שני',city:'Tokyo',title:'Osaka → Tokyo · שתי אפשרויות לסיום',summary:'Namba → Shin-Osaka → Shinkansen → Tokyo · בערב: טיסה מאושרת כרגע או לינה ב-Marunouchi',hotel:'hotel-metropolitan-marunouchi',evening:'marunouchi',stops:[
+      {time:'בוקר',icon:'🚄',title:'Osaka → Tokyo',text:'Namba → Shin-Osaka ב-Midosuji Line, ואז Shinkansen ל-Tokyo. הנסיעה לטוקיו נשארת בכל תרחיש. אם הראות טובה, שווה לשבת בצד המתאים ל-Fuji.'},
+      {time:'15:00',icon:'🏮',title:'Nihonbashi · Tokyo של פעם',text:'אם הזמן מאפשר: Nihonbashi Bridge, רחובות ותיקים ו-COREDO Muromachi.',place:'Nihonbashi',optional:true},
       {time:'אופציה',icon:'⚡',title:'Pokémon Center Tokyo DX',text:'חנות Pokémon גדולה באזור Nihonbashi, קרובה למסלול שלנו.',place:'Pokemon Center Tokyo DX',optional:true,tag:'🛍️ חנות אופציונלית'},
-      {time:'17:00',icon:'🛍️',title:'Tokyo Station · Gransta / Character Street',text:'מתנות, ממתקים והשלמות אחרונות בלי להתרחק מהמלון.',place:'Gransta / Character Street'},
+      {time:'17:00',icon:'🛍️',title:'Tokyo Station · Gransta / Character Street',text:'אם לא טסים מיד: מתנות, ממתקים והשלמות אחרונות בלי להתרחק מהמלון.',place:'Gransta / Character Street',optional:true},
       {time:'על הדרך',icon:'🥟',title:'Tokyo Gyoza Stand Oolong',text:'גיוזה בתוך Gransta — עצירה קצרה בזמן שעוברים בתחנה.',place:'Tokyo Gyoza Stand Oolong',optional:true,tag:'🥟 גיוזה על הדרך'},
-      {time:'18:30',icon:'🌃',title:'KITTE + Marunouchi Naka-dori',text:'Rooftop Garden של KITTE והליכה קצרה ב-Marunouchi.',place:'KITTE Marunouchi'},
-      {time:'אופציה',icon:'🛍️',title:'Ginza · רק אם נשאר משהו לקנות',text:'קרובה מאוד ל-Tokyo Station; רק אם יש קנייה ספציפית שלא הספקנו.',place:'Ginza'}
-    ],route:D('Hotel Metropolitan Tokyo Marunouchi','Marunouchi Naka-dori Tokyo',['Nihonbashi Bridge Tokyo','Pokemon Center Tokyo DX Nihonbashi','Tokyo Station','Tokyo Gyoza Stand Oolong Gransta Tokyo Station','KITTE Marunouchi'])},
-    {date:'17/11',dow:'שלישי',city:'Tokyo',title:'יום אחרון וטיסה',summary:'בוקר חופשי → JINS / השלמות → Narita → טיסה',hotel:'hotel-metropolitan-marunouchi',stops:[
-      {time:'בוקר',icon:'🏨',title:'Check-out · Hotel Metropolitan Tokyo Marunouchi',text:'Check-out והשארת מזוודות אם צריך עד היציאה ל-Narita.'},
-      {time:'בוקר',icon:'☕',title:'בוקר חופשי',text:'לפי מה שנשאר ומה שמתחשק.'},
-      {time:'גיבוי',icon:'👓',title:'JINS Shinjuku · איסוף רק אם לא הושלם קודם',text:'עדיף לאסוף לפני שעוזבים את Shinjuku ב־8/11 אם המשקפיים מוכנים. חוזרים לכאן ב־17/11 רק אם עדיין צריך.',place:'JINS Shinjuku',optional:true,tag:'גיבוי ליום האחרון'},
-      {time:'אחה״צ',icon:'🚆',title:'יציאה ל-Narita',text:'להשאיר מרווח נדיב לנסיעה ולבידוק.',place:'Narita Airport'},
-      {time:'21:30',icon:'✈️',title:'Narita → Dubai',text:'EK321 · Emirates · מושבים: Azriel 32K · Ayala 32J · Narita T2 → DXB T3.'}
+      {time:'17:30',icon:'🚆',title:'אפשרות A · יציאה ל-Narita',text:'אם נשארים עם הטיסה המאושרת של 16/11: יוצאים מאזור Tokyo Station לכיוון Narita ומשאירים מרווח נדיב.',place:'Narita Airport',optional:true,kind:'logistics',tag:'✅ לפי האישור הנוכחי'},
+      {time:'18:30',icon:'🛫',title:'אפשרות A · הגעה ל-Narita',text:'כבודה, בידוק והגעה רגועה לשער לטיסת EK321.',place:'Narita Airport',optional:true,kind:'logistics'},
+      {time:'21:30',icon:'✈️',title:'אפשרות A · Narita → Dubai',text:'EK321 · Emirates · 21:30 → 04:40 (+1). זו הטיסה המאושרת כרגע ל־16/11.',optional:true,kind:'logistics',tag:'✅ מאושר כרגע'},
+      {time:'ערב',icon:'🏨',title:'אפשרות B · נשארים ללילה בטוקיו',text:'אם הטיסה תחזור ל־17/11: נשארים ב-Hotel Metropolitan Tokyo Marunouchi כמתוכנן וממשיכים לערב Marunouchi / Ginza.',optional:true,tag:'🏨 המלון נשאר כרגע'}
+    ],route:D('Shin-Osaka Station','Hotel Metropolitan Tokyo Marunouchi',['Tokyo Station'])},
+    {date:'17/11',dow:'שלישי',city:'Tokyo',title:'יום אחרון · חלופת טיסה 17/11',summary:'היום נשאר בתוכנית למקרה שהטיסה תחזור ל־17/11 · בוקר חופשי → JINS / השלמות → Narita',hotel:'hotel-metropolitan-marunouchi',stops:[
+      {time:'בוקר',icon:'🏨',title:'Check-out · Hotel Metropolitan Tokyo Marunouchi',text:'רלוונטי אם נשארנו ללילה 16–17/11. Check-out והשארת מזוודות אם צריך עד היציאה ל-Narita.'},
+      {time:'בוקר',icon:'☕',title:'בוקר חופשי',text:'לפי מה שנשאר ומה שמתחשק, אם הטיסה אכן תהיה ב־17/11.'},
+      {time:'גיבוי',icon:'👓',title:'JINS Shinjuku · איסוף רק אם לא הושלם קודם',text:'עדיף לאסוף לפני שעוזבים את Shinjuku ב־8/11 אם המשקפיים מוכנים. חוזרים לכאן רק אם עדיין צריך.',place:'JINS Shinjuku',optional:true,tag:'גיבוי ליום האחרון'},
+      {time:'17:30',icon:'🚆',title:'אפשרות B · יציאה ל-Narita',text:'רק אם Emirates תחזיר את הטיסה ל־17/11. כרגע זו חלופת תכנון ולא טיסה מאושרת.',place:'Narita Airport',optional:true,kind:'logistics',tag:'🟠 חלופת תכנון'},
+      {time:'18:30',icon:'🛫',title:'אפשרות B · הגעה ל-Narita',text:'הגעה לשדה כ־3 שעות לפני ההמראה, אם חלופת 17/11 תאושר.',place:'Narita Airport',optional:true,kind:'logistics'},
+      {time:'21:30',icon:'✈️',title:'אפשרות B · Narita → Dubai',text:'EK321 · Emirates · 21:30 → 04:40 (+1) — מבוסס על התכנון הקודם ל־17/11, אך אינו מאושר כרגע.',optional:true,kind:'logistics',tag:'🟠 לא מאושר כרגע'}
     ],route:D('Hotel Metropolitan Tokyo Marunouchi','Narita International Airport')}
   ];
 
@@ -318,12 +321,13 @@
   const flights = {
     booking:'', airlines:'Etihad + Emirates', cabin:'Economy', passengers:'2 passengers',
     checked:'לפי הכרטיס המעודכן', hand:'לפי הכרטיס המעודכן',
-    note:'האישור העדכני כולל חזרה Narita → Dubai ב־16/11. מקטע המשך Dubai → Tel Aviv אינו מופיע באישור האחרון ולכן לא מוצג כאן עד לאישור.',
+    note:'חזרה: 16/11 היא הטיסה המאושרת כרגע. 17/11 נשמרת באפליקציה כחלופת תכנון למקרה ש-Emirates תחזיר את התאריך. המלון בטוקיו 16–17/11 נשאר כרגע. מקטע המשך Dubai → Tel Aviv אינו מופיע באישור האחרון ולכן אינו מוצג עד לאישור.',
     legs:[
-      {date:'03/11',route:'TLV → AUH',time:'14:00 → 19:10',flight:'EY594',carrier:'Etihad Airways',duration:'03:10 שעות',aircraft:'Airbus A321neo'},
+      {date:'03/11',route:'TLV → AUH',time:'14:00 → 19:10',flight:'EY594',carrier:'Etihad Airways',duration:'03:10 שעות',aircraft:'Airbus A321neo',status:'✅ מאושר'},
       {connection:'Abu Dhabi · 1:55'},
-      {date:'03–04/11',route:'AUH → NRT',time:'21:05 → 11:40 (+1)',flight:'EY800',carrier:'Etihad Airways',duration:'09:35 שעות',aircraft:'Airbus A380-800',seats:''},
-      {date:'16–17/11',route:'NRT → DXB',time:'21:30 → 04:40 (+1)',flight:'EK321',carrier:'Emirates',duration:'12:10 שעות',aircraft:'Boeing 777-300ER',seats:''}
+      {date:'03–04/11',route:'AUH → NRT',time:'21:05 → 11:40 (+1)',flight:'EY800',carrier:'Etihad Airways',duration:'09:35 שעות',aircraft:'Airbus A380-800',seats:'',status:'✅ מאושר'},
+      {date:'16–17/11',route:'NRT → DXB',time:'21:30 → 04:40 (+1)',flight:'EK321',carrier:'Emirates',duration:'12:10 שעות',aircraft:'Boeing 777-300ER',seats:'',status:'✅ מאושר כרגע'},
+      {date:'17–18/11',route:'NRT → DXB',time:'21:30 → 04:40 (+1)',flight:'EK321',carrier:'Emirates',duration:'12:10 שעות',aircraft:'Boeing 777-300ER',seats:'',status:'🟠 חלופת תכנון · לא מאושר כרגע'}
     ]
   };
 
@@ -371,7 +375,7 @@
   ];
 
   window.TRIP_DATA = {
-    version:'10.3.20', title:'Japan Trip', year:2026, travelers:'2 travelers',
+    version:'10.3.21', title:'Japan Trip', year:2026, travelers:'2 travelers',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
     hotels, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
     maps:{search:G,directions:D}
