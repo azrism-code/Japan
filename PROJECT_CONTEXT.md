@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.23 first-Tokyo-day update on 2026-10-19.
-> **Current app version:** **v10.3.23**.  
+> **Verified against:** current main after the v10.3.24 guide-and-evening update on 2026-10-19.
+> **Current app version:** **v10.3.24**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -24,6 +24,10 @@
 7. Do not rebuild the app from scratch unless explicitly requested.
 8. Do not change the visual design beyond what the requested feature needs.
 9. This repository is **public**. Do not add new passwords, private tokens, passport details, booking references, personal IDs, or other secrets to this file.
+
+10. **Place-detail UX rule:** day cards stay concise. Detailed explanation belongs inside **“מדריך וטיפים”** only. Do not repeat the same descriptive paragraph in the day card, Places card and guide modal.
+11. Every itinerary place that has a guide button should have a real guide: what the place is, why it is worth our time, how it fits this trip, a practical tip, and a suggested visit duration.
+12. **Dinner rhythm:** default dinner target is around **21:00**. Earlier dinner is an exception only when fatigue, a booked experience, transport, or local closing hours make it necessary.
 
 ---
 
@@ -317,30 +321,40 @@ Latest confirmed flights from the 18 Oct Emirates itinerary:
 - EY800 · AUH 21:05 → NRT 11:40 (+1) · Etihad Airways · Airbus A380-800.
 
 ### 04/11 · Tokyo · Shinjuku First Day
-Narita 11:40 → **JR Kyushu Hotel Blossom Shinjuku** → first afternoon/evening in Shinjuku.
+Narita 11:40 → first afternoon/evening in Shinjuku.
 
 Airport transfer:
-- preferred comfort option: fixed-fare Airport Taxi from Narita directly to the hotel,
-- current Narita official Zone D fare: **¥31,500–¥32,500 + expressway tolls**, no advance reservation required,
-- NEX → Shinjuku remains the cheaper fallback,
-- target hotel/check-in window is roughly 14:30–15:30, but depends on immigration, baggage and road/rail conditions.
+- the user has a **free taxi through Booking**, so this is the planned transfer,
+- after immigration and baggage, follow the Booking / transfer-provider pickup instructions and ride directly to Shinjuku,
+- do **not** show a paid Narita taxi price or NEX as the primary plan,
+- do **not** add a separate check-in stop just after customs; the hotel is already shown by the itinerary hotel card.
 
 Afternoon:
 JINS → 3D Cat → Godzilla Head → optional Tokyu Kabukicho Tower.
 
 Evening walk is deliberately shorter and has no duplicates from the afternoon:
-optional Don Quijote → Hanazono Shrine → Golden Gai → Omoide Yokocho / dinner.
+optional Don Quijote → Hanazono Shrine → Golden Gai → Omoide Yokocho.
+Dinner target is around **21:00**; only on arrival day may it move earlier if fatigue/hunger requires it.
 
 ### 05/11 · Tokyo
-Asakusa → Ueno → Ameyoko → Akihabara.
+Asakusa → Ueno → Ameyoko → 2k540 → Akihabara through the evening.
 
-Current optional additions:
-- Asakusa Culture Tourist Information Center viewpoint,
-- Gyoza no Ousama,
-- Chuka Chinman,
-- Kikanbo Kanda Honten.
+Current flow:
+- Kaminarimon → Nakamise → Sensō-ji,
+- optional Asakusa Culture Tourist Information Center,
+- optional Gyoza no Ousama,
+- Ueno → Ameyoko,
+- optional Chuka Chinman,
+- optional **2k540 AKI-OKA ARTISAN**,
+- Akihabara Electric Town,
+- **Akihabara Radio Kaikan**,
+- Akihabara after dark,
+- optional **Yodobashi Akiba**,
+- optional **GiGO Akihabara**,
+- Kikanbo only if timing/queue work,
+- dinner around **21:00** in Akihabara/Kanda.
 
-**No separate Asakusa evening walk is assigned anymore.** The route already visits Asakusa in the morning, so the day now finishes naturally in Akihabara/Kanda after the neon comes on, with dinner there. This avoids a duplicate trip back to Asakusa.
+**No separate Asakusa evening walk is assigned.** Asakusa is already visited in the morning, so the day deliberately finishes in Akihabara/Kanda rather than doubling back.
 
 ### 06/11 · Tokyo
 Meiji Shrine → Harajuku → Omotesando → Shibuya → viewpoint choice → **Shibuya After Dark**.
