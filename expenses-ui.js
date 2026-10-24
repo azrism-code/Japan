@@ -1,7 +1,7 @@
-/* Japan Trip 2026 · compact expense controls + budget summary · v10.3.18 */
+/* Japan Trip 2026 · compact expense controls + dual budget filters · v10.3.25 */
 (() => {
   'use strict';
-  const VERSION='10.3.18';
+  const VERSION='10.3.25';
   const EXP_KEY='japanTrip_expenses_v1';
   const SETTINGS_KEY='japanTrip_expense_settings_v1';
   const TRASH_KEY='japanTrip_expenses_trash_v1';
@@ -121,14 +121,72 @@
     return new Intl.NumberFormat('he-IL',{maximumFractionDigits:0}).format(Math.round(Number(value)||0))+' ₪';
   }
 
+
+  const STATUS_CHOICES=[
+    {key:'paid',label:'שולם',colorClass:'budget-paid'},
+    {key:'booked',label:'הוזמן',colorClass:'budget-booked'},
+    {key:'estimate',label:'הערכה',colorClass:'budget-estimate'}
+  ];
+  const CATEGORY_COLORS={
+    '🏨 לינה':'#5478bf','🚗 תחבורה':'#2f9c8d','✈️ טיסות':'#e7a347',
+    '🍜 אוכל':'#9875cd','🛍️ קניות':'#d77888','🎟️ אטרקציות':'#408eab',
+    '📱 תקשורת':'#8c95a3','🛡️ ביטוח':'#af7a4b','📦 אחר':'#9a8a7a'
+  };
+  const FALLBACK_CATEGORY_COLORS=['#5478bf','#2f9c8d','#e7a347','#9875cd','#d77888','#408eab','#8c95a3','#af7a4b','#9a8a7a'];
+  let statusFilter=null,categoryFilter=null;
+
+  function expenseStatus(status){
+    return status==='שולם'?'paid':status==='מוזמן'?'booked':'estimate';
+  }
+  function htmlSafe(value){
+    return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function categoryColor(category){
+    if(CATEGORY_COLORS[category])return CATEGORY_COLORS[category];
+    let hash=0;
+    for(const ch of category)hash=(hash*31+ch.codePointAt(0))>>>0;
+    return FALLBACK_CATEGORY_COLORS[hash%FALLBACK_CATEGORY_COLORS.length];
+  }
+  function expenseCategories(){
+    const T=window.TRIP_DATA||{};
+    const settings=read(SETTINGS_KEY,{});
+    const rates={USD:3,EUR:3.5,JPY:Number(T.rateJpyIls)||0.0196773,ILS:1,...(settings.rates||{})};
+    const items=read(EXP_KEY,[]);
+    const amounts=new Map();
+    if(Array.isArray(items))for(const item of items){
+      const name=String(item?.category||'📦 אחר');
+      if(!amounts.has(name))amounts.set(name,0);
+      if(item?.included===false)continue;
+      const amount=(Number(item?.amount)||0)*(Number(rates[item?.currency])||1);
+      amounts.set(name,amounts.get(name)+amount);
+    }
+    return [...amounts].map(([name,amount])=>({name,amount,color:categoryColor(name)}))
+      .sort((a,b)=>b.amount-a.amount||a.name.localeCompare(b.name,'he'));
+  }
+
   function enhanceSummary(body){
     const summary=body.querySelector(':scope > .expense-summary');
     if(!summary)return;
 
     const t=budgetData();
+    const categories=expenseCategories();
+    if(categoryFilter&&!categories.some(c=>c.name===categoryFilter))categoryFilter=null;
     const denom=Math.max(t.budget,t.used,1);
-    const paidW=t.paid/denom*100, bookedW=t.booked/denom*100, estimateW=t.estimate/denom*100;
     const pct=t.budget?Math.round(t.used/t.budget*100):0;
+    const statusItems=STATUS_CHOICES.map(s=>({...s,amount:t[s.key]}));
+
+    const statusBar=statusItems.filter(s=>s.amount>0).map(s=>
+      `<button type="button" class="budget-seg budget-seg-button ${s.colorClass} ${statusFilter&&statusFilter!==s.key?'is-muted':''}" data-exp-status="${s.key}" aria-pressed="${statusFilter===s.key}" aria-label="${s.label}: ${money(s.amount)}" style="width:${s.amount/denom*100}%" title="${s.label}: ${money(s.amount)}"></button>`
+    ).join('');
+    const statusLegend=statusItems.map(s=>
+      `<button type="button" class="expense-legend-choice ${statusFilter===s.key?'is-active':''}" data-exp-status="${s.key}" aria-pressed="${statusFilter===s.key}"><i class="legend-dot ${s.colorClass}"></i><b>${s.label}</b><small>${money(s.amount)}</small></button>`
+    ).join('');
+    const categoryBar=categories.filter(c=>c.amount>0&&t.used>0).map(c=>
+      `<button type="button" class="budget-seg budget-seg-button expense-category-seg ${categoryFilter&&categoryFilter!==c.name?'is-muted':''}" data-exp-category="${htmlSafe(c.name)}" aria-pressed="${categoryFilter===c.name}" aria-label="${htmlSafe(c.name)}: ${money(c.amount)}" style="width:${c.amount/t.used*100}%;background:${c.color}" title="${htmlSafe(c.name)}: ${money(c.amount)}"></button>`
+    ).join('');
+    const categoryLegend=categories.map(c=>
+      `<button type="button" class="expense-legend-choice ${categoryFilter===c.name?'is-active':''}" data-exp-category="${htmlSafe(c.name)}" aria-pressed="${categoryFilter===c.name}"><i class="legend-dot" style="background:${c.color}"></i><b>${htmlSafe(c.name)}</b><small>${money(c.amount)} · ${t.used?Math.round(c.amount/t.used*100):0}%</small></button>`
+    ).join('');
 
     summary.classList.add('expense-summary-v2');
     summary.innerHTML=`
@@ -138,18 +196,44 @@
       <div class="kpi estimate-kpi"><span>הערכה</span><b>${money(t.estimate)}</b></div>
       <div class="kpi remaining-kpi"><span>נותר בתקציב</span><b>${money(t.remaining)}</b></div>
       <div class="budget-chart">
-        <div class="budget-chart-head"><span>ניצול תקציב</span><b>${pct}%</b></div>
-        <div class="budget-stack" aria-label="ניצול תקציב: שולם, הוזמן והערכה">
-          <i class="budget-seg budget-paid" style="width:${paidW}%" title="שולם בפועל ${money(t.paid)}"></i>
-          <i class="budget-seg budget-booked" style="width:${bookedW}%" title="הוזמן ${money(t.booked)}"></i>
-          <i class="budget-seg budget-estimate" style="width:${estimateW}%" title="הערכה ${money(t.estimate)}"></i>
-        </div>
-        <div class="budget-legend">
-          <span><i class="legend-dot budget-paid"></i><b>שולם</b><small>${money(t.paid)}</small></span>
-          <span><i class="legend-dot budget-booked"></i><b>הוזמן</b><small>${money(t.booked)}</small></span>
-          <span><i class="legend-dot budget-estimate"></i><b>הערכה</b><small>${money(t.estimate)}</small></span>
-        </div>
+        <div class="budget-chart-head"><span>ניצול תקציב · סינון לפי מצב</span><b>${pct}%</b></div>
+        <div class="budget-stack" role="group" aria-label="סינון הוצאות לפי מצב התשלום">${statusBar}</div>
+        <div class="budget-legend">${statusLegend}</div>
+      </div>
+      <div class="budget-chart expense-category-chart">
+        <div class="budget-chart-head"><span>חלוקת הוצאות · סינון לפי סוג</span>${statusFilter||categoryFilter?'<button type="button" class="expense-clear-filters" data-exp-clear-filters>נקה סינון ✕</button>':''}</div>
+        <div class="budget-stack" role="group" aria-label="סינון הוצאות לפי קטגוריה">${categoryBar}</div>
+        <div class="expense-category-legend">${categoryLegend||'<span class="expense-filter-empty-label">אין הוצאות להצגה</span>'}</div>
       </div>`;
+  }
+
+  function applyExpenseFilters(body){
+    const oldFilters=body.querySelector('.filter-row');
+    if(oldFilters)oldFilters.hidden=true;
+    const items=read(EXP_KEY,[]);
+    const byId=new Map(Array.isArray(items)?items.map(item=>[String(item.id),item]):[]);
+    let visible=0;
+    const cards=[...body.querySelectorAll('.expense-card')];
+    for(const card of cards){
+      const item=byId.get(String(card.dataset.expId));
+      const show=!!item&&(!statusFilter||expenseStatus(item.status)===statusFilter)
+        &&(!categoryFilter||String(item.category||'📦 אחר')===categoryFilter);
+      card.hidden=!show;
+      if(show)visible++;
+    }
+    let note=body.querySelector('.expense-filter-result');
+    if(!note){
+      note=document.createElement('div');
+      note.className='expense-filter-result';
+      note.setAttribute('role','status');
+      if(oldFilters)oldFilters.after(note);
+      else body.querySelector('.expense-card')?.before(note);
+    }
+    const filtered=!!(statusFilter||categoryFilter);
+    note.hidden=!filtered;
+    if(filtered)note.textContent=visible
+      ?`מציג ${visible} הוצאות · ${[STATUS_CHOICES.find(s=>s.key===statusFilter)?.label,categoryFilter].filter(Boolean).join(' + ')}`
+      :'אין הוצאות המתאימות לסינון. לחיצה נוספת על הבחירה תבטל אותה.';
   }
 
   function enhanceExpenseCards(body){
@@ -345,9 +429,8 @@
       btn.setAttribute('aria-expanded',String(active));
     });
 
-    const hotelFilter=body.querySelector('.filter-row [data-exp-filter="🏨 לינה"]');
-    if(hotelFilter)hotelFilter.textContent='🏨 מלונות';
     enhanceExpenseCards(body);
+    applyExpenseFilters(body);
   }
 
   function scheduleEnhance(){
@@ -392,6 +475,20 @@
     }
   },true);
 
+
+  document.addEventListener('click',e=>{
+    const status=e.target.closest('[data-exp-status]');
+    const category=e.target.closest('[data-exp-category]');
+    const clear=e.target.closest('[data-exp-clear-filters]');
+    if(!status&&!category&&!clear)return;
+    if(!isExpensesPage(document.querySelector('#sheetPage.open')))return;
+    e.preventDefault();
+    if(clear){statusFilter=null;categoryFilter=null}
+    else if(status){statusFilter=statusFilter===status.dataset.expStatus?null:status.dataset.expStatus}
+    else if(category){categoryFilter=categoryFilter===category.dataset.expCategory?null:category.dataset.expCategory}
+    enhanceExpenses();
+  });
+
   document.addEventListener('click',e=>{
     const panelButton=e.target.closest('[data-exp-panel]');
     if(panelButton){
@@ -419,12 +516,24 @@
     .budget-chart{grid-column:1/-1;background:#fff;border:1px solid #eadfd8;border-radius:14px;padding:11px 12px;box-shadow:0 2px 10px #0000000a}
     .budget-chart-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;font-size:12px;font-weight:900}
     .budget-chart-head b{font-size:16px}
-    .budget-stack{height:14px;display:flex;direction:ltr;overflow:hidden;border-radius:999px;background:#eee9e5}
+    .budget-stack{height:18px;display:flex;direction:ltr;overflow:hidden;border-radius:999px;background:#eee9e5}
+    .budget-seg-button{appearance:none;border:0;padding:0;cursor:pointer;min-width:0;transition:opacity .15s}
+    .budget-seg-button.is-muted{opacity:.26}
+    .budget-seg-button:focus-visible,.expense-legend-choice:focus-visible,.expense-clear-filters:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
+    .expense-category-chart{margin-top:0}
+    .expense-legend-choice{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:5px;row-gap:2px;padding:5px 4px;border:1px solid transparent;border-radius:8px;background:transparent;cursor:pointer;text-align:right;min-width:0;color:inherit;font:inherit;font-size:10px}
+    .expense-legend-choice b{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .expense-legend-choice small{grid-column:2;color:#776c65;font-size:9px;white-space:nowrap}
+    .expense-legend-choice.is-active{border-color:#cfbda9;background:#fff4e7}
+    .expense-category-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 5px;margin-top:7px}
+    .expense-clear-filters{border:0;background:transparent;color:#9b4e0e;font:inherit;font-size:10px;font-weight:800;cursor:pointer}
+    .expense-filter-result{margin:6px 0;color:#67574c;font-size:11px;font-weight:700}
+    .expense-card[hidden],.filter-row[hidden],.expense-filter-result[hidden]{display:none!important}
+    .expense-filter-empty-label{font-size:11px;color:#776c65}
     .budget-seg{display:block;height:100%;flex:0 0 auto}
     .budget-paid{background:#2f855a}.budget-booked{background:#d97706}.budget-estimate{background:#6b7280}
     .budget-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:9px}
-    .budget-legend span{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:5px;row-gap:1px;font-size:10px;min-width:0}
-    .budget-legend small{grid-column:2;color:#776c65;font-size:9.5px;white-space:nowrap}
+    .budget-legend .expense-legend-choice{min-width:0}
     .legend-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
     .compact-expense-card{padding:9px 10px!important;margin:7px 0!important}
     .compact-expense-card .expense-head{gap:7px;align-items:center}

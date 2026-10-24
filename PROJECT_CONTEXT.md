@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.24 guide-and-evening update on 2026-10-19.
-> **Current app version:** **v10.3.24**.  
+> **Verified against:** current main after the v10.3.25 dual expense-filter update on 2026-10-24.
+> **Current app version:** **v10.3.25**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -65,10 +65,10 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.18**
+Current release: **v10.3.25**
 
 Current service-worker cache:
-`japan-trip-v10-3-18-security`
+`japan-trip-v10-3-25-expense-filters`
 
 When app code/assets change:
 
@@ -582,6 +582,17 @@ The same PWA now adapts automatically to tablets; there is no separate tablet ap
 - Hotels, flights, bookings, tools and expenses use two-column layouts where practical; Places uses a two-column card grid.
 - The manifest orientation is now `any`, so installed PWA works in both portrait and landscape.
 - Mobile behavior and data model are unchanged.
+
+
+## 16B. Interactive budget breakdown filters — v10.3.25
+
+- Existing paid / booked / estimate utilization bar and legend now filter the expense list by payment status.
+- A second stacked bar and legend summarize expenses by category and filter the same list.
+- Status and category choices combine (logical AND); clicking a selected choice again clears it; a clear-all control appears when filters are active.
+- The separate expense category filter button row is hidden to save space.
+- All totals and chart percentages always reflect **all expenses included in the budget**, not just the selected subset.
+- Category amounts are converted to ILS using current configured FX rates; excluded expenses stay visible in the list when they match the filters but do not contribute to chart totals.
+- Existing expense storage and Firestore synchronization schemas are unchanged. No user data is reset.
 
 ---
 
