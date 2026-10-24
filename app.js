@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · application · v10.3.26
+/* Japan Trip 2026 · application · v10.3.27
    Deterministic render from TRIP_DATA. No patch modules, DOM observers or runtime source rewriting. */
 (() => {
 'use strict';

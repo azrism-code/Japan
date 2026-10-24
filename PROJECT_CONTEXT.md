@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.26 responsive expense typography update on 2026-10-24.
-> **Current app version:** **v10.3.26**.  
+> **Verified against:** current main after the v10.3.27 app-wide readability update on 2026-10-24.
+> **Current app version:** **v10.3.27**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -65,10 +65,10 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.26**
+Current release: **v10.3.27**
 
 Current service-worker cache:
-`japan-trip-v10-3-26-readable-expenses`
+`japan-trip-v10-3-27-readable-app`
 
 When app code/assets change:
 
@@ -603,6 +603,18 @@ The same PWA now adapts automatically to tablets; there is no separate tablet ap
 - Enlarged small KPI labels and expense action/filter text, with wrapping/minimum touch targets to reduce clipping on narrow mobile screens.
 - Changes are scoped to the Expenses page; existing layouts on other app pages remain unchanged.
 - Typography scales within bounds across phone and tablet viewports. The dual filter behavior, expense data and sync schema are preserved.
+
+---
+
+## 16D. App-wide readable typography — v10.3.27
+
+- New `readability.css` is the single, targeted override layer for text readability across the PWA, loaded last in `index.html` and included in the offline CORE cache.
+- Regular descriptions, notes and card details are **16px**; secondary text is **15px**; headings are usually **18px**. The expense chart headings are **17px**.
+- Expense cards use 16px for status/category/payment and free-text notes. The two chart legends have 16px category/status names and 15px values/percentages.
+- Also targets itinerary timelines, place listings, booking planner, hotel/flight cards, station guides, modals, tools, nav labels and tablet companion panel.
+- Narrow card text may wrap. Expense edit-button tap targets are enlarged. The bottom navigation has increased reserved height; tablet landscape retains its left-side rail.
+- No change to business logic, expense data, Firestore schema, booking truth, or interactive expense filtering. Never reset localStorage to apply typography changes.
+- Future app-wide text size adjustments should be made in `readability.css` rather than adding more runtime overrides.
 
 ---
 
