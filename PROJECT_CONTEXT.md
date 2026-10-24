@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.28 balanced readability adjustment on 2026-10-24.
-> **Current app version:** **v10.3.28**.  
+> **Verified against:** current main after the v10.3.29 itinerary timeline simplification on 2026-10-24.
+> **Current app version:** **v10.3.29**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -65,10 +65,10 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.28**
+Current release: **v10.3.29**
 
 Current service-worker cache:
-`japan-trip-v10-3-28-balanced-fonts`
+`japan-trip-v10-3-29-wide-itinerary`
 
 When app code/assets change:
 
@@ -626,6 +626,16 @@ The same PWA now adapts automatically to tablets; there is no separate tablet ap
 - Applied balanced typography to itinerary, hotels, places, booking planner, station guides and Expenses without altering features or private/shared storage.
 - Two expense chart filters still combine; status/category selections, expense amounts, and persisted settings are unchanged.
 - Verify visually at phone widths and tablet layouts before any future typography increase.
+
+---
+
+## 16F. Compact itinerary without timeline rail — v10.3.29
+
+- Removed the small stop icons and vertical timeline connector from the day itinerary. This applies to normal stops, logistics, hotel mini-cards, and evening walk cards.
+- The itinerary `.stop` CSS grid now has two columns: a 52px time/label column and a flexible `minmax(0,1fr)` stop card with an 8px gap. Compared with the former 54px + 24px rail and two gaps, cards gain about 32px on phones.
+- The time remains outside the card on the right in RTL, in its existing orange treatment (logistics times retain their distinctive blue).
+- The rail's DOM markup and unused CSS rules are gone rather than only hidden; the larger card width also applies to tablet layouts.
+- No changes to itinerary content/times, optional flags, guides, map links, budget logic, stored data, or balanced typography from v10.3.28.
 
 ---
 
