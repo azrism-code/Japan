@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.27 app-wide readability update on 2026-10-24.
-> **Current app version:** **v10.3.27**.  
+> **Verified against:** current main after the v10.3.28 balanced readability adjustment on 2026-10-24.
+> **Current app version:** **v10.3.28**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -65,10 +65,10 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.27**
+Current release: **v10.3.28**
 
 Current service-worker cache:
-`japan-trip-v10-3-27-readable-app`
+`japan-trip-v10-3-28-balanced-fonts`
 
 When app code/assets change:
 
@@ -615,6 +615,17 @@ The same PWA now adapts automatically to tablets; there is no separate tablet ap
 - Narrow card text may wrap. Expense edit-button tap targets are enlarged. The bottom navigation has increased reserved height; tablet landscape retains its left-side rail.
 - No change to business logic, expense data, Firestore schema, booking truth, or interactive expense filtering. Never reset localStorage to apply typography changes.
 - Future app-wide text size adjustments should be made in `readability.css` rather than adding more runtime overrides.
+
+---
+
+## 16E. Balanced font sizes — v10.3.28
+
+- Based on the compact v10.3.26 layout after the v10.3.27 global typography enlargement caused oversized cards and clipped information.
+- The `readability.css` rules were replaced by selective, moderate font overrides: about 15px regular text, 14px secondary text, 16px card titles, 13–14px small labels; expense category names 15px, amounts and percentages 13px.
+- Restored original geometry for the day strip, timeline, bottom navigation, buttons, expense cards and graph columns; no broad 16px forced type or global padding/height changes.
+- Applied balanced typography to itinerary, hotels, places, booking planner, station guides and Expenses without altering features or private/shared storage.
+- Two expense chart filters still combine; status/category selections, expense amounts, and persisted settings are unchanged.
+- Verify visually at phone widths and tablet layouts before any future typography increase.
 
 ---
 
