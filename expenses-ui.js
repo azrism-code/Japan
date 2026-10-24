@@ -1,7 +1,7 @@
-/* Japan Trip 2026 · compact expense controls + dual budget filters · v10.3.25 */
+/* Japan Trip 2026 · compact expense controls + dual budget filters · v10.3.26 */
 (() => {
   'use strict';
-  const VERSION='10.3.25';
+  const VERSION='10.3.26';
   const EXP_KEY='japanTrip_expenses_v1';
   const SETTINGS_KEY='japanTrip_expense_settings_v1';
   const TRASH_KEY='japanTrip_expenses_trash_v1';
@@ -514,27 +514,27 @@
     .expense-summary-v2 .kpi{min-width:0}
     .expense-summary-v2 .remaining-kpi{grid-column:1/-1}
     .budget-chart{grid-column:1/-1;background:#fff;border:1px solid #eadfd8;border-radius:14px;padding:11px 12px;box-shadow:0 2px 10px #0000000a}
-    .budget-chart-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;font-size:12px;font-weight:900}
+    .budget-chart-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px 8px;margin-bottom:8px;font-size:clamp(13px,3.5vw,15px);font-weight:900;line-height:1.3}
     .budget-chart-head b{font-size:16px}
     .budget-stack{height:18px;display:flex;direction:ltr;overflow:hidden;border-radius:999px;background:#eee9e5}
     .budget-seg-button{appearance:none;border:0;padding:0;cursor:pointer;min-width:0;transition:opacity .15s}
     .budget-seg-button.is-muted{opacity:.26}
     .budget-seg-button:focus-visible,.expense-legend-choice:focus-visible,.expense-clear-filters:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
     .expense-category-chart{margin-top:0}
-    .expense-legend-choice{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:5px;row-gap:2px;padding:5px 4px;border:1px solid transparent;border-radius:8px;background:transparent;cursor:pointer;text-align:right;min-width:0;color:inherit;font:inherit;font-size:10px}
-    .expense-legend-choice b{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .expense-legend-choice small{grid-column:2;color:#776c65;font-size:9px;white-space:nowrap}
+    .expense-legend-choice{display:grid;grid-template-columns:10px minmax(0,1fr);align-items:center;column-gap:6px;row-gap:3px;padding:7px 4px;min-height:44px;border:1px solid transparent;border-radius:8px;background:transparent;cursor:pointer;text-align:right;min-width:0;color:inherit;font:inherit;font-size:clamp(13px,3.5vw,14px)}
+    .expense-legend-choice b{font-size:clamp(13px,3.5vw,14px);line-height:1.25;white-space:normal;overflow-wrap:anywhere}
+    .expense-legend-choice small{grid-column:2;color:#776c65;font-size:clamp(11px,3vw,12px);line-height:1.35;white-space:normal;overflow-wrap:anywhere}
     .expense-legend-choice.is-active{border-color:#cfbda9;background:#fff4e7}
-    .expense-category-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 5px;margin-top:7px}
-    .expense-clear-filters{border:0;background:transparent;color:#9b4e0e;font:inherit;font-size:10px;font-weight:800;cursor:pointer}
-    .expense-filter-result{margin:6px 0;color:#67574c;font-size:11px;font-weight:700}
+    .expense-category-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 6px;margin-top:8px}
+    .expense-clear-filters{border:0;background:transparent;color:#9b4e0e;font:inherit;font-size:12px;font-weight:800;cursor:pointer;min-height:32px}
+    .expense-filter-result{margin:6px 0;color:#67574c;font-size:13px;font-weight:700}
     .expense-card[hidden],.filter-row[hidden],.expense-filter-result[hidden]{display:none!important}
-    .expense-filter-empty-label{font-size:11px;color:#776c65}
+    .expense-filter-empty-label{font-size:13px;color:#776c65}
     .budget-seg{display:block;height:100%;flex:0 0 auto}
     .budget-paid{background:#2f855a}.budget-booked{background:#d97706}.budget-estimate{background:#6b7280}
     .budget-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:9px}
     .budget-legend .expense-legend-choice{min-width:0}
-    .legend-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+    .legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
     .compact-expense-card{padding:9px 10px!important;margin:7px 0!important}
     .compact-expense-card .expense-head{gap:7px;align-items:center}
     .compact-expense-card .expense-meta{margin-top:2px;line-height:1.25}
@@ -544,6 +544,12 @@
     .expense-edit-options{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px;padding:9px 10px;background:#faf7f4;border:1px solid #eadfd8;border-radius:11px}
     .expense-edit-include{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:900}.expense-edit-include input{width:18px;height:18px;accent-color:#2f855a}
     .expense-edit-delete{border:1px solid #e7b7b7;background:#fff5f5;color:#a12b2b;border-radius:9px;padding:7px 9px;font-size:10.5px;font-weight:900}
+    /* Readable typography on phones and tablets, scoped to the expense page. */
+    .expense-summary-v2 .kpi span{font-size:clamp(12px,3.1vw,13px);line-height:1.3}
+    .compact-expense-card .expense-meta,.compact-expense-card .expense-note{font-size:clamp(13px,3.5vw,14px);line-height:1.45;overflow-wrap:anywhere}
+    .compact-expense-card .expense-status{line-height:1.3}
+    .expense-actions-bar button{font-size:clamp(12px,3.2vw,14px)}
+    @media(max-width:360px){.expense-legend-choice{padding:6px 2px;column-gap:4px}.budget-legend{gap:2px}}
     .expense-edit-cancel{margin-top:7px}
     @media(min-width:520px){.expense-summary-v2{grid-template-columns:repeat(5,minmax(0,1fr))}.expense-summary-v2 .remaining-kpi{grid-column:auto}.budget-chart{grid-column:1/-1}}
   `;

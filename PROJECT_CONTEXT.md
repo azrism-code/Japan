@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.25 dual expense-filter update on 2026-10-24.
-> **Current app version:** **v10.3.25**.  
+> **Verified against:** current main after the v10.3.26 responsive expense typography update on 2026-10-24.
+> **Current app version:** **v10.3.26**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -65,10 +65,10 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.25**
+Current release: **v10.3.26**
 
 Current service-worker cache:
-`japan-trip-v10-3-25-expense-filters`
+`japan-trip-v10-3-26-readable-expenses`
 
 When app code/assets change:
 
@@ -593,6 +593,16 @@ The same PWA now adapts automatically to tablets; there is no separate tablet ap
 - All totals and chart percentages always reflect **all expenses included in the budget**, not just the selected subset.
 - Category amounts are converted to ILS using current configured FX rates; excluded expenses stay visible in the list when they match the filters but do not contribute to chart totals.
 - Existing expense storage and Firestore synchronization schemas are unchanged. No user data is reset.
+
+---
+
+## 16C. Expense screen readability — v10.3.26
+
+- Enlarged chart titles to responsive 13–15px, status/category labels to 13–14px, and corresponding amount/percentage captions to 11–12px.
+- Enlarged secondary text within individual expense cards (category, payment status, payment method and optional note) to responsive 13–14px.
+- Enlarged small KPI labels and expense action/filter text, with wrapping/minimum touch targets to reduce clipping on narrow mobile screens.
+- Changes are scoped to the Expenses page; existing layouts on other app pages remain unchanged.
+- Typography scales within bounds across phone and tablet viewports. The dual filter behavior, expense data and sync schema are preserved.
 
 ---
 
