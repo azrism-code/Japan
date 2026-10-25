@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.30 Firebase authentication lifecycle repair on 2026-10-25.
-> **Current app version:** **v10.3.30**.  
+> **Verified against:** current main after the v10.3.31 confirmed Etihad itinerary and airport transfer update on 2026-10-25.
+> **Current app version:** **v10.3.31**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -65,10 +65,10 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.30**
+Current release: **v10.3.31**
 
 Current service-worker cache:
-`japan-trip-v10-3-30-auth-session`
+`japan-trip-v10-3-31-etihad-final-flights`
 
 When app code/assets change:
 
@@ -315,19 +315,25 @@ Shin-Osaka → Tokyo. Exact train/time still to be finalized; consider Fuji-side
 ### 03/11 · Israel → Japan
 TLV → Abu Dhabi → Narita.
 
-Latest confirmed flights from the 18 Oct Emirates itinerary:
-- EY594 · TLV 14:00 → AUH 19:10 · Etihad Airways · Airbus A321neo.
-- Connection in Abu Dhabi: 1:55.
-- EY800 · AUH 21:05 → NRT 11:40 (+1) · Etihad Airways · Airbus A380-800.
+Final confirmed Etihad itinerary from tickets shared on 25 Oct 2026:
+- EY594 · 03/11 TLV 14:00 → AUH 19:10 · Airbus A321neo, Terminal 3 TLV.
+- Abu Dhabi connection 1:55.
+- EY800 · 03–04/11 AUH 21:05 → NRT 11:40 (+1) · Airbus A380-800, Narita **Terminal 1**.
+- 17/11 EY801 · NRT 17:20 → AUH 00:40 on 18/11, Narita **Terminal 1**.
+- Abu Dhabi return connection 2:45.
+- 18/11 EY595 · AUH 03:25 → TLV 05:05, Terminal 3.
+- Ticket displays 30 kg checked baggage per traveler on all four Etihad legs. Other cabin bag allowances are not assumed.
 
 ### 04/11 · Tokyo · Shinjuku First Day
-Narita 11:40 → first afternoon/evening in Shinjuku.
+Narita Terminal 1, 11:40 → Booking taxi → Shinjuku Prince Hotel check-in → first afternoon/evening in Shinjuku.
 
 Airport transfer:
-- the user has a **free taxi through Booking**, so this is the planned transfer,
-- after immigration and baggage, follow the Booking / transfer-provider pickup instructions and ride directly to Shinjuku,
-- do **not** show a paid Narita taxi price or NEX as the primary plan,
-- do **not** add a separate check-in stop just after customs; the hotel is already shown by the itinerary hotel card.
+- **Confirmed free Booking.com taxi**, service provider **xiooh travel**, People Carrier for up to 2 passengers, tracking inbound **EY800**, landing at 11:40 on 04/11.
+- Meeting point needs to be confirmed as Narita Terminal 1 and the 45-minute waiting-window conditions checked with provider; do not invent a pickup pin or exact taxi ETA.
+- The airport itinerary sequence is: Narita arrival → immigration/baggage → **one** booked Booking taxi → **check-in at Shinjuku Prince Hotel** → JINS and the evening.
+- The previous `shinjuku-prince-update.js` second transfer labeled `אחרי המכס` and its Narita Express advice were removed; N'EX is a backup only.
+- No extra train stop or duplicate paid transfer should be inserted; hotel mini-card remains for accommodation information.
+
 
 Afternoon:
 JINS → 3D Cat → Godzilla Head → optional Tokyu Kabukicho Tower.
@@ -445,21 +451,23 @@ Evening: Umeda Night Lights is still defined/assigned.
 
 Do not add Himeji unless the user explicitly chooses to replace part of this Osaka day; do not stack it on top.
 
-### 16/11 · Osaka → Tokyo · current confirmed flight option
-The user explicitly wants to keep the **Osaka → Tokyo Shinkansen on 16/11 in every scenario**.
+### 16/11 · Osaka → Tokyo · confirmed hotel night
+- Preserve Osaka → Tokyo Shinkansen on 16/11.
+- Check in / drop bags at **Hotel Metropolitan Tokyo Marunouchi**, confirmed for **16–17/11**.
+- Afternoon around Nihonbashi/Tokyo Station, optional Pokémon / Gransta / gyoza, and the existing Marunouchi → Ginza evening. There is **no flight on 16/11**.
 
-Latest confirmed ticket has **EK321 · NRT 21:30 → DXB 04:40 (+1) on 16–17/11**. In the app this is shown as **Option A / currently confirmed**.
+### 17/11 · confirmed return day from Narita
+- Check out from Hotel Metropolitan Tokyo Marunouchi; short morning near Tokyo Station.
+- JINS Shinjuku is emergency pickup backup only; strongly prefer collecting before the last day.
+- Indicative hotel/Tokyo Station departure around **12:15**, with actual rail timing still to be chosen. Aim for check-in by **14:20** at **Narita Terminal 1**.
+- Confirmed **EY801 · NRT 17:20 → AUH 00:40 (+1)**, Etihad Airways.
+- No superseded Emirates EK321/Dubai flights and no old alternative date.
 
-The existing **Hotel Metropolitan Tokyo Marunouchi booking for 16–17/11 stays in place for now**. Do not remove it. If the 16/11 flight remains final, the user simply will not use that night; if Emirates restores the return to 17/11, the hotel and Tokyo evening remain useful.
+### 18/11 · arrival in Israel
+- Abu Dhabi connection 2:45.
+- Confirmed **EY595 · AUH 03:25 → TLV 05:05**, Terminal 3.
+- This is a distinct 18/11 itinerary day, with arrival home on 18 Nov.
 
-### 17/11 · retained as planning alternative
-Keep the full 17/11 Tokyo day in the app. It is a valid **Option B** in case Emirates restores the older 17/11 return date.
-
-The 17/11 EK321 entry is shown only as a **planning alternative / not currently confirmed**. Do not present it as ticketed unless a new airline confirmation says so.
-
-Latest confirmation reaches Dubai at 04:40 after the currently confirmed 16/11 departure. The onward **DXB → TLV** segment is not present in the latest confirmation currently available, so do not invent or restore an old Flydubai segment until a new confirmed itinerary shows it.
-
-JINS should preferably be completed/collected earlier in Tokyo, but the 17/11 JINS backup remains in the plan because the whole day is intentionally being retained.
 
 ---
 
@@ -650,6 +658,21 @@ The same PWA now adapts automatically to tablets; there is no separate tablet ap
 - **Security boundary:** Owner is determined solely by equality of the current authenticated UID with `trips/japan-2026.ownerUid` in trusted Firestore. Editors are authorized according to configured UID/email allowlists. Client code does not auto-promote Editor to Owner.
 - **Unresolved backend check:** the authenticated account currently showing Editor may have a different UID from Firestore `ownerUid`. The app cannot safely alter that trusted root field; it must be verified using Firebase Authentication and Firestore with authenticated admin access. No permission or Firestore security rules were changed.
 - Regression tested in a mocked Firebase lifecycle (Viewer → Owner → logout → Editor, stale public callbacks ignored); no localStorage wipe, data migration, or expense/itinerary changes.
+
+---
+
+## 16H. Confirmed Etihad flights, taxi, and trip end — v10.3.31
+
+- Canonical `trip-data.js` now has final EY594 / EY800 / EY801 / EY595 flight legs with local times and Narita Terminal 1.
+- On 04/11, Booking taxi is confirmed (EY800, xiooh travel, People Carrier, free); check-in is immediately after the taxi; obsolete "after customs" rail stop is removed by `shinjuku-prince-update.js`.
+- 16/11 stays as Osaka → Tokyo + Metropolitan Marunouchi night / evening; 17/11 is the actual flight home; 18/11 adds Abu Dhabi transfer and Israel arrival.
+- Booking planner marks the taxi and flights confirmed, with their non-sensitive details.
+- The historic expense named "טיסות Emirates / Flydubai" is renamed to "טיסות Etihad Airways" in defaults and locally / when applying Cloud state, without changing price, currency, paid status, or user notes.
+- `place-content.js` Narita guide now matches Terminal 1 and the booked taxi. Removed the old Terminal 2 stock image rather than wrongly portraying the terminal.
+- `firestore-sync.js` deliberately does not map legacy return-flight seat values (from old Emirates legs) to new Etihad return flight records. Private persisted seat records remain intact.
+- Removed stale runtime version overwrites from `place-content.js` and `car-rental.js`, which were resetting `TRIP_DATA.version`/`appReady` to older versions after load.
+- No booking/PNR or personal identifier was inserted into public GitHub. No Firebase permissions, login behavior, private document contents, or trip budget totals were changed.
+- Arrival/return travel times in the itinerary are indicative; do not present unbooked train times or pickup pins as confirmed.
 
 ---
 

@@ -126,8 +126,7 @@
     renderRentalPage();
   }, true);
 
-  T.version='10.3.18';
-  document.documentElement.dataset.appReady='v10.3.18';
+  // Rental feature must not override the active app release version.
   window.JapanTripApp?.renderTrip?.();
   window.JapanCarRental={rental,renderRentalPage};
 })();

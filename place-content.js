@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · curated place content · v10.3.24
+/* Japan Trip 2026 · curated place content · v10.3.31
    Restored historical popup guides and place photos from the pre-v10 trip app.
    Loaded after trip-data and before app.js. */
 (() => {
@@ -15,7 +15,6 @@
   // Restore the photo set that existed in the older trip app.
   // These are presentation-only images; trip facts remain in trip-data.js.
   const restoredImages = {
-    'Narita Airport':'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Narita_International_Airport_Terminal_2_2019.jpg/640px-Narita_International_Airport_Terminal_2_2019.jpg',
     'Shinjuku':'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=900&q=78',
     'Kaminarimon':'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Kaminarimon2020.jpg/640px-Kaminarimon2020.jpg',
     'Nakamise':commons('Senso-ji Nakamise 2.jpg'),
@@ -56,10 +55,10 @@
   // Keep each point on its own visible line in the popup.
   const guides = {
     'Narita Airport':[
-      "זהו שדה התעופה שבו מתחיל ומסתיים הטיול, ולכן כדאי להכיר מראש את הטרמינל ואת דרך היציאה לעיר.",
-      "Narita Express הוא אחת האפשרויות הנוחות להגיע ישירות ל-Shinjuku עם מזוודות, בלי החלפות מסורבלות.",
-      "ביום החזרה חשוב להשאיר מרווח גדול לנסיעה, לבידוק ולמציאת הטרמינל הנכון.",
-      "המטרה כאן היא יעילות: לעבור את הנחיתה וההמראה בצורה רגועה ולא להפוך את שדה התעופה לחלק עמוס מהטיול."
+      "הנחיתה ב-4/11 וההמראה ב-17/11 הן ב-Narita Terminal 1, לפי כרטיסי Etihad המעודכנים.",
+      "ביום ההגעה מחכה לנו הסעת Booking חינמית ומאושרת של xiooh travel אחרי איסוף המזוודות; אין צורך לחפש Narita Express אלא אם ההסעה לא זמינה.",
+      "חשוב לוודא באישור Booking את נקודת המפגש בטרמינל 1 ואת תחילת מניין 45 דקות ההמתנה לפי תנאי הספק.",
+      "ביום החזרה יוצאים מ-Tokyo Station סביב 12:15 ברכבת שתיקבע בהמשך ומכוונים לצ׳ק-אין ב-14:20 לפני טיסת EY801 ב-17:20."
     ],
     'Shinjuku':[
       "Shinjuku הוא אחד מצמתי התחבורה והבילוי הגדולים בעולם ומרגיש כמעט כמו כמה שכונות שונות סביב תחנה אחת.",
@@ -494,5 +493,5 @@
     if (el instanceof HTMLImageElement && el.matches('.stop-thumb,.place-thumb,.info-image')) el.remove();
   }, true);
 
-  T.version = '10.3.24';
+  // Version is owned by trip-data.js and the final app initializer.
 })();

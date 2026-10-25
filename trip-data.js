@@ -57,7 +57,7 @@
   ];
 
   const places = {
-    'Narita Airport':{name:'Narita International Airport',icon:'✈️',city:'Tokyo / Chiba',cat:'אתרים',desc:'שדה התעופה הבינלאומי שבו נוחתים וממנו ממריאים. Narita Express הוא אחת האפשרויות הנוחות להגיע ישירות ל-Shinjuku עם מזוודות.',tip:'ביום החזרה משאירים מרווח גדול לנסיעה, לבידוק ול-Terminal 2.',map:G('Narita International Airport Terminal 2')},
+    'Narita Airport':{name:'Narita International Airport · Terminal 1',icon:'✈️',city:'Tokyo / Chiba',cat:'אתרים',desc:'נחיתה והמראה של טיסות Etihad בטרמינל 1. בהגעה מחכה הסעת Booking מאושרת ישירות ל-Shinjuku Prince Hotel; אין צורך להזמין רכבת.',tip:'4/11: לוודא את נקודת המפגש עם xiooh travel אחרי איסוף המזוודות. 17/11: להגיע לטרמינל 1 לקראת צ׳ק-אין 14:20 לטיסת EY801 ב-17:20.',map:G('Narita International Airport Terminal 1')},
     'Shinjuku':{name:'Shinjuku',icon:'🏙️',city:'Tokyo',cat:'אתרים',schedule:'04/11 · ערב',desc:'אזור ענק סביב אחת התחנות העמוסות בעולם: קניות, מסעדות, גורדי שחקים וחיי לילה. מערב Shinjuku מתאים לתצפית ולבנייני המשרדים, והמזרח לאווירת ערב.',tip:'בודקים מראש את ה-Exit הנכון בתחנה; יציאה לא נכונה יכולה להוסיף הליכה מיותרת.',map:G('Shinjuku Tokyo')},
     'Cross Shinjuku Vision – 3D Cat':{name:'Cross Shinjuku Vision · 3D Cat',icon:'🐈',city:'Tokyo · Shinjuku',cat:'אתרים',schedule:'04/11 · אחה״צ',desc:'המסך המעוקל המפורסם מול East Exit של Shinjuku Station, שבו מופיע חתול הענק בתלת־ממד.',tip:'לעמוד ברחבה מול East Exit בזווית הנכונה ולחכות למחזור של החתול; זו עצירה קצרה וחינמית.',map:G('Cross Shinjuku Vision 3D Cat Tokyo')},
     'Godzilla Head':{name:'Godzilla Head · Shinjuku Toho Building',icon:'🦖',city:'Tokyo · Shinjuku',cat:'אתרים',schedule:'04/11 · אחה״צ',desc:'ראש Godzilla האייקוני מעל Shinjuku Toho Building בלב Kabukicho, כמה דקות מהמלון ומהאזור של 3D Cat.',tip:'מספיק לעצור לצילום קצר בדרך בתוך Kabukicho; אין צורך להקדיש לזה זמן רב.',map:G('Godzilla Head Shinjuku Toho Building Tokyo')},
@@ -66,7 +66,7 @@
     'Shinjuku Golden Gai':{name:'Shinjuku Golden Gai',icon:'🏮',city:'Tokyo · Shinjuku',cat:'אתרים',optionalSchedule:'04/11 · ערב מאוחר',desc:'מקבץ סמטאות צפופות עם ברים זעירים ואווירת Tokyo ישנה בלב Shinjuku.',tip:'רוב הברים מתעוררים מאוחר; גם מעבר קצר בסמטאות מספיק. לא מצלמים אנשים או פנים של ברים בלי רשות.',map:G('Shinjuku Golden Gai Tokyo')},
     'Omoide Yokocho':{name:'Omoide Yokocho',icon:'🍢',city:'Tokyo · Shinjuku',cat:'אתרים',optionalSchedule:'04/11 · ארוחת ערב',desc:'סמטאות צרות ליד West Exit עם דוכני yakitori ומסעדות קטנות באווירה נוסטלגית.',tip:'אופציה טובה לארוחת ערב או מעבר קצר; אם עייפים מהטיסה אפשר לדלג בלי לפגוע במסלול.',map:G('Omoide Yokocho Shinjuku Tokyo')},
     'Shinjuku Gyoen':{name:'Shinjuku Gyoen National Garden',icon:'🌳',city:'Tokyo · Shinjuku',cat:'טבע',optionalSchedule:'06/11 · אופציה בשעות היום',desc:'גן לאומי גדול ושקט בלב Shinjuku, עם גנים יפניים ומרחבים ירוקים.',tip:'מתאים רק אם רוצים להחליף חלק מיום Meiji / Harajuku / Shibuya בחוויה רגועה יותר; לא מתאים למסלול הלילה.',map:G('Shinjuku Gyoen National Garden Tokyo')},
-    'JINS Shinjuku':{name:'JINS Shinjuku',icon:'👓',city:'Tokyo',cat:'שווקים וקניות',schedule:'04/11 · אחה״צ / איסוף 17/11 אם צריך',desc:'חנות משקפיים של JINS בשינג׳וקו. התוכנית היא לבצע בדיקת ראייה ולהזמין מוקדם בטיול כדי להשאיר זמן להכנה ולאיסוף.',tip:'להגיע עם המרשם הקיים אם יש, ולוודא בזמן ההזמנה מתי המשקפיים יהיו מוכנים.',map:G('JINS Shinjuku Tokyo')},
+    'JINS Shinjuku':{name:'JINS Shinjuku',icon:'👓',city:'Tokyo',cat:'שווקים וקניות',schedule:'04/11 · אחה״צ / איסוף עד 16/11 מועדף',desc:'חנות משקפיים של JINS בשינג׳וקו. התוכנית היא לבצע בדיקת ראייה ולהזמין מוקדם בטיול כדי להשאיר זמן להכנה ולאיסוף.',tip:'להגיע עם המרשם הקיים אם יש, ולוודא בזמן ההזמנה מתי המשקפיים יהיו מוכנים.',map:G('JINS Shinjuku Tokyo')},
     'Don Quijote Shinjuku Kabukicho':{name:'Don Quijote Shinjuku Kabukicho',icon:'🛍️',city:'Tokyo · Shinjuku',cat:'שווקים וקניות',optionalSchedule:'04/11 · טיול ערב Shinjuku',storeOptional:true,desc:'סניף גדול של Don Quijote בלב Kabukicho עם קוסמטיקה, חטיפים, מזכרות, מוצרי יומיום, אלקטרוניקה קטנה והמון מציאות יפניות.',worth:'הוא יושב ממש על מסלול הערב שלנו ליד Godzilla, כך שאפשר להיכנס בלי לבנות נסיעה מיוחדת ולראות במקום אחד הרבה סוגי קניות.',tip:'להיכנס רק אם יש כוח אחרי הטיסה; החנות גדולה וקל להיתקע בה הרבה זמן. עדיף להגדיר מראש 20–30 דקות.',map:G('Don Quijote Shinjuku Kabukicho Tokyo')},
     'Kaminarimon':{name:'Kaminarimon',icon:'⛩️',city:'Tokyo',cat:'מקדשים',schedule:'05/11 · 09:00',desc:'שער הרעם האדום והכניסה האייקונית לאזור Sensō-ji ו-Nakamise באסקוסה.',tip:'בבוקר מוקדם האזור רגוע יותר; בהמשך היום הוא נעשה צפוף מאוד.',map:G('Kaminarimon Tokyo')},
     'Nakamise':{name:'Nakamise Shopping Street',icon:'🛍️',city:'Tokyo',cat:'שווקים וקניות',schedule:'05/11 · 09:15',desc:'רחוב שוק מסורתי המוביל מ-Kaminarimon ל-Sensō-ji, עם מזכרות, ממתקים ומוצרים יפניים.',tip:'לא חייבים לעצור בכל דוכן; עדיף לעבור בנחת ולשמור זמן למקדש.',map:G('Nakamise Shopping Street Tokyo')},
@@ -180,8 +180,9 @@
       {time:'מחר 11:40',icon:'🇯🇵',title:'נחיתה Narita',text:'הנחיתה ביפן מופיעה בתחילת היום הבא.'}
     ],route:null},
     {date:'04/11',dow:'רביעי',city:'Tokyo · Shinjuku',title:'נחיתה · Shinjuku First Day',summary:'Narita → מלון → JINS → 3D Cat → Kabukicho → ערב Shinjuku',hotel:'hotel-jr-kyushu-shinjuku',evening:'shinjuku',stops:[
-      {time:'11:40',icon:'✈️',title:'נחיתה Narita',text:'ביקורת גבולות, מזוודות ויציאה לעיר.',place:'Narita Airport'},
-      {time:'אחרי איסוף המזוודות',icon:'🚕',title:'Narita → Shinjuku · מונית Booking',text:'המונית החינמית שהוזמנה דרך Booking לוקחת אותנו ישירות לאזור המלון. פועלים לפי הוראות האיסוף של Booking / ספק ההסעה.',tag:'✅ מונית חינם · הוזמנה דרך Booking'},
+      {time:'11:40',icon:'✈️',title:'נחיתה Narita · Terminal 1',text:'EY800 · Etihad · ביקורת דרכונים, איסוף מזוודות ומעבר לנקודת המפגש של ההסעה.',place:'Narita Airport'},
+      {time:'אחרי איסוף המזוודות',icon:'🚕',title:'Narita → Shinjuku Prince · מונית Booking',text:'הסעה חינמית ומאושרת של xiooh travel ברכב People Carrier (עד 2 נוסעים) · הנהג עוקב אחרי EY800 · זמן המתנה של 45 דקות לפי תנאי ההזמנה. יש לפעול לפי נקודת המפגש שקיבלתם ב-Booking.',tag:'✅ הוזמן ומאושר · ₪0'},
+      {time:'בהגעה למלון',icon:'🏨',title:'Check-in · Shinjuku Prince Hotel',text:'קבלת החדר אם הוא מוכן, התארגנות ומנוחה קצרה; אם טרם ניתן להיכנס לחדר משאירים מזוודות בקבלה. ממשיכים ל-JINS לפי שעת ההגעה.'},
       {time:'15:30',icon:'👓',title:'JINS Shinjuku',text:'בדיקת ראייה, בחירת מסגרת והזמנת משקפיים כבר בתחילת הטיול כדי להשאיר זמן להכנה.',place:'JINS Shinjuku'},
       {time:'16:30',icon:'🐈',title:'Cross Shinjuku Vision · 3D Cat',text:'עצירה קצרה מול המסך המעוקל ליד East Exit.',place:'Cross Shinjuku Vision – 3D Cat'},
       {time:'16:50',icon:'🦖',title:'Godzilla Head · Kabukicho',text:'צילום קצר והמשך דרך הרחובות של Kabukicho.',place:'Godzilla Head'},
@@ -301,25 +302,27 @@
       {time:'ערב',icon:'🌃',title:'Dotonbori',text:'ערב נוסף לאוכל ושיטוט.',place:'Dotonbori'},
       {time:'אופציה',icon:'🍜',title:'Namba Ramen Ichiza',text:'מתחם ראמן ב-EDION Namba.',place:'Namba Ramen Ichiza'}
     ],route:D('Osaka Castle','Dotonbori Osaka',['Umeda Osaka','Shinsaibashi Osaka'])},
-    {date:'16/11',dow:'שני',city:'Tokyo',title:'Osaka → Tokyo · שתי אפשרויות לסיום',summary:'Namba → Shin-Osaka → Shinkansen → Tokyo · בערב: טיסה מאושרת כרגע או לינה ב-Marunouchi',hotel:'hotel-metropolitan-marunouchi',evening:'marunouchi',stops:[
-      {time:'בוקר',icon:'🚄',title:'Osaka → Tokyo',text:'Namba → Shin-Osaka ב-Midosuji Line, ואז Shinkansen ל-Tokyo. הנסיעה לטוקיו נשארת בכל תרחיש. אם הראות טובה, שווה לשבת בצד המתאים ל-Fuji.'},
+    {date:'16/11',dow:'שני',city:'Tokyo',title:'Osaka → Tokyo · לילה אחרון בטוקיו',summary:'Namba → Shin-Osaka → Shinkansen → Tokyo · מלון Metropolitan Marunouchi → קניות וטיול ערב',hotel:'hotel-metropolitan-marunouchi',evening:'marunouchi',stops:[
+      {time:'בוקר',icon:'🚄',title:'Osaka → Tokyo',text:'Namba → Shin-Osaka ב-Midosuji Line, ואז Shinkansen ל-Tokyo. אם הראות טובה, כדאי לבחור מראש את צד Fuji.'},
+      {time:'בהגעה',icon:'🏨',title:'Check-in · Hotel Metropolitan Tokyo Marunouchi',text:'הגעה למלון ליד Tokyo Station, מסירת מזוודות וקבלת החדר בהתאם לשעת הצ׳ק-אין. הלילה של 16–17/11 נשמר ומאושר.'},
       {time:'15:00',icon:'🏮',title:'Nihonbashi · Tokyo של פעם',text:'אם הזמן מאפשר: Nihonbashi Bridge, רחובות ותיקים ו-COREDO Muromachi.',place:'Nihonbashi',optional:true},
       {time:'אופציה',icon:'⚡',title:'Pokémon Center Tokyo DX',text:'חנות Pokémon גדולה באזור Nihonbashi, קרובה למסלול שלנו.',place:'Pokemon Center Tokyo DX',optional:true,tag:'🛍️ חנות אופציונלית'},
-      {time:'17:00',icon:'🛍️',title:'Tokyo Station · Gransta / Character Street',text:'אם לא טסים מיד: מתנות, ממתקים והשלמות אחרונות בלי להתרחק מהמלון.',place:'Gransta / Character Street',optional:true},
-      {time:'על הדרך',icon:'🥟',title:'Tokyo Gyoza Stand Oolong',text:'גיוזה בתוך Gransta — עצירה קצרה בזמן שעוברים בתחנה.',place:'Tokyo Gyoza Stand Oolong',optional:true,tag:'🥟 גיוזה על הדרך'},
-      {time:'17:30',icon:'🚆',title:'אפשרות A · יציאה ל-Narita',text:'אם נשארים עם הטיסה המאושרת של 16/11: יוצאים מאזור Tokyo Station לכיוון Narita ומשאירים מרווח נדיב.',place:'Narita Airport',optional:true,kind:'logistics',tag:'✅ לפי האישור הנוכחי'},
-      {time:'18:30',icon:'🛫',title:'אפשרות A · הגעה ל-Narita',text:'כבודה, בידוק והגעה רגועה לשער לטיסת EK321.',place:'Narita Airport',optional:true,kind:'logistics'},
-      {time:'21:30',icon:'✈️',title:'אפשרות A · Narita → Dubai',text:'EK321 · Emirates · 21:30 → 04:40 (+1). זו הטיסה המאושרת כרגע ל־16/11.',optional:true,kind:'logistics',tag:'✅ מאושר כרגע'},
-      {time:'ערב',icon:'🏨',title:'אפשרות B · נשארים ללילה בטוקיו',text:'אם הטיסה תחזור ל־17/11: נשארים ב-Hotel Metropolitan Tokyo Marunouchi כמתוכנן וממשיכים לערב Marunouchi / Ginza.',optional:true,tag:'🏨 המלון נשאר כרגע'}
+      {time:'17:00',icon:'🛍️',title:'Tokyo Station · Gransta / Character Street',text:'מתנות, ממתקים וקניות אחרונות ליד המלון.',place:'Gransta / Character Street',optional:true},
+      {time:'על הדרך',icon:'🥟',title:'Tokyo Gyoza Stand Oolong',text:'גיוזה בתוך Gransta — עצירה קצרה בזמן שעוברים בתחנה.',place:'Tokyo Gyoza Stand Oolong',optional:true,tag:'🥟 גיוזה על הדרך'}
     ],route:D('Shin-Osaka Station','Hotel Metropolitan Tokyo Marunouchi',['Tokyo Station'])},
-    {date:'17/11',dow:'שלישי',city:'Tokyo',title:'יום אחרון · חלופת טיסה 17/11',summary:'היום נשאר בתוכנית למקרה שהטיסה תחזור ל־17/11 · בוקר חופשי → JINS / השלמות → Narita',hotel:'hotel-metropolitan-marunouchi',stops:[
-      {time:'בוקר',icon:'🏨',title:'Check-out · Hotel Metropolitan Tokyo Marunouchi',text:'רלוונטי אם נשארנו ללילה 16–17/11. Check-out והשארת מזוודות אם צריך עד היציאה ל-Narita.'},
-      {time:'בוקר',icon:'☕',title:'בוקר חופשי',text:'לפי מה שנשאר ומה שמתחשק, אם הטיסה אכן תהיה ב־17/11.'},
-      {time:'גיבוי',icon:'👓',title:'JINS Shinjuku · איסוף רק אם לא הושלם קודם',text:'עדיף לאסוף לפני שעוזבים את Shinjuku ב־8/11 אם המשקפיים מוכנים. חוזרים לכאן רק אם עדיין צריך.',place:'JINS Shinjuku',optional:true,tag:'גיבוי ליום האחרון'},
-      {time:'17:30',icon:'🚆',title:'אפשרות B · יציאה ל-Narita',text:'רק אם Emirates תחזיר את הטיסה ל־17/11. כרגע זו חלופת תכנון ולא טיסה מאושרת.',place:'Narita Airport',optional:true,kind:'logistics',tag:'🟠 חלופת תכנון'},
-      {time:'18:30',icon:'🛫',title:'אפשרות B · הגעה ל-Narita',text:'הגעה לשדה כ־3 שעות לפני ההמראה, אם חלופת 17/11 תאושר.',place:'Narita Airport',optional:true,kind:'logistics'},
-      {time:'21:30',icon:'✈️',title:'אפשרות B · Narita → Dubai',text:'EK321 · Emirates · 21:30 → 04:40 (+1) — מבוסס על התכנון הקודם ל־17/11, אך אינו מאושר כרגע.',optional:true,kind:'logistics',tag:'🟠 לא מאושר כרגע'}
-    ],route:D('Hotel Metropolitan Tokyo Marunouchi','Narita International Airport')}
+    {date:'17/11',dow:'שלישי',city:'Tokyo → Abu Dhabi',title:'יום החזרה · טיסה מטוקיו',summary:'Check-out → בוקר קצר ליד Tokyo Station → Narita Terminal 1 · EY801 ב-17:20',stops:[
+      {time:'בוקר',icon:'🏨',title:'Check-out · Hotel Metropolitan Tokyo Marunouchi',text:'צ׳ק-אאוט וסידור המזוודות לנסיעה לנמל התעופה. לא מתכננים אטרקציות רחוקות לפני הטיסה.'},
+      {time:'בוקר',icon:'☕',title:'בוקר חופשי וקניות קלות',text:'קפה או השלמות אחרונות באזור Tokyo Station / Marunouchi, בהתאם לזמן הפנוי.'},
+      {time:'גיבוי בלבד',icon:'👓',title:'JINS Shinjuku · איסוף אם טרם הושלם',text:'רק אם המשקפיים מוכנים ויש מספיק זמן. מומלץ מאוד לאסוף לפני 17/11 כדי לא לסכן את ההגעה לשדה.',place:'JINS Shinjuku',optional:true,tag:'גיבוי · לא להתעכב'},
+      {time:'סביב 12:15',icon:'🚆',title:'Tokyo Station → Narita Terminal 1',text:'יציאה מאזור המלון ברכבת לשדה, למשל Narita Express. שעת הרכבת המדויקת טרם נבחרה; יש לבחור רכבת שמגיעה בנחת לפני הצ׳ק-אין ב-14:20.',place:'Narita Airport',kind:'logistics'},
+      {time:'14:20',icon:'🧳',title:'Check-in · Narita Terminal 1',text:'הגעה מתוכננת לדלפקים כ-3 שעות לפני הטיסה, הפקדת כבודה, ביקורת ביטחון וביקורת דרכונים. שעת צ׳ק-אין לפי כרטיס הטיסה.',place:'Narita Airport',kind:'logistics'},
+      {time:'17:20',icon:'✈️',title:'EY801 · Narita → Abu Dhabi',text:'טיסת Etihad מאושרת · נחיתה באבו דאבי ב-00:40 ב-18/11 (שעון מקומי).',kind:'logistics',tag:'✅ טיסה מאושרת'}
+    ],route:D('Hotel Metropolitan Tokyo Marunouchi','Narita International Airport Terminal 1')},
+    {date:'18/11',dow:'רביעי',city:'Abu Dhabi → ישראל',title:'חוזרים הביתה ✈️',summary:'נחיתה באבו דאבי 00:40 → קונקשן 2:45 → EY595 ב-03:25 → תל אביב 05:05',stops:[
+      {time:'00:40',icon:'🇦🇪',title:'נחיתה באבו דאבי · EY801',text:'מגיעים מאזור טוקיו, עוברים לפי שילוט לטיסת ההמשך לישראל. כל הזמנים מקומיים.',kind:'logistics'},
+      {time:'03:25',icon:'✈️',title:'EY595 · Abu Dhabi → Tel Aviv',text:'טיסת Etihad מאושרת · קונקשן של 2 שעות ו-45 דקות · טיסה ישירה לנתב״ג טרמינל 3.',kind:'logistics',tag:'✅ טיסה מאושרת'},
+      {time:'05:05',icon:'🇮🇱',title:'נחיתה בישראל · נתב״ג Terminal 3',text:'נחיתה בישראל ביום רביעי, 18/11, ולאחר מכן ביקורת דרכונים ואיסוף המזוודות.',kind:'logistics'}
+    ],route:null}
   ];
 
   const eveningWalks = {
@@ -335,19 +338,21 @@
   };
 
   const flights = {
-    booking:'', airlines:'Etihad + Emirates', cabin:'Economy', passengers:'2 passengers',
-    checked:'לפי הכרטיס המעודכן', hand:'לפי הכרטיס המעודכן',
-    note:'חזרה: 16/11 היא הטיסה המאושרת כרגע. 17/11 נשמרת באפליקציה כחלופת תכנון למקרה ש-Emirates תחזיר את התאריך. המלון בטוקיו 16–17/11 נשאר כרגע. מקטע המשך Dubai → Tel Aviv אינו מופיע באישור האחרון ולכן אינו מוצג עד לאישור.',
+    booking:'', airlines:'Etihad Airways', cabin:'Economy', passengers:'2 passengers',
+    checked:'30 ק״ג לכל נוסע', hand:'לפי תנאי הכרטיס',
+    note:'ארבע הטיסות מאושרות לפי כרטיסי Etihad. 4/11 נחיתה ב-Narita Terminal 1 והסעה מאושרת של Booking למלון. לילה 16–17/11 ב-Hotel Metropolitan Tokyo Marunouchi; חזרה ב-17/11 דרך Abu Dhabi, נחיתה בישראל ב-18/11 05:05. כל שעות הטיסות מקומיות.',
     legs:[
-      {date:'03/11',route:'TLV → AUH',time:'14:00 → 19:10',flight:'EY594',carrier:'Etihad Airways',duration:'03:10 שעות',aircraft:'Airbus A321neo',status:'✅ מאושר'},
-      {connection:'Abu Dhabi · 1:55'},
-      {date:'03–04/11',route:'AUH → NRT',time:'21:05 → 11:40 (+1)',flight:'EY800',carrier:'Etihad Airways',duration:'09:35 שעות',aircraft:'Airbus A380-800',seats:'',status:'✅ מאושר'},
-      {date:'16–17/11',route:'NRT → DXB',time:'21:30 → 04:40 (+1)',flight:'EK321',carrier:'Emirates',duration:'12:10 שעות',aircraft:'Boeing 777-300ER',seats:'',status:'✅ מאושר כרגע'},
-      {date:'17–18/11',route:'NRT → DXB',time:'21:30 → 04:40 (+1)',flight:'EK321',carrier:'Emirates',duration:'12:10 שעות',aircraft:'Boeing 777-300ER',seats:'',status:'🟠 חלופת תכנון · לא מאושר כרגע'}
+      {date:'03/11',route:'TLV → AUH',time:'14:00 → 19:10',flight:'EY594',carrier:'Etihad Airways',duration:'03:10 שעות',aircraft:'Airbus A321neo',terminals:'TLV Terminal 3',status:'✅ מאושר'},
+      {connection:'Abu Dhabi · 1:55 שעות'},
+      {date:'03–04/11',route:'AUH → NRT',time:'21:05 → 11:40 (+1)',flight:'EY800',carrier:'Etihad Airways',duration:'09:35 שעות',aircraft:'Airbus A380-800',terminals:'Narita Terminal 1',status:'✅ מאושר'},
+      {date:'17–18/11',route:'NRT → AUH',time:'17:20 → 00:40 (+1)',flight:'EY801',carrier:'Etihad Airways',duration:'12:20 שעות',terminals:'Narita Terminal 1',status:'✅ מאושר'},
+      {connection:'Abu Dhabi · 2:45 שעות'},
+      {date:'18/11',route:'AUH → TLV',time:'03:25 → 05:05',flight:'EY595',carrier:'Etihad Airways',duration:'03:40 שעות',terminals:'TLV Terminal 3',status:'✅ מאושר'}
     ]
   };
 
   const bookings = [
+    {priority:'green',title:'טיסות Etihad · 3–4/11, 17–18/11',status:'מאושר ושולם',note:'EY594 / EY800 / EY801 / EY595 · חזרה 17/11, נחיתה 18/11'},
     {priority:'red',title:'teamLab Biovortex Kyoto',status:'טרם הוזמן',note:'12/11 בערב · חובה להזמין מראש',docKey:'teamlab-biovortex-kyoto'},
     {priority:'yellow',title:'AONIYOSHI · Kyoto → Nara',status:'טרם הוזמן',note:'14/11 · מתוכנן 10:55 → 11:31 · Twin Seats מומלצים',docKey:'aoniyoshi-kyoto-nara'},
     {priority:'yellow',title:'Shinkansen · Odawara → Kyoto',status:'שעה טרם נקבעה',note:'10/11 · נקבע קרוב יותר לטיול'},
@@ -366,7 +371,7 @@
   ];
 
   const expenseDefaults = [
-    {name:'טיסות Emirates / Flydubai',status:'שולם',payment:'אשראי',currency:'USD',amount:3166,category:'✈️ טיסות',included:true,note:''},
+    {name:'טיסות Etihad Airways',status:'שולם',payment:'אשראי',currency:'USD',amount:3166,category:'✈️ טיסות',included:true,note:''},
     {name:'JR Kyushu Hotel Blossom Shinjuku',status:'מוזמן',payment:'אשראי',currency:'JPY',amount:311616,category:'🏨 לינה',included:true,note:'4–8/11'},
     {name:'Hakone Kowakien TEN-YU',status:'מוזמן',payment:'אשראי',currency:'USD',amount:1036.91,category:'🏨 לינה',included:true,note:'8–10/11 · תשלום מאוחר · כולל ארוחת בוקר'},
     {name:'Daiwa Roynet Hotel Kyoto Shijo Karasuma',status:'מוזמן',payment:'אשראי',currency:'JPY',amount:116856,category:'🏨 לינה',included:true,note:'10–14/11'},
@@ -380,18 +385,18 @@
   ];
 
   const trains = [
-    ['4/11 · Narita → Shinjuku','Narita Express — ישיר ונוח עם מזוודות; או Keisei + המשך עירוני לפי זמן הנחיתה.'],
+    ['4/11 · Narita → Shinjuku','מונית Booking מאושרת וחינמית עם xiooh travel, בעקבות טיסת EY800 לנאריטה טרמינל 1; נסיעה ישירה ל-Shinjuku Prince Hotel. רכבת רק כחלופת גיבוי אם ההסעה לא זמינה.'],
     ['5/11 · Asakusa → Ueno → Akihabara','Shinjuku → Asakusa: Marunouchi + Ginza בדרך כלל. Asakusa → Ueno: Ginza Line. Ueno → Akihabara: JR Yamanote / Keihin-Tohoku.'],
     ['6/11 · Meiji → Harajuku → Shibuya','JR Yamanote נוחה בין Harajuku, Shibuya ו-Shinjuku; Omotesando נגיש גם במטרו.'],
     ['7/11 · Tsukiji → Ginza → Tokyo Station','Hibiya/Ginza/Marunouchi לפי הקטע; חלק גדול מהיום נוח גם ברגל.'],
     ['8/11 · Shinjuku → Odawara','Romancecar — ישירה ונוחה עם מושב שמור; Odakyu רגילה — זולה וגמישה. בשתי האפשרויות מגיעים ל-Odawara.'],
     ['14/11 · Kyoto → Nara','AONIYOSHI מתוכננת 10:55 → 11:31; נוודא לוח שוב לפני המכירה.'],
     ['16/11 · Osaka → Tokyo','Namba → Shin-Osaka ב-Midosuji, ואז Shinkansen ל-Tokyo.'],
-    ['17/11 · Tokyo → Narita','Narita Express או Keisei לפי נקודת היציאה והשעה; משאירים מרווח גדול לטיסה.']
+    ['17/11 · Tokyo → Narita','יציאה סביב 12:15 מ-Tokyo Station לשדה Narita Terminal 1; לבחור רכבת שתגיע לפני צ׳ק-אין ב-14:20 לטיסת EY801 ב-17:20.']
   ];
 
   window.TRIP_DATA = {
-    version:'10.3.30', title:'Japan Trip', year:2026, travelers:'2 travelers',
+    version:'10.3.31', title:'Japan Trip', year:2026, travelers:'2 travelers',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
     hotels, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
     maps:{search:G,directions:D}

@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · booking planner · v10.3.18
+/* Japan Trip 2026 · booking planner · v10.3.31
    Enhanced reservation checklist with type badges, prices, booking windows,
    provider links, filters, Drive confirmations and cloud-synced completion state. */
 (() => {
@@ -13,6 +13,14 @@
 
   const ITEMS=[
     {
+      id:'etihad-flights-confirmed', type:'flight', icon:'✈️', typeLabel:'טיסות',
+      title:'Etihad · ארבע הטיסות מאושרות', tripDate:'3–4/11 + 17–18/11', required:true, defaultDone:true,
+      price:'שולם · סכום החיוב נשמר במסך ההוצאות',
+      when:'כבר הוזמן', whenNote:'EY594 · EY800 · EY801 · EY595. 17/11 המראה מנאריטה ב-17:20; 18/11 נחיתה בתל אביב ב-05:05. כבודה לבטן: 30 ק״ג לנוסע.',
+      provider:'Etihad Airways', bookingUrl:'https://www.etihad.com/',
+      priority:99
+    },
+    {
       id:'hakone-hotel', docKey:'hotel-hakone', type:'hotel', icon:'🏨', typeLabel:'מלון',
       title:'Hakone Kowakien TEN-YU', tripDate:'8–10/11', required:true, defaultDone:true,
       price:'US$1,036.91 לזוג / 2 לילות · תשלום מאוחר',
@@ -23,10 +31,10 @@
     },
     {
       id:'narita-transfer-shinjuku-prince', docKey:'narita-transfer-shinjuku-prince', type:'car', icon:'🚕', typeLabel:'מונית / הסעה',
-      title:'הסעה · Narita → Shinjuku Prince Hotel', tripDate:'4/11 · נחיתה 13:10 · יעד משוער 14:27', required:true,
+      title:'הסעה · Narita → Shinjuku Prince Hotel', tripDate:'4/11 · EY800 · נחיתה 11:40 · Narita Terminal 1', required:true, defaultDone:true,
       price:'חינם · ₪0',
-      when:'עכשיו', whenNote:'הטבת Booking.com להזמנה הנוכחית · Standard · עד 2 נוסעים · 3 מזוודות · כולל מעקב טיסה.',
-      provider:'Booking.com · Powered by Carzen+',
+      when:'כבר הוזמן', whenNote:'הסעה מאושרת וחינמית · People Carrier · עד 2 נוסעים · xiooh travel · מעקב אחרי EY800 · המתנה של 45 דקות לפי תנאי ההזמנה. לוודא נקודת מפגש בטרמינל 1.',
+      provider:'Booking.com · xiooh travel',
       bookingUrl:'https://www.booking.com/taxi/index.html',
       priority:2
     },
@@ -94,8 +102,8 @@
     }
   ];
 
-  const TYPE_ORDER=['all','hotel','attraction','train','shinkansen','car'];
-  const TYPE_NAMES={all:'כל הסוגים',hotel:'מלון',attraction:'אטרקציות / תצפית',train:'רכבות',shinkansen:'Shinkansen',car:'רכב / מונית'};
+  const TYPE_ORDER=['all','flight','hotel','attraction','train','shinkansen','car'];
+  const TYPE_NAMES={all:'כל הסוגים',flight:'טיסות',hotel:'מלון',attraction:'אטרקציות / תצפית',train:'רכבות',shinkansen:'Shinkansen',car:'רכב / מונית'};
 
   function readSettings(){
     try{const s=JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}');return s&&typeof s==='object'&&!Array.isArray(s)?s:{}}catch(_){return {}}

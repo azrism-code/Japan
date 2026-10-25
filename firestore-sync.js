@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · Firestore auth lifecycle and privacy-safe sync · v10.3.30 */
+/* Japan Trip 2026 · Firestore auth lifecycle and privacy-safe sync · v10.3.31 */
 (() => {
   'use strict';
   const F=window.JAPAN_FIREBASE_CONFIG||{}, C=window.JAPAN_CLOUD_CONFIG||{};
@@ -45,7 +45,12 @@
     if(!window.TRIP_DATA)return;
     // Flight booking/PNR stays private in Firestore/localStorage and is never injected into the UI runtime.
     if(window.TRIP_DATA.flights)window.TRIP_DATA.flights.booking='';
-    (s.flightLegSeats||[]).forEach((v,i)=>{if(window.TRIP_DATA.flights.legs[i])window.TRIP_DATA.flights.legs[i].seats=v||''});
+    (s.flightLegSeats||[]).forEach((v,i)=>{
+      // Legacy seats beyond the outbound flights belonged to the superseded
+      // Emirates return. Preserve them privately but never label them as EY801/EY595 seats.
+      const leg=window.TRIP_DATA.flights.legs[i];
+      if(i<=2&&leg?.flight)leg.seats=v||'';
+    });
     for(const h of window.TRIP_DATA.hotels||[]){
       const x=s.hotels?.[h.key];
       if(x){h.booking=x.booking||'';h.reference=x.reference||''}

@@ -1,8 +1,8 @@
-/* Japan Trip 2026 · service worker · v10.3.30
+/* Japan Trip 2026 · service worker · v10.3.31
    Simple offline cache. No source rewriting, module merging or forced navigation. */
-const CACHE='japan-trip-v10-3-30-auth-session';
+const CACHE='japan-trip-v10-3-31-etihad-final-flights';
 const CORE=[
-  './','./index.html','./styles.css?v=10.3.30','./place-content.css?v=10.3.30','./station-guides.css?v=10.3.30','./expenses-ui.css?v=10.3.30','./readability.css?v=10.3.30','./trip-data.js?v=10.3.30','./place-content.js?v=10.3.30','./firebase-config.js?v=10.3.30','./firestore-sync.js?v=10.3.30','./shinjuku-prince-update.js?v=10.3.30','./romancecar-update.js?v=10.3.30','./kyoto-hotel-update.js?v=10.3.30','./app.js?v=10.3.30','./day-strip-city.js?v=10.3.30','./hotel-compact.js?v=10.3.30','./car-rental.js?v=10.3.30','./drive.js?v=10.3.30','./booking-planner.js?v=10.3.30','./romancecar-booking-update.js?v=10.3.30','./station-guides.js?v=10.3.30','./expense-safety.js?v=10.3.30','./expenses-ui.js?v=10.3.30','./manifest.json?v=10.3.30','./assets/icons/app-icon-192.png?v=10.3.30','./assets/icons/app-icon-512.png?v=10.3.30','./assets/icons/apple-touch-icon.png?v=10.3.30','./assets/icons/header-icon.png?v=10.3.30',
+  './','./index.html','./styles.css?v=10.3.31','./place-content.css?v=10.3.31','./station-guides.css?v=10.3.31','./expenses-ui.css?v=10.3.31','./readability.css?v=10.3.31','./trip-data.js?v=10.3.31','./place-content.js?v=10.3.31','./firebase-config.js?v=10.3.31','./firestore-sync.js?v=10.3.31','./shinjuku-prince-update.js?v=10.3.31','./romancecar-update.js?v=10.3.31','./kyoto-hotel-update.js?v=10.3.31','./app.js?v=10.3.31','./day-strip-city.js?v=10.3.31','./hotel-compact.js?v=10.3.31','./car-rental.js?v=10.3.31','./drive.js?v=10.3.31','./booking-planner.js?v=10.3.31','./romancecar-booking-update.js?v=10.3.31','./station-guides.js?v=10.3.31','./expense-safety.js?v=10.3.31','./expenses-ui.js?v=10.3.31','./manifest.json?v=10.3.31','./assets/icons/app-icon-192.png?v=10.3.31','./assets/icons/app-icon-512.png?v=10.3.31','./assets/icons/apple-touch-icon.png?v=10.3.31','./assets/icons/header-icon.png?v=10.3.31',
   './assets/train-infographic.svg',
   './images/evening-walks/asakusa.jpg','./images/evening-walks/ueno-akihabara.jpg','./images/evening-walks/shibuya.jpg','./images/evening-walks/marunouchi-ginza.jpg'
 ];

@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · Shinjuku Prince hotel migration · v10.1.8
+/* Japan Trip 2026 · Shinjuku Prince hotel migration · v10.3.31
    Keeps the existing private booking slot intact until Firestore private data is verified.
    Updates only non-sensitive hotel facts, itinerary routing, station guidance and the matching expense. */
 (() => {
@@ -38,19 +38,24 @@
 
     const day=T.days?.find(d=>d.date==='04/11');
     if(day){
-      const checkin=day.stops?.find(s=>/^Check-in/.test(s.title||''));
-      if(checkin){
-        checkin.title='Check-in · Shinjuku Prince Hotel';
-        checkin.text='Kabukicho · כ־5 דקות הליכה מ-JR Shinjuku; תחנת Seibu-Shinjuku מחוברת למלון. התארגנות ומנוחה קצרה לפני הערב הראשון.';
+      // Older builds injected a second Narita transfer ("after customs") recommending trains.
+      // The confirmed Booking taxi is the single airport-to-hotel transfer.
+      day.stops=day.stops.filter(stop=>
+        !(/Narita → Shinjuku Prince Hotel/.test(stop.title||'')&&
+          !/מונית Booking/.test(stop.title||''))&&
+        !(stop.time==='אחרי המכס'&&/Narita → Shinjuku/.test(stop.title||''))
+      );
+      let checkin=day.stops.find(stop=>/^Check-in · Shinjuku Prince Hotel/.test(stop.title||''));
+      if(!checkin){
+        checkin={time:'בהגעה למלון',icon:'🏨',title:'Check-in · Shinjuku Prince Hotel',text:''};
+      }else{
+        day.stops.splice(day.stops.indexOf(checkin),1);
       }
-      if(!day.stops?.some(s=>s.title==='Narita → Shinjuku Prince Hotel')){
-        const landingIndex=day.stops?.findIndex(s=>/נחיתה Narita/.test(s.title||''))??-1;
-        day.stops?.splice(Math.max(0,landingIndex+1),0,{
-          time:'אחרי המכס',icon:'🚆',title:'Narita → Shinjuku Prince Hotel',
-          text:'אפשרות נוחה: N’EX ישיר ל-Shinjuku (כ־80 דקות) ואז כ־5 דקות הליכה. חלופה עם מזוודות: Limousine Bus ל-TOKYU KABUKICHO TOWER ומשם כ־2 דקות הליכה למלון.'
-        });
-      }
-      day.route=T.maps.directions('Narita International Airport Terminal 2','Shinjuku Prince Hotel Tokyo');
+      checkin.time='בהגעה למלון';
+      checkin.text='קבלת החדר אם הוא מוכן, התארגנות ומנוחה קצרה; אם טרם ניתן להיכנס לחדר משאירים מזוודות בקבלה. ממשיכים ל-JINS לפי שעת ההגעה.';
+      const taxiIndex=day.stops.findIndex(stop=>/מונית Booking/.test(stop.title||''));
+      day.stops.splice(Math.max(0,taxiIndex+1),0,checkin);
+      day.route=T.maps.directions('Narita International Airport Terminal 1','Shinjuku Prince Hotel Tokyo');
     }
 
     const shinjuku=T.places?.Shinjuku;
