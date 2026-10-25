@@ -1,7 +1,7 @@
-/* Japan Trip 2026 · compact expense controls + dual budget filters · v10.3.29 */
+/* Japan Trip 2026 · compact expense controls + dual budget filters · v10.3.30 */
 (() => {
   'use strict';
-  const VERSION='10.3.29';
+  const VERSION='10.3.30';
   const EXP_KEY='japanTrip_expenses_v1';
   const SETTINGS_KEY='japanTrip_expense_settings_v1';
   const TRASH_KEY='japanTrip_expenses_trash_v1';

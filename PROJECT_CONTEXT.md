@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.29 itinerary timeline simplification on 2026-10-24.
-> **Current app version:** **v10.3.29**.  
+> **Verified against:** current main after the v10.3.30 Firebase authentication lifecycle repair on 2026-10-25.
+> **Current app version:** **v10.3.30**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -65,10 +65,10 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.29**
+Current release: **v10.3.30**
 
 Current service-worker cache:
-`japan-trip-v10-3-29-wide-itinerary`
+`japan-trip-v10-3-30-auth-session`
 
 When app code/assets change:
 
@@ -636,6 +636,20 @@ The same PWA now adapts automatically to tablets; there is no separate tablet ap
 - The time remains outside the card on the right in RTL, in its existing orange treatment (logistics times retain their distinctive blue).
 - The rail's DOM markup and unused CSS rules are gone rather than only hidden; the larger card width also applies to tablet layouts.
 - No changes to itinerary content/times, optional flags, guides, map links, budget logic, stored data, or balanced typography from v10.3.28.
+
+---
+
+## 16G. Firebase login / role lifecycle — v10.3.30
+
+- Fixed a race where the public-view Firestore snapshot subscription survived authentication and could later demote a signed-in Owner/Editor to Viewer, or apply public-only completion state over an authenticated session.
+- All public and private Firestore subscriptions are removed when Firebase Auth changes users or signs out. Async callbacks and permission lookups check the current auth-generation and account UID before changing state.
+- While account privileges are being checked, the runtime remains in Viewer (read-only) mode with an explicit "checking permissions" status. Write operations do not begin until private state hydration completes.
+- On initial publish failure, show a sync warning and retain the authenticated Owner/Editor role; a failed publish does not mark the private migration verified.
+- Google sign-in explicitly requests persistent LOCAL Firebase session where supported. Popup-blocked and unsupported-popup environments fall back to redirect login. Browser/device data cleanup can still require a new login.
+- Fixed noisy Viewer write-denied popups from background state notifications; explicit Viewer actions remain blocked.
+- **Security boundary:** Owner is determined solely by equality of the current authenticated UID with `trips/japan-2026.ownerUid` in trusted Firestore. Editors are authorized according to configured UID/email allowlists. Client code does not auto-promote Editor to Owner.
+- **Unresolved backend check:** the authenticated account currently showing Editor may have a different UID from Firestore `ownerUid`. The app cannot safely alter that trusted root field; it must be verified using Firebase Authentication and Firestore with authenticated admin access. No permission or Firestore security rules were changed.
+- Regression tested in a mocked Firebase lifecycle (Viewer → Owner → logout → Editor, stale public callbacks ignored); no localStorage wipe, data migration, or expense/itinerary changes.
 
 ---
 
