@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · Shinjuku Prince hotel migration · v10.3.31
+/* Japan Trip 2026 · Shinjuku Prince hotel migration · v10.3.33
    Keeps the existing private booking slot intact until Firestore private data is verified.
    Updates only non-sensitive hotel facts, itinerary routing, station guidance and the matching expense. */
 (() => {
@@ -52,7 +52,7 @@
         day.stops.splice(day.stops.indexOf(checkin),1);
       }
       checkin.time='בהגעה למלון';
-      checkin.text='קבלת החדר אם הוא מוכן, התארגנות ומנוחה קצרה; אם טרם ניתן להיכנס לחדר משאירים מזוודות בקבלה. ממשיכים ל-JINS לפי שעת ההגעה.';
+      checkin.text='קבלת החדר אם הוא מוכן, התארגנות ומנוחה קצרה; אם טרם ניתן להיכנס לחדר משאירים מזוודות בקבלה. אחרי הנחיתה ב-13:15, JINS רק אם השעה ושעות הפתיחה מאפשרות; אחרת ביום אחר.';
       const taxiIndex=day.stops.findIndex(stop=>/מונית Booking/.test(stop.title||''));
       day.stops.splice(Math.max(0,taxiIndex+1),0,checkin);
       day.route=T.maps.directions('Narita International Airport Terminal 1','Shinjuku Prince Hotel Tokyo');

@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · booking planner · v10.3.31
+/* Japan Trip 2026 · booking planner · v10.3.33
    Enhanced reservation checklist with type badges, prices, booking windows,
    provider links, filters, Drive confirmations and cloud-synced completion state. */
 (() => {
@@ -16,7 +16,7 @@
       id:'etihad-flights-confirmed', type:'flight', icon:'✈️', typeLabel:'טיסות',
       title:'Etihad · ארבע הטיסות מאושרות', tripDate:'3–4/11 + 17–18/11', required:true, defaultDone:true,
       price:'שולם · סכום החיוב נשמר במסך ההוצאות',
-      when:'כבר הוזמן', whenNote:'EY594 · EY800 · EY801 · EY595. 17/11 המראה מנאריטה ב-17:20; 18/11 נחיתה בתל אביב ב-05:05. כבודה לבטן: 30 ק״ג לנוסע.',
+      when:'כבר הוזמן', whenNote:'EY594 · EY800 (עודכנה: AUH 22:20 ב-3/11 → NRT 13:15 ב-4/11) · EY801 · EY595. 17/11 המראה מנאריטה ב-17:20; 18/11 נחיתה בתל אביב ב-05:05. כבודה לבטן: 30 ק״ג לנוסע.',
       provider:'Etihad Airways', bookingUrl:'https://www.etihad.com/',
       priority:99
     },
@@ -31,9 +31,9 @@
     },
     {
       id:'narita-transfer-shinjuku-prince', docKey:'narita-transfer-shinjuku-prince', type:'car', icon:'🚕', typeLabel:'מונית / הסעה',
-      title:'הסעה · Narita → Shinjuku Prince Hotel', tripDate:'4/11 · EY800 · נחיתה 11:40 · Narita Terminal 1', required:true, defaultDone:true,
+      title:'הסעה · Narita → Shinjuku Prince Hotel', tripDate:'4/11 · EY800 · נחיתה חדשה 13:15 · Narita Terminal 1', required:true, defaultDone:true,
       price:'חינם · ₪0',
-      when:'כבר הוזמן', whenNote:'הסעה מאושרת וחינמית · People Carrier · עד 2 נוסעים · xiooh travel · מעקב אחרי EY800 · המתנה של 45 דקות לפי תנאי ההזמנה. לוודא נקודת מפגש בטרמינל 1.',
+      when:'לאמת שינוי שעה', whenNote:'ההסעה הוזמנה ואושרה בעבר לנחיתת EY800 ב-11:40; Etihad עדכנה את הנחיתה ל-13:15. יש לבדוק ב-Booking או מול xiooh travel שהנהג עודכן ושההמתנה מותאמת. רכב People Carrier, עד 2 נוסעים, מעקב טיסה ו-45 דקות המתנה לפי תנאי ההזמנה. נקודת מפגש בטרמינל 1 טעונה אישור.',
       provider:'Booking.com · xiooh travel',
       bookingUrl:'https://www.booking.com/taxi/index.html',
       priority:2

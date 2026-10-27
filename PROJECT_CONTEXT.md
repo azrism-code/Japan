@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.32 confirmed 7G eSIM purchase budget update on 2026-10-27.
-> **Current app version:** **v10.3.32**.  
+> **Verified against:** current main after the v10.3.33 Etihad EY800 schedule change and arrival-day adjustment on 2026-10-27.
+> **Current app version:** **v10.3.33**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -65,10 +65,10 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.32**
+Current release: **v10.3.33**
 
 Current service-worker cache:
-`japan-trip-v10-3-32-esim-purchase`
+`japan-trip-v10-3-33-ey800-schedule`
 
 When app code/assets change:
 
@@ -315,20 +315,20 @@ Shin-Osaka → Tokyo. Exact train/time still to be finalized; consider Fuji-side
 ### 03/11 · Israel → Japan
 TLV → Abu Dhabi → Narita.
 
-Final confirmed Etihad itinerary from tickets shared on 25 Oct 2026:
+Confirmed Etihad itinerary from tickets shared on 25 Oct 2026, with **EY800 rescheduled according to the airline change email received 27 Oct 2026**:
 - EY594 · 03/11 TLV 14:00 → AUH 19:10 · Airbus A321neo, Terminal 3 TLV.
-- Abu Dhabi connection 1:55.
-- EY800 · 03–04/11 AUH 21:05 → NRT 11:40 (+1) · Airbus A380-800, Narita **Terminal 1**.
+- Abu Dhabi outbound connection is now **3:10** (EY594 arrival 19:10 → EY800 departure 22:20); confirm other legs have not changed in Etihad Manage Booking.
+- **EY800 changed** · 03–04/11 AUH Terminal A **22:20** → NRT **13:15** (+1), duration **9:55** · Airbus A380-800, Narita **Terminal 1**. Previous 21:05 / 11:40 times are obsolete.
 - 17/11 EY801 · NRT 17:20 → AUH 00:40 on 18/11, Narita **Terminal 1**.
 - Abu Dhabi return connection 2:45.
 - 18/11 EY595 · AUH 03:25 → TLV 05:05, Terminal 3.
 - Ticket displays 30 kg checked baggage per traveler on all four Etihad legs. Other cabin bag allowances are not assumed.
 
 ### 04/11 · Tokyo · Shinjuku First Day
-Narita Terminal 1, 11:40 → Booking taxi → Shinjuku Prince Hotel check-in → first afternoon/evening in Shinjuku.
+Narita Terminal 1, **13:15** → immigration and baggage → previously booked Booking taxi (pickup timing must be reconfirmed) → Shinjuku Prince Hotel check-in → shorter and flexible Shinjuku evening.
 
 Airport transfer:
-- **Confirmed free Booking.com taxi**, service provider **xiooh travel**, People Carrier for up to 2 passengers, tracking inbound **EY800**, landing at 11:40 on 04/11.
+- Free Booking.com taxi was **confirmed for the original EY800 arrival at 11:40**, service provider **xiooh travel**, People Carrier for 2 travelers, tracking inbound EY800. The flight now lands at **13:15 on 04/11**. **No evidence that the actual Booking/supplier pickup has been adjusted.** The user must contact Booking or the provider and verify pickup and 45-minute wait rules; do not claim the booking was changed remotely.
 - Meeting point needs to be confirmed as Narita Terminal 1 and the 45-minute waiting-window conditions checked with provider; do not invent a pickup pin or exact taxi ETA.
 - The airport itinerary sequence is: Narita arrival → immigration/baggage → **one** booked Booking taxi → **check-in at Shinjuku Prince Hotel** → JINS and the evening.
 - The previous `shinjuku-prince-update.js` second transfer labeled `אחרי המכס` and its Narita Express advice were removed; N'EX is a backup only.
@@ -336,9 +336,9 @@ Airport transfer:
 
 
 Afternoon:
-JINS → 3D Cat → Godzilla Head → optional Tokyu Kabukicho Tower.
+JINS after hotel check-in **only if time and opening hours permit**, otherwise reschedule early in Tokyo (5–7 Nov). 3D Cat → Godzilla Head → optional Tokyu Kabukicho Tower in the evening, with times kept flexible.
 
-Evening walk is deliberately shorter and has no duplicates from the afternoon:
+Evening walk starts only after hotel check-in and is deliberately short (about 1–2 hours), with no duplicated daytime stops:
 optional Don Quijote → Hanazono Shrine → Golden Gai → Omoide Yokocho.
 Dinner target is around **21:00**; only on arrival day may it move earlier if fatigue/hunger requires it.
 
@@ -685,6 +685,18 @@ The same PWA now adapts automatically to tablets; there is no separate tablet ap
 - `📱 תקשורת` totals should show the new **USD 37.18 paid** once rather than two **USD 12 estimates**. The rest of the itinerary, flight totals, app permissions, and costs remain unchanged.
 - The publicly hosted repository contains **no receipt number, charge reference, card details, personal email, purchase token, or eSIM activation codes**.
 - The repository code is updated on `main`; the user's existing remote Firestore document is updated through the normal authenticated app sync when the user opens the new version, not directly by editing the public Git repo.
+
+---
+
+## 16J. EY800 rescheduled flight · v10.3.33
+
+- **Source:** screenshot of an Etihad Airways change notice on 27 Oct 2026. EY800 from Abu Dhabi Terminal A departs **03/11 at 22:20** (instead of 21:05), arrives Tokyo Narita Terminal 1 **04/11 at 13:15** (instead of 11:40), Airbus A380-800, flight duration **9:55**. Both travelers have seats shown as unassigned ('-') on this notice; seat assignments should be checked with the airline, not fabricated or stored in public repo.
+- If EY594 continues to arrive AUH at 19:10 as in the last ticket, the outbound layover becomes **3h10**. Other leg timings and hotel dates remain unchanged; airline full itinerary should be checked for other changes.
+- Arrival on 04/11 shifts later: immigration → luggage → Booking taxi → Shinjuku Prince Hotel check-in → short optional Shinjuku outing. JINS 15:30 is removed and becomes **conditional / after hotel check-in**; if closed or tired, choose another Tokyo day early in the trip. 3D Cat and Godzilla stops have flexible evening labels. Evening walk no longer assumes all afternoon stops already happened.
+- **Critical booking follow-up:** xiooh travel / Booking.com pickup was booked on the original EY800 **11:40** arrival; the new **13:15** pickup is *not verified*. The itinerary and booking planner warn to check the supplier, meeting point and 45-minute wait policy. We did **not** change the external Booking reservation.
+- Updated Narita place guide and removed an obsolete Terminal 2 photo fallback in app.js. Terminal remains **Narita Terminal 1**.
+- Bumped `app.js`, `trip-data.js`, `booking-planner.js`, `shinjuku-prince-update.js`, `place-content.js` and PWA version/cache to 10.3.33; no changes to Firebase login/authorization, private booking identifiers, other flights, expenses, or trip end.
+- The previous idea to include Craft Dining Upit as an optional restaurant for the Kyoto 11/11 Pontocho evening was **only proposed**, not part of this flight-schedule release. Implement separately upon specific approval.
 
 ---
 

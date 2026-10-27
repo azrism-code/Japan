@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · application · v10.3.32
+/* Japan Trip 2026 · application · v10.3.33
    Deterministic render from TRIP_DATA. No patch modules, DOM observers or runtime source rewriting. */
 (() => {
 'use strict';
@@ -12,7 +12,6 @@ const hotelByKey=key=>T.hotels.find(h=>h.key===key);
 
 /* Visuals are presentation metadata only. Trip facts remain in TRIP_DATA. */
 const IMAGE_BY_PLACE={
-'Narita Airport':'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Narita_International_Airport_Terminal_2_2019.jpg/640px-Narita_International_Airport_Terminal_2_2019.jpg',
 'Shinjuku':'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=900&q=78',
 'Kaminarimon':'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Kaminarimon2020.jpg/640px-Kaminarimon2020.jpg',
 'Sensō-ji':'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Sensoji_2023.jpg/640px-Sensoji_2023.jpg',
@@ -209,7 +208,7 @@ document.addEventListener('change',e=>{if(e.target.matches('[data-take-check]'))
 document.addEventListener('input',e=>{if(e.target.id==='placeSearch'){state.placeSearch=e.target.value;applyPlaceFilters();return}if(e.target.id==='ilsAmount'){const v=Number(e.target.value);$('#jpyAmount').value=v?Math.round(v/T.rateJpyIls):'';$('#moneyResult').textContent=v?`₪${fmt(v)} ≈ ¥${fmt(v/T.rateJpyIls)}`:'הכנס סכום להמרה';return}if(e.target.id==='jpyAmount'){const v=Number(e.target.value);$('#ilsAmount').value=v?(v*T.rateJpyIls).toFixed(2):'';$('#moneyResult').textContent=v?`¥${fmt(v)} ≈ ₪${fmt(v*T.rateJpyIls)}`:'הכנס סכום להמרה';return}});
 $('#overlay').addEventListener('click',closeMenu);$('#infoModal').addEventListener('click',e=>{if(e.target.id==='infoModal')closeModal('#infoModal')});$('#eveningModal').addEventListener('click',e=>{if(e.target.id==='eveningModal')closeModal('#eveningModal')});$('#imageOverlay').addEventListener('click',e=>{if(e.target.id==='imageOverlay')closeImage()});$('#menuButton').addEventListener('click',openMenu);
 document.addEventListener('japan:cloudApplied',()=>{migrateFlightExpenseAfterCloud();migratePurchasedEsimsAfterCloud();take=listFromStorage(keys.take,T.takeDefault);shop=listFromStorage(keys.shop,T.shoppingDefault);if(state.page)openPage(state.page);else renderTrip()});
-state.day=currentTripDay();renderTrip();document.documentElement.dataset.appReady='v10.3.32';
+state.day=currentTripDay();renderTrip();document.documentElement.dataset.appReady='v10.3.33';
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').then(r=>r.update()).catch(console.warn));
 window.JapanTripApp={openPage,closePage,renderTrip,renderHotels,renderBookings,keys};
 })();

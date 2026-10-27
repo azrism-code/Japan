@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · curated place content · v10.3.31
+/* Japan Trip 2026 · curated place content · v10.3.33
    Restored historical popup guides and place photos from the pre-v10 trip app.
    Loaded after trip-data and before app.js. */
 (() => {
@@ -56,8 +56,8 @@
   const guides = {
     'Narita Airport':[
       "הנחיתה ב-4/11 וההמראה ב-17/11 הן ב-Narita Terminal 1, לפי כרטיסי Etihad המעודכנים.",
-      "ביום ההגעה מחכה לנו הסעת Booking חינמית ומאושרת של xiooh travel אחרי איסוף המזוודות; אין צורך לחפש Narita Express אלא אם ההסעה לא זמינה.",
-      "חשוב לוודא באישור Booking את נקודת המפגש בטרמינל 1 ואת תחילת מניין 45 דקות ההמתנה לפי תנאי הספק.",
+      "4/11: EY800 נוחתת כעת ב-13:15 בטרמינל 1 (במקום 11:40). הוזמנה הסעת Booking חינמית של xiooh travel, אך חובה לוודא מול הספק שההזמנה מעודכנת לשעת הנחיתה החדשה; אין צורך להזמין רכבת כל עוד ההסעה בתוקף.",
+      "בדקו באישור Booking את נקודת המפגש בטרמינל 1, את זמן האיסוף ואת תחילת מניין 45 דקות ההמתנה אחרי שינוי השעה. אין לנו אישור שהספק כבר קלט את העדכון.",
       "ביום החזרה יוצאים מ-Tokyo Station סביב 12:15 ברכבת שתיקבע בהמשך ומכוונים לצ׳ק-אין ב-14:20 לפני טיסת EY801 ב-17:20."
     ],
     'Shinjuku':[
