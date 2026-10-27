@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · application · v10.3.31
+/* Japan Trip 2026 · application · v10.3.32
    Deterministic render from TRIP_DATA. No patch modules, DOM observers or runtime source rewriting. */
 (() => {
 'use strict';
@@ -92,7 +92,31 @@ function listFromStorage(key,defaults,legacy=[]){for(const k of [key,...legacy])
 let take=listFromStorage(keys.take,T.takeDefault,['japanTrip_take_v1','takeList']);
 let shop=listFromStorage(keys.shop,T.shoppingDefault,['japanTrip_shop_v1','shoppingList','shopList']);
 function defaultExpSettings(){return {budget:32027,rates:{USD:3,EUR:3.5,JPY:T.rateJpyIls,ILS:1}}}
-function normalizeExpenses(){let a=parseStorage(keys.expenses,null);if(!Array.isArray(a)||!a.length)a=T.expenseDefaults.map((x,i)=>({id:Date.now()+i,...x}));const stale=/Cross Hotel Osaka|remm Tokyo Kyobashi|Richmond Hotel Premier Kyoto Shijo|^מלון טוקיו$|מלון טוקיו · לילה אחרון|^מלון Hakone \/ Fuji$/i;a=a.filter(x=>!stale.test(x.name||''));const up=(name,obj)=>{let x=a.find(y=>y.name===name);if(x)Object.assign(x,obj);else a.push({id:Date.now()+a.length,...obj})};T.expenseDefaults.filter(x=>x.category==='🏨 לינה').forEach(x=>up(x.name,x));for(const expense of a){if(expense?.name==='טיסות Emirates / Flydubai')expense.name='טיסות Etihad Airways';}localStorage.setItem(keys.expenses,JSON.stringify(a));if(!parseStorage(keys.expSettings,null))localStorage.setItem(keys.expSettings,JSON.stringify(defaultExpSettings()));return a}normalizeExpenses();
+// Consolidate only the two original eSIM estimates. This is idempotent and does
+// not alter unrelated purchases or a 7G record that the user has already edited.
+function consolidatePurchasedEsims(items){
+  if(!Array.isArray(items))return {items,changed:false};
+  const legacyNames=new Set(['eSIM עזרי','eSIM איילי']);
+  const old=items.filter(item=>legacyNames.has(item?.name));
+  if(!old.length)return {items,changed:false};
+  const existing=items.find(item=>item?.name==='7G eSIM × 2');
+  const keep=existing||old[0]; // retain a stable expense ID during the migration
+  if(!existing)Object.assign(keep,{
+    name:'7G eSIM × 2',status:'שולם',payment:'אשראי',
+    currency:'USD',amount:37.18,category:'📱 תקשורת',included:true,
+    note:'2 חבילות eSIM · נרכש ב-27/10/2026'
+  });
+  return {items:items.filter(item=>item===keep||!legacyNames.has(item?.name)),changed:true};
+}
+function migratePurchasedEsimsAfterCloud(){
+  if(window.JapanCloud&&!window.JapanCloud.canWrite())return;
+  const current=parseStorage(keys.expenses,null);
+  const result=consolidatePurchasedEsims(current);
+  if(!result.changed)return;
+  localStorage.setItem(keys.expenses,JSON.stringify(result.items));
+  document.dispatchEvent(new CustomEvent('japan:stateChanged'));
+}
+function normalizeExpenses(){let a=parseStorage(keys.expenses,null);if(!Array.isArray(a)||!a.length)a=T.expenseDefaults.map((x,i)=>({id:Date.now()+i,...x}));const stale=/Cross Hotel Osaka|remm Tokyo Kyobashi|Richmond Hotel Premier Kyoto Shijo|^מלון טוקיו$|מלון טוקיו · לילה אחרון|^מלון Hakone \/ Fuji$/i;a=a.filter(x=>!stale.test(x.name||''));const up=(name,obj)=>{let x=a.find(y=>y.name===name);if(x)Object.assign(x,obj);else a.push({id:Date.now()+a.length,...obj})};T.expenseDefaults.filter(x=>x.category==='🏨 לינה').forEach(x=>up(x.name,x));for(const expense of a){if(expense?.name==='טיסות Emirates / Flydubai')expense.name='טיסות Etihad Airways';}a=consolidatePurchasedEsims(a).items;localStorage.setItem(keys.expenses,JSON.stringify(a));if(!parseStorage(keys.expSettings,null))localStorage.setItem(keys.expSettings,JSON.stringify(defaultExpSettings()));return a}normalizeExpenses();
 function migrateFlightExpenseAfterCloud(){
   // Rename only the legacy carrier label; leave all user-entered fields intact.
   if(window.JapanCloud&&!window.JapanCloud.canWrite())return;
@@ -184,8 +208,8 @@ document.addEventListener('click',e=>{const b=e.target.closest('button,a,label')
 document.addEventListener('change',e=>{if(e.target.matches('[data-take-check]')){take[Number(e.target.dataset.takeCheck)].done=e.target.checked;saveTake();return}if(e.target.matches('[data-shop-check]')){shop[Number(e.target.dataset.shopCheck)].done=e.target.checked;saveShop();return}if(e.target.matches('[data-exp-include]')){const a=expItems(),x=a.find(v=>String(v.id)===String(e.target.dataset.expInclude));if(x)x.included=e.target.checked;setStorage(keys.expenses,a);openPage('expenses');return}if(e.target.id==='importFile'){importData(e.target.files?.[0]);return}});
 document.addEventListener('input',e=>{if(e.target.id==='placeSearch'){state.placeSearch=e.target.value;applyPlaceFilters();return}if(e.target.id==='ilsAmount'){const v=Number(e.target.value);$('#jpyAmount').value=v?Math.round(v/T.rateJpyIls):'';$('#moneyResult').textContent=v?`₪${fmt(v)} ≈ ¥${fmt(v/T.rateJpyIls)}`:'הכנס סכום להמרה';return}if(e.target.id==='jpyAmount'){const v=Number(e.target.value);$('#ilsAmount').value=v?(v*T.rateJpyIls).toFixed(2):'';$('#moneyResult').textContent=v?`¥${fmt(v)} ≈ ₪${fmt(v*T.rateJpyIls)}`:'הכנס סכום להמרה';return}});
 $('#overlay').addEventListener('click',closeMenu);$('#infoModal').addEventListener('click',e=>{if(e.target.id==='infoModal')closeModal('#infoModal')});$('#eveningModal').addEventListener('click',e=>{if(e.target.id==='eveningModal')closeModal('#eveningModal')});$('#imageOverlay').addEventListener('click',e=>{if(e.target.id==='imageOverlay')closeImage()});$('#menuButton').addEventListener('click',openMenu);
-document.addEventListener('japan:cloudApplied',()=>{migrateFlightExpenseAfterCloud();take=listFromStorage(keys.take,T.takeDefault);shop=listFromStorage(keys.shop,T.shoppingDefault);if(state.page)openPage(state.page);else renderTrip()});
-state.day=currentTripDay();renderTrip();document.documentElement.dataset.appReady='v10.3.31';
+document.addEventListener('japan:cloudApplied',()=>{migrateFlightExpenseAfterCloud();migratePurchasedEsimsAfterCloud();take=listFromStorage(keys.take,T.takeDefault);shop=listFromStorage(keys.shop,T.shoppingDefault);if(state.page)openPage(state.page);else renderTrip()});
+state.day=currentTripDay();renderTrip();document.documentElement.dataset.appReady='v10.3.32';
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').then(r=>r.update()).catch(console.warn));
 window.JapanTripApp={openPage,closePage,renderTrip,renderHotels,renderBookings,keys};
 })();

@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.31 confirmed Etihad itinerary and airport transfer update on 2026-10-25.
-> **Current app version:** **v10.3.31**.  
+> **Verified against:** current main after the v10.3.32 confirmed 7G eSIM purchase budget update on 2026-10-27.
+> **Current app version:** **v10.3.32**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -65,10 +65,10 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.31**
+Current release: **v10.3.32**
 
 Current service-worker cache:
-`japan-trip-v10-3-31-etihad-final-flights`
+`japan-trip-v10-3-32-esim-purchase`
 
 When app code/assets change:
 
@@ -673,6 +673,18 @@ The same PWA now adapts automatically to tablets; there is no separate tablet ap
 - Removed stale runtime version overwrites from `place-content.js` and `car-rental.js`, which were resetting `TRIP_DATA.version`/`appReady` to older versions after load.
 - No booking/PNR or personal identifier was inserted into public GitHub. No Firebase permissions, login behavior, private document contents, or trip budget totals were changed.
 - Arrival/return travel times in the itinerary are indicative; do not present unbooked train times or pickup pins as confirmed.
+
+---
+
+## 16I. Confirmed 7G eSIM purchase for two travelers — v10.3.32
+
+- User confirmed the purchase of **two 7G eSIMs** for the Japan trip. The receipt dated **27 Oct 2026** confirms **USD 37.18 total paid**. The receipt does **not** list the GB capacity of either eSIM, so no data allowance is asserted.
+- The two previous `📱 תקשורת` defaults (`eSIM עזרי`, `eSIM איילי`, both USD 12 estimates) are replaced by one **`7G eSIM × 2`, status `שולם`, currency `USD`, amount `37.18`, included in budget**, note `2 חבילות eSIM · נרכש ב-27/10/2026`.
+- Existing local / Firestore expense arrays are migrated in `app.js` when cloud state is applied: remove only those two exact legacy estimate names, keep exactly one new shared purchase row (preserving its existing ID if possible), and notify normal `japan:stateChanged` for authorized Owner/Editor to publish Firestore state.
+- Migration is idempotent. If the combined purchase row already exists, its user-edited financial details are kept and the two old estimates alone are removed. Unrelated expenses and customized entries are unchanged. If the legacy rows were previously manually removed, do not resurrect deleted expenses.
+- `📱 תקשורת` totals should show the new **USD 37.18 paid** once rather than two **USD 12 estimates**. The rest of the itinerary, flight totals, app permissions, and costs remain unchanged.
+- The publicly hosted repository contains **no receipt number, charge reference, card details, personal email, purchase token, or eSIM activation codes**.
+- The repository code is updated on `main`; the user's existing remote Firestore document is updated through the normal authenticated app sync when the user opens the new version, not directly by editing the public Git repo.
 
 ---
 

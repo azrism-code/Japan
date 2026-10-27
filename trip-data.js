@@ -378,8 +378,7 @@
     {name:'Hotel Royal Classic Osaka',status:'מוזמן',payment:'אשראי',currency:'JPY',amount:109398,category:'🏨 לינה',included:true,note:'14–16/11 · סופי'},
     {name:'Hotel Metropolitan Tokyo Marunouchi',status:'שולם',payment:'אשראי',currency:'ILS',amount:676.61,category:'🏨 לינה',included:true,note:'16–17/11 · שולם'},
     {name:'ביטוח נסיעות (2×17)',status:'הערכה',payment:'אשראי',currency:'USD',amount:34,category:'🛡️ ביטוח',included:true,note:''},
-    {name:'eSIM עזרי',status:'הערכה',payment:'אשראי',currency:'USD',amount:12,category:'📱 תקשורת',included:true,note:''},
-    {name:'eSIM איילי',status:'הערכה',payment:'אשראי',currency:'USD',amount:12,category:'📱 תקשורת',included:true,note:''},
+    {name:'7G eSIM × 2',status:'שולם',payment:'אשראי',currency:'USD',amount:37.18,category:'📱 תקשורת',included:true,note:'2 חבילות eSIM · נרכש ב-27/10/2026'},
     {name:'השכרת רכב · Odawara',status:'הערכה',payment:'אשראי',currency:'USD',amount:150,category:'🚗 תחבורה',included:true,note:'8–10/11'},
     {name:'חניה בנתב״ג',status:'הערכה',payment:'אשראי',currency:'ILS',amount:800,category:'🚗 תחבורה',included:true,note:''}
   ];
@@ -396,7 +395,7 @@
   ];
 
   window.TRIP_DATA = {
-    version:'10.3.31', title:'Japan Trip', year:2026, travelers:'2 travelers',
+    version:'10.3.32', title:'Japan Trip', year:2026, travelers:'2 travelers',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
     hotels, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
     maps:{search:G,directions:D}
