@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · booking planner · v10.3.33
+/* Japan Trip 2026 · booking planner · v10.3.34
    Enhanced reservation checklist with type badges, prices, booking windows,
    provider links, filters, Drive confirmations and cloud-synced completion state. */
 (() => {
@@ -180,6 +180,7 @@
     const filter=getFilter(), typeFilter=getTypeFilter(), s=summary();
     const visible=ITEMS.filter(x=>matches(x,filter,typeFilter)).sort((a,b)=>a.priority-b.priority);
     page.innerHTML=`<div class="page-head"><button data-action="close-page">←</button><h2>🎟️ הזמנות</h2></div><div class="page-body bp-page">
+      <div class="entry-qr-booking-shortcut"><b>🛂 הגירה ומכס · Visit Japan Web</b><span>קודי QR פרטיים לכל נוסע, זמינים מהמכשיר גם ללא אינטרנט.</span><button type="button" class="entry-qr-quick" data-entry-qr-open>📱 פתח קודי QR</button></div>
       <div class="bp-summary">
         <div><b>${s.open}</b><span>להזמין</span></div><div><b>${s.booked}</b><span>הוזמן</span></div><div><b>${s.optional}</b><span>אופציונלי</span></div>
       </div>

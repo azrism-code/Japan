@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.33 Etihad EY800 schedule change and arrival-day adjustment on 2026-10-27.
-> **Current app version:** **v10.3.33**.  
+> **Verified against:** current main after the v10.3.34 private offline Visit Japan QR wallet update on 2026-10-29.
+> **Current app version:** **v10.3.34**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -37,6 +37,7 @@ The app is a **static, mobile-first PWA** hosted on GitHub Pages.
 
 - `index.html` — app shell and script loading.
 - `trip-data.js` — canonical base itinerary/place/hotel data.
+- `entry-qr.js` and `entry-qr.css` — device-only, PIN-encrypted Visit Japan Web QR images, with no backend upload.
 - `app.js` — deterministic rendering of itinerary, places, tools, hotels, lists, etc.
 - `styles.css`, `place-content.css`, `expenses-ui.css`, `station-guides.css` — presentation.
 - `manifest.json` + `service-worker.js` — PWA/offline cache.
@@ -65,10 +66,10 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.33**
+Current release: **v10.3.34**
 
 Current service-worker cache:
-`japan-trip-v10-3-33-ey800-schedule`
+`japan-trip-v10-3-34-offline-qr`
 
 When app code/assets change:
 
@@ -697,6 +698,20 @@ The same PWA now adapts automatically to tablets; there is no separate tablet ap
 - Updated Narita place guide and removed an obsolete Terminal 2 photo fallback in app.js. Terminal remains **Narita Terminal 1**.
 - Bumped `app.js`, `trip-data.js`, `booking-planner.js`, `shinjuku-prince-update.js`, `place-content.js` and PWA version/cache to 10.3.33; no changes to Firebase login/authorization, private booking identifiers, other flights, expenses, or trip end.
 - The previous idea to include Craft Dining Upit as an optional restaurant for the Kyoto 11/11 Pontocho evening was **only proposed**, not part of this flight-schedule release. Implement separately upon specific approval.
+
+---
+
+## 16K. Visit Japan Web QR — local encrypted offline wallet · v10.3.34
+
+- Two separate QR screenshots for Japan immigration/customs, labeled for each of the two travelers, can be selected directly from the phone's photo gallery, replaced, deleted, previewed, or expanded to a white-screen scan view.
+- Entry points: compact **🛂 QR** shortcut in the sticky app header, QR button in the side menu, a first "🛂 קודי כניסה ליפן" card in Tools, and a button in the first arrival/immigration stop on **4 Nov, Narita Terminal 1**, and a QR shortcut at the top of the **Bookings / documents** page.
+- QR screenshots are saved **only on the device** in a new origin-scoped IndexedDB database `JapanTripEntryQR_v1`, store `wallet`. They are encrypted with AES-GCM using a key derived from a **user-chosen 6-digit PIN** with PBKDF2-SHA256 and a random salt (310,000 iterations); unique IVs for saved images. The PIN itself is never stored. The encryption key is held only in memory while the current app page is active (quick re-open without re-entering the PIN), and cleared on explicit lock, reload or pagehide. A forgotten PIN can be reset via a two-confirmation destructive reset of the two local QR images and verifier; the user must have copies of the original images.
+- **First-time setup requires Owner/Editor authentication.** After setup, displaying stored QR images requires the PIN even when Firebase auth is temporarily unavailable, enabling offline access. A public Viewer on another device sees no saved QR images; a person with access to this particular unlocked phone and the PIN can display them. 6-digit PIN deters casual access but is not a substitute for a strong device screen lock.
+- **Do not add actual QR images, encoded QR content, screenshots, activation keys or immigration details to public GitHub, Firestore, Google Drive, docs metadata, or service-worker cache.** `entry-qr.js` uses no network upload, and these entries are never included in other synced localStorage keys or backup JSON.
+- Because IndexedDB is strictly local, **not synced between devices**, people must separately save the relevant QR screenshots on each phone if desired. Browser data removal/reinstallation can erase them; recommend keeping original QR screenshots as an offline gallery backup. Losing the PIN requires replacing the wallet data from originals, not password recovery.
+- The new JS/CSS app assets themselves are included in the PWA service worker's offline CORE list; sensitive image files are **not**. Test access in airplane mode after first installation.
+- Preserves existing Firebase Owner/Editor auth, reservation documents on Google Drive, original itinerary, purchases and all prior localStorage state. No backend schema or public permissions changes.
+- Previous Kyoto Craft Dining Upit restaurant proposal is outside this scoped change; only QR feature was approved here.
 
 ---
 

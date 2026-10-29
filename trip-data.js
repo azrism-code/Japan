@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · canonical data · v10.3.30
+/* Japan Trip 2026 · canonical data · v10.3.34
    One source of truth. No runtime hotel/place replacement patches. */
 (() => {
   'use strict';
@@ -180,7 +180,7 @@
       {time:'מחר 13:15',icon:'🇯🇵',title:'נחיתה Narita',text:'הנחיתה ביפן מופיעה בתחילת היום הבא.'}
     ],route:null},
     {date:'04/11',dow:'רביעי',city:'Tokyo · Shinjuku',title:'נחיתה · Shinjuku First Day',summary:'נחיתה ב-13:15 → הסעת Booking → צ׳ק-אין → Shinjuku בערב · JINS אם מספיקים',hotel:'hotel-jr-kyushu-shinjuku',evening:'shinjuku',stops:[
-      {time:'13:15',icon:'✈️',title:'נחיתה Narita · Terminal 1',text:'EY800 · Etihad · ביקורת דרכונים, איסוף מזוודות ומעבר לנקודת המפגש של ההסעה.',place:'Narita Airport'},
+      {time:'13:15',icon:'✈️',title:'נחיתה Narita · Terminal 1',text:'EY800 · Etihad · ביקורת דרכונים, הצגת QR של Visit Japan Web בהגירה ובמכס, איסוף מזוודות ומעבר להסעת Booking.',place:'Narita Airport',entryQr:true},
       {time:'אחרי איסוף המזוודות',icon:'🚕',title:'Narita → Shinjuku Prince · מונית Booking',text:'הסעת Booking שהוזמנה ואושרה במקור לפי נחיתה ב-11:40: xiooh travel · People Carrier לעד 2 נוסעים · הנהג עוקב אחרי EY800. הנחיתה השתנתה ל-13:15! יש לוודא שהספק עודכן ושהאיסוף/חלון ההמתנה של 45 דקות מותאמים, לפי אישור Booking. אין שינוי מאומת בהזמנה עצמה.',tag:'🚕 הוזמן · ₪0 · לאמת שינוי שעה'},
       {time:'בהגעה למלון',icon:'🏨',title:'Check-in · Shinjuku Prince Hotel',text:'קבלת החדר אם הוא מוכן, התארגנות ומנוחה קצרה; אם טרם ניתן להיכנס לחדר משאירים מזוודות בקבלה. לאחר ההתארגנות מתחילים בטיול קל בסביבה; JINS רק אם הזמן ושעות הפתיחה מאפשרים.'},
       {time:'אם פתוח · אחרי צ׳ק-אין',icon:'👓',title:'JINS Shinjuku · אם מספיקים',text:'בדיקת ראייה והזמנת משקפיים רק אם נגיע בזמן והחנות פתוחה; אחרת להעביר ליום אחר בתחילת טוקיו, כדי להשאיר זמן להכנת העדשות.',place:'JINS Shinjuku',optional:true,tag:'גמיש · לא להעמיס ביום הנחיתה'},
@@ -395,7 +395,7 @@
   ];
 
   window.TRIP_DATA = {
-    version:'10.3.33', title:'Japan Trip', year:2026, travelers:'2 travelers',
+    version:'10.3.34', title:'Japan Trip', year:2026, travelers:'2 travelers',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
     hotels, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
     maps:{search:G,directions:D}

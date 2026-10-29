@@ -1,0 +1,44 @@
+/* Japan Trip 2026 · personal encrypted QR wallet · v10.3.34 */
+.entry-qr-shortcut{border:1px solid #ead8c5;background:#fff3e6;color:#a8560b;border-radius:11px;min-height:36px;padding:5px 9px;font-size:13px;font-weight:900;white-space:nowrap}
+.entry-qr-top-actions{display:flex;align-items:center;gap:5px}
+.entry-qr-quick{border:1px solid #e5cba8;background:#fff6eb;color:#a0520c;border-radius:10px;padding:10px 12px;font-size:14px;font-weight:900;min-height:42px}
+.entry-qr-backdrop[hidden],.entry-qr-full[hidden]{display:none!important}
+.entry-qr-backdrop{position:fixed;inset:0;z-index:1200;background:#0009;display:flex;align-items:center;justify-content:center;padding:10px;direction:rtl}
+.entry-qr-dialog{width:min(100%,580px);max-height:calc(100dvh - 20px);overflow-y:auto;overscroll-behavior:contain;background:#fff;border-radius:17px;box-shadow:0 18px 55px #0005;padding:16px;color:#242424;text-align:right}
+.entry-qr-header{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:17px}
+.entry-qr-header button{border:0;background:#f3f2f1;border-radius:12px;min-width:42px;min-height:42px;font-size:19px}
+.entry-qr-intro{font-size:13px;line-height:1.6;color:#5d5a57;margin:9px 0 15px}
+.entry-qr-setup{padding:16px;border:1px solid #e9e0d7;border-radius:13px;background:#fffcf8}
+.entry-qr-setup h3{margin:0 0 8px;font-size:17px}
+.entry-qr-setup p{font-size:13px;line-height:1.55}
+.entry-qr-setup label{display:block;font-size:13px;font-weight:700;margin:12px 0}
+.entry-qr-setup input{width:100%;margin-top:5px;min-height:48px;border:1px solid #d4cbc1;border-radius:10px;padding:10px 13px;font-size:20px;text-align:center;letter-spacing:6px;direction:ltr;background:#fff}
+.entry-qr-setup button{width:100%;min-height:46px;border:0;background:#a95b15;color:#fff;font-weight:900;border-radius:11px;font-size:15px}
+.entry-qr-error{background:#fff0f0;border:1px solid #efc7c7;border-radius:10px;padding:13px;color:#8d3030;font-size:13px;line-height:1.6}
+.entry-qr-feedback{min-height:20px;color:#a33b18;font-size:12px;font-weight:750;line-height:1.5}
+.entry-qr-people{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.entry-qr-person{background:#fff;border:1px solid #e8ddd2;border-radius:13px;padding:12px;min-width:0}
+.entry-qr-person h3{font-size:16px;margin:0 0 10px}
+.entry-qr-preview{display:flex;flex-direction:column;align-items:center;gap:5px;width:100%;padding:7px;border:1px solid #eee1d4;border-radius:10px;background:#fff;cursor:zoom-in}
+.entry-qr-preview img{display:block;width:100%;max-height:270px;object-fit:contain;background:#fff;image-rendering:auto}
+.entry-qr-preview span{font-size:11px;color:#80552d;font-weight:800}
+.entry-qr-empty{min-height:90px;display:grid;place-items:center;color:#786d63;font-size:12px;background:#f9f7f4;border-radius:10px}
+.entry-qr-actions{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:10px}
+.entry-qr-actions button,.entry-qr-file-label{border:1px solid #e2d6c7;background:#fff9f1;border-radius:9px;min-height:40px;padding:9px 11px;font-size:12px;font-weight:850;cursor:pointer}
+.entry-qr-actions button{color:#a33d32;background:#fff7f7;border-color:#ead0ca}
+.entry-qr-file-label{display:inline-flex;align-items:center;color:#88520f}
+.entry-qr-bottom{display:flex;align-items:center;gap:10px;margin-top:12px}
+.entry-qr-bottom button{border:1px solid #d7ceca;background:#f7f5f2;padding:10px 14px;border-radius:10px;font-weight:850}
+.entry-qr-foot{margin-top:15px;border-top:1px solid #ece5df;padding-top:11px;color:#736963;font-size:12px;line-height:1.6}
+.entry-qr-full{position:fixed;inset:0;z-index:1300;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:15px;color:#111}
+.entry-qr-full>button{position:absolute;top:calc(10px + env(safe-area-inset-top,0px));left:12px;border:1px solid #eee;border-radius:11px;background:#fafafa;padding:10px 15px;font-weight:850;font-size:15px}
+#entryQrFullName{font-size:20px;font-weight:900;margin:40px 0 14px;text-align:center}
+#entryQrFullImage{display:block;max-width:min(95vw,540px);width:auto;max-height:min(70dvh,650px);object-fit:contain;background:#fff;image-rendering:pixelated}
+.entry-qr-zoom-help{font-size:12px;color:#555;text-align:center;margin-top:16px}
+body.entry-qr-active{overflow:hidden}
+@media(max-width:370px){.app-header .brand small{font-size:10px!important}.entry-qr-shortcut{font-size:11px;padding:4px 6px}.entry-qr-people{grid-template-columns:1fr}.entry-qr-preview img{max-height:290px}}
+@media(min-width:700px){.entry-qr-dialog{padding:23px}.entry-qr-preview img{max-height:330px}}
+
+.entry-qr-reset{margin-top:9px;min-height:38px!important;background:#fff!important;border:1px solid #e5d8cf!important;color:#8a4a32!important;font-size:12px!important}
+.entry-qr-booking-shortcut{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:11px;margin-bottom:11px;background:#fff5e8;border:1px solid #f1d8b7;border-radius:12px}
+.entry-qr-booking-shortcut b{font-size:13px}.entry-qr-booking-shortcut span{font-size:11px;color:#6e6358;flex:1 1 150px}.entry-qr-booking-shortcut button{flex:0 0 auto}
