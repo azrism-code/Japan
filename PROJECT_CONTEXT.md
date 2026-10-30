@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after the v10.3.34 private offline Visit Japan QR wallet update on 2026-10-29.
-> **Current app version:** **v10.3.34**.  
+> **Verified against:** current main after v10.3.35 introducing two selectable preview itineraries for Hakone/Fuji on 9 Nov 2026.
+> **Current app version:** **v10.3.35**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -66,10 +66,10 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.34**
+Current release: **v10.3.35**
 
 Current service-worker cache:
-`japan-trip-v10-3-34-offline-qr`
+`japan-trip-v10-3-35-two-fuji-routes`
 
 When app code/assets change:
 
@@ -395,17 +395,18 @@ The old Shibuya evening was moved to 6/11 because 6/11 already ends in Shibuya.
 
 The itinerary includes an explicit TEN-YU check-in stop and the day map ends at the hotel. The remaining afternoon/evening can now be optimized around the exact hotel location and onsen time.
 
-### 09/11 · Hakone / Fuji
-**TEN-YU →** Owakudani → Hakone Ropeway.
+### 09/11 · Hakone / Fuji — v10.3.35 two itinerary previews
 
-Weather branch:
-- **Option A, clear Fuji:** Kawaguchiko + Oishi Park + optional Oishi Park Cafe.
-- **Option B, poorer Fuji visibility:** Hakone Open-Air Museum / stay in Hakone.
+Both itineraries are full independent alternatives starting/ending at **Hakone Kowakien TEN-YU** on 9 Nov. They are **not** combined into a single must-do list. The decision can be made that morning based on Fuji visibility, weather, ropeway operation and preference, and the options remain accessible in the app.
 
-Potential future option after hotel is known:
-- short stop at **Lake Yamanakako** if it sits naturally on the drive and Fuji visibility is excellent.
+- **Route A · Hakone + Ropeway:** TEN-YU → park rental car at Sounzan Station → ride Hakone Ropeway to Owakudani and **return to Sounzan to collect the car** → if Fuji visible and sufficient time, drive to Kawaguchiko + Oishi Park → TEN-YU. If cloudy or time-consuming, stay in Hakone and visit the Open-Air Museum instead of the long Kawaguchiko loop.
+- **Route B · Fuji Lakes + Shiraito Falls:** TEN-YU → Lake Kawaguchiko / Oishi Park → Lake Tanuki → Shiraito Falls (Fujinomiya, Shizuoka) → optional nearby Otodome Falls → TEN-YU. No Owakudani or ropeway on this option. Route B is a long driving day; GPS travel times in Google Maps override the approximate stop labels.
+- The route selector is a **transient view-only control** (state.fujiRoute); it does **not** store a final choice, change Firestore or overwrite the other route. Route A is the initial visible preview, **not** a recommendation or booked commitment. Each option has its own driving map link and a distinct stop list; the itinerary list, map tab, and tablet map respect the shown option. Route A also has a short/cloudy-day navigation link via Hakone Open-Air Museum.
+- Place entries and guide/tips with visit times added for **Sounzan Station, Lake Tanuki, Shiraito Falls and Otodome Falls**. Existing Owakudani and Ropeway are identified as Route A; lake viewpoints can appear on either option.
+- Directions for these car alternatives use Google Maps `travelmode=driving`, unlike the legacy transit direction helper (which is deliberately unchanged). The ropeway segment is **not** included as a drivable road leg.
+- Timings in the app are approximate planning labels, not exact traffic predictions. Check the actual routes and parking, weather and ropeway status on 9/11. Shiraito's official car park has seasonal closing hours; the lower viewing area has around 100 steps, but an upper vantage point is available.
 
-Do not attempt to “collect all five Fuji lakes”; that would turn the day into mostly driving.
+Do not restore the original combined/mixed stops or the old transit-mode 9 Nov map when later updating the itinerary. Do not store a personal health statement in the public repo.
 
 ### 10/11 · Hakone/Fuji → Kyoto
 **Check-out TEN-YU** → return rental at 11:00 → Odawara → Shinkansen → Kyoto → SAKURA TERRACE THE GALLERY → Gion evening.
@@ -712,6 +713,17 @@ The same PWA now adapts automatically to tablets; there is no separate tablet ap
 - The new JS/CSS app assets themselves are included in the PWA service worker's offline CORE list; sensitive image files are **not**. Test access in airplane mode after first installation.
 - Preserves existing Firebase Owner/Editor auth, reservation documents on Google Drive, original itinerary, purchases and all prior localStorage state. No backend schema or public permissions changes.
 - Previous Kyoto Craft Dining Upit restaurant proposal is outside this scoped change; only QR feature was approved here.
+
+---
+
+## 16L. 9/11 Fuji alternative routes · v10.3.35
+
+- Release scope: 9 Nov only, with two separate routes via `days[].routeChoices` in `trip-data.js`, a choice-preview selector rendered by `app.js`, plus `fuji-routes.css` and additional guides in `place-content.js`.
+- On mobile the user can switch A/B, see the corresponding detailed timetable and driving map, and open a navigation link directly for **either** option. Route A additionally links to a short cloudy-day route staying in Hakone.
+- Both route maps start/end at TEN-YU. Route A's round-trip ropeway from/to Sounzan must not be treated as driving.
+- Changes affect **neither** dates 8/11 and 10/11, hotel booking, rental/flight data, trip budget, QR wallet content, Firebase auth, nor any user data.
+- Bump `index.html`, `service-worker.js` CORE and cache, manifest, and other versioned assets to 10.3.35. `fuji-routes.css` must be loaded and cached offline.
+- Prior proposed restaurant Craft Dining Upit remains a separate unapproved feature; this release does not add it.
 
 ---
 

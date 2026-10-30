@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · local encrypted Visit Japan Web QR wallet · v10.3.34
+/* Japan Trip 2026 · local encrypted Visit Japan Web QR wallet · v10.3.35
    Images live ONLY in this device's IndexedDB. No Firebase, Drive or public Git data. */
 (() => {
   'use strict';

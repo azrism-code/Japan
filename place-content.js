@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · curated place content · v10.3.33
+/* Japan Trip 2026 · curated place content · v10.3.35
    Restored historical popup guides and place photos from the pre-v10 trip app.
    Loaded after trip-data and before app.js. */
 (() => {
@@ -54,6 +54,30 @@
   // Restored from the detailed "למה המקום שווה" guides used before v10.
   // Keep each point on its own visible line in the popup.
   const guides = {
+    'Sounzan Station':[
+      "Sounzan היא תחנת המוצא המזרחית של Hakone Ropeway, סמוך לאזור Gora ובהמשך ישיר של האזור שבו שוכן TEN-YU.",
+      "זו נקודת החניה המעשית שלנו במסלול A: משאירים את הרכב במקום אחד, עולים ברכבל לכיוון Owakudani וחוזרים באותה הדרך.",
+      "לפי מפעיל הרכבל, הקטע Sounzan–Owakudani אורך כ־15 דקות לכיוון, לפני המתנות וביקור.",
+      "כדאי לבדוק פתיחה, רוח, חניה ופעילות הרכבל בבוקר; מקצים כ־90–120 דקות לתחנה, לרכבל הלוך ושוב ולביקור."
+    ],
+    'Lake Tanuki':[
+      "Lake Tanuki הוא אגם קטן ושקט בצדו המערבי של הר פוג׳י, ליד Fujinomiya.",
+      "ביום צלול ורגוע אפשר לראות ממנו את ההר ואת השתקפותו במים; יש שבילים לתצפית ושיטוט קצר.",
+      "זהו החיבור הטבעי בין Kawaguchiko למפלי Shiraito במסלול B, ולכן לא צריך להקיף את האגם כולו.",
+      "להקדיש כ־20–40 דקות ולבחור תצפית נגישה ליד החניה. גם כשמעונן, אפשר ליהנות מהאגם עצמו."
+    ],
+    'Shiraito Falls':[
+      "מפלי Shiraito שב-Fujinomiya, Shizuoka, הם קיר רחב של מאות זרמי מים דקיקים הנופלים מעל סלע לבה בגובה כ־20 מטר.",
+      "זו אחת מנקודות הטבע המיוחדות במסלול B; המפלים יפים גם כאשר עננות מסתירה את פוג׳י.",
+      "יש תצפית עליונה נגישה יחסית, בעוד הירידה אל הבריכה התחתונה כוללת כ־100 מדרגות. המפלים נמצאים קרוב מאוד ל-Otodome Falls.",
+      "להקדיש 45–75 דקות, כולל הגישה מהחניה. יש חניה רשמית בתשלום, והגישה תלויה בשעות החניה ובמזג האוויר."
+    ],
+    'Otodome Falls':[
+      "Otodome הוא מפל נוסף וסוער ליד Shiraito Falls באזור Fujinomiya.",
+      "בניגוד לזרמים הדקיקים של Shiraito, כאן נראית נפילה מרוכזת ועוצמתית יותר של המים.",
+      "אפשר לשלב עצירה קצרה בדרך בין החניה ל-Shiraito בלי לנסוע במיוחד.",
+      "מספיקות כ־10–15 דקות; אם היום מתארך, המפל הזה אופציונלי ולא בא על חשבון Shiraito."
+    ],
     'Narita Airport':[
       "הנחיתה ב-4/11 וההמראה ב-17/11 הן ב-Narita Terminal 1, לפי כרטיסי Etihad המעודכנים.",
       "4/11: EY800 נוחתת כעת ב-13:15 בטרמינל 1 (במקום 11:40). הוזמנה הסעת Booking חינמית של xiooh travel, אך חובה לוודא מול הספק שההזמנה מעודכנת לשעת הנחיתה החדשה; אין צורך להזמין רכבת כל עוד ההסעה בתוקף.",
@@ -480,7 +504,7 @@
   };
 
   // Suggested visit duration is shown only inside the guide/metadata, not duplicated in day cards.
-  const visitTimes={"Narita Airport":"תפעולי · לפי ביקורת גבולות/מזוודות","JINS Shinjuku":"45–75 דקות","Cross Shinjuku Vision – 3D Cat":"10–15 דקות","Godzilla Head":"10–15 דקות","Tokyu Kabukicho Tower":"20–30 דקות","Kaminarimon":"10–15 דקות","Nakamise":"30–45 דקות","Sensō-ji":"45–60 דקות","Asakusa Culture Tourist Information Center":"15–20 דקות","Gyoza no Ousama":"15–30 דקות","Ueno":"30–45 דקות","Ameyoko Market":"60–90 דקות","Chuka Chinman":"15–30 דקות","2k540 AKI-OKA ARTISAN":"30–45 דקות","Akihabara":"2–4 שעות לאורך הערב","Akihabara Radio Kaikan":"45–60 דקות","Yodobashi Akiba":"45–90 דקות","GiGO Akihabara":"30–60 דקות","Kikanbo Kanda":"45–60 דקות","Meiji Shrine":"60–90 דקות","Harajuku":"60–90 דקות","Harajuku Gyoza Lou":"20–30 דקות","Age.3xQ Harajuku":"15–25 דקות","The Matcha Tokyo Harajuku":"15–25 דקות","Omotesando":"60–90 דקות","Onitsuka Tiger Omotesando":"20–40 דקות","Shibuya Crossing":"15–30 דקות","Shibuya Sky":"60–90 דקות","Tsukiji Outer Market":"90–120 דקות","Ginza":"90–120 דקות","Ginza Kagari":"45–60 דקות","Glitch Coffee Ginza":"20–30 דקות","UNIQLO Ginza":"30–60 דקות","GU Ginza":"30–45 דקות","MUJI Ginza":"30–60 דקות","Imperial Palace":"45–60 דקות","Tokyo Station / Marunouchi":"45–75 דקות","Odawara":"20–40 דקות תפעוליות","Lake Ashi":"60–90 דקות","Hakone Shrine":"45–60 דקות","Owakudani":"60–90 דקות","Hakone Ropeway":"45–75 דקות","Kawaguchiko":"2–3 שעות","Oishi Park":"30–60 דקות","Oishi Park Cafe":"20–30 דקות","Hakone Open-Air Museum":"90–120 דקות","Gion":"90–120 דקות","Kiyomizu-dera":"60–90 דקות","Sannenzaka & Ninenzaka":"60–90 דקות","Yasaka Pagoda":"10–20 דקות","Higashiyama Tea House":"30–45 דקות","Higashiyama":"60–90 דקות","Kyoto Gyoza enen Gion":"20–30 דקות","Gyoza Hohei Gion":"20–30 דקות","Pontocho":"45–60 דקות","Kyoto Kaiseki Dinner":"90–150 דקות","Fushimi Inari":"90–120 דקות","Fushimi Sake District":"60–90 דקות","Tofuku-ji":"60–90 דקות","Sanjusangen-do":"45–60 דקות","Kyoto Station":"30–60 דקות","teamLab Biovortex Kyoto":"90–120 דקות","Arashiyama / Okusaga":"90–120 דקות","Tenryu-ji":"60–90 דקות","Togetsukyo Bridge":"20–30 דקות","Arashiyama Riverside Cafe":"30–45 דקות","Otagi Nenbutsu-ji":"45–60 דקות","Gion Duck Noodles Arashiyama":"45–60 דקות","Ryoan-ji":"45–60 דקות","Kinkaku-ji":"45–60 דקות","Nishiki Market":"60–90 דקות","MOTOI Gyoza":"20–30 דקות","Nara Park":"60–90 דקות","Tōdai-ji":"60–90 דקות","Wakakusayama Hill":"60–90 דקות","Hozenji Yokocho":"30–45 דקות","Hanamaruken Hozenji":"30–45 דקות","Takotako King":"20–30 דקות","Dotonbori":"60–90 דקות","Namba":"60–90 דקות","Osaka Castle":"90–120 דקות","Umeda":"90–120 דקות","Shinsaibashi":"60–90 דקות","Namba Ramen Ichiza":"45–60 דקות","Nihonbashi":"45–60 דקות","Pokemon Center Tokyo DX":"30–60 דקות","Gransta / Character Street":"45–75 דקות","Tokyo Gyoza Stand Oolong":"20–30 דקות"};
+  const visitTimes={"Narita Airport":"תפעולי · לפי ביקורת גבולות/מזוודות","JINS Shinjuku":"45–75 דקות","Cross Shinjuku Vision – 3D Cat":"10–15 דקות","Godzilla Head":"10–15 דקות","Tokyu Kabukicho Tower":"20–30 דקות","Kaminarimon":"10–15 דקות","Nakamise":"30–45 דקות","Sensō-ji":"45–60 דקות","Asakusa Culture Tourist Information Center":"15–20 דקות","Gyoza no Ousama":"15–30 דקות","Ueno":"30–45 דקות","Ameyoko Market":"60–90 דקות","Chuka Chinman":"15–30 דקות","2k540 AKI-OKA ARTISAN":"30–45 דקות","Akihabara":"2–4 שעות לאורך הערב","Akihabara Radio Kaikan":"45–60 דקות","Yodobashi Akiba":"45–90 דקות","GiGO Akihabara":"30–60 דקות","Kikanbo Kanda":"45–60 דקות","Meiji Shrine":"60–90 דקות","Harajuku":"60–90 דקות","Harajuku Gyoza Lou":"20–30 דקות","Age.3xQ Harajuku":"15–25 דקות","The Matcha Tokyo Harajuku":"15–25 דקות","Omotesando":"60–90 דקות","Onitsuka Tiger Omotesando":"20–40 דקות","Shibuya Crossing":"15–30 דקות","Shibuya Sky":"60–90 דקות","Tsukiji Outer Market":"90–120 דקות","Ginza":"90–120 דקות","Ginza Kagari":"45–60 דקות","Glitch Coffee Ginza":"20–30 דקות","UNIQLO Ginza":"30–60 דקות","GU Ginza":"30–45 דקות","MUJI Ginza":"30–60 דקות","Imperial Palace":"45–60 דקות","Tokyo Station / Marunouchi":"45–75 דקות","Odawara":"20–40 דקות תפעוליות","Lake Ashi":"60–90 דקות","Hakone Shrine":"45–60 דקות","Sounzan Station":"90–120 דקות כולל רכבל הלוך ושוב","Lake Tanuki":"20–40 דקות","Shiraito Falls":"45–75 דקות","Otodome Falls":"10–15 דקות","Owakudani":"60–90 דקות","Hakone Ropeway":"45–75 דקות","Kawaguchiko":"2–3 שעות","Oishi Park":"30–60 דקות","Oishi Park Cafe":"20–30 דקות","Hakone Open-Air Museum":"90–120 דקות","Gion":"90–120 דקות","Kiyomizu-dera":"60–90 דקות","Sannenzaka & Ninenzaka":"60–90 דקות","Yasaka Pagoda":"10–20 דקות","Higashiyama Tea House":"30–45 דקות","Higashiyama":"60–90 דקות","Kyoto Gyoza enen Gion":"20–30 דקות","Gyoza Hohei Gion":"20–30 דקות","Pontocho":"45–60 דקות","Kyoto Kaiseki Dinner":"90–150 דקות","Fushimi Inari":"90–120 דקות","Fushimi Sake District":"60–90 דקות","Tofuku-ji":"60–90 דקות","Sanjusangen-do":"45–60 דקות","Kyoto Station":"30–60 דקות","teamLab Biovortex Kyoto":"90–120 דקות","Arashiyama / Okusaga":"90–120 דקות","Tenryu-ji":"60–90 דקות","Togetsukyo Bridge":"20–30 דקות","Arashiyama Riverside Cafe":"30–45 דקות","Otagi Nenbutsu-ji":"45–60 דקות","Gion Duck Noodles Arashiyama":"45–60 דקות","Ryoan-ji":"45–60 דקות","Kinkaku-ji":"45–60 דקות","Nishiki Market":"60–90 דקות","MOTOI Gyoza":"20–30 דקות","Nara Park":"60–90 דקות","Tōdai-ji":"60–90 דקות","Wakakusayama Hill":"60–90 דקות","Hozenji Yokocho":"30–45 דקות","Hanamaruken Hozenji":"30–45 דקות","Takotako King":"20–30 דקות","Dotonbori":"60–90 דקות","Namba":"60–90 דקות","Osaka Castle":"90–120 דקות","Umeda":"90–120 דקות","Shinsaibashi":"60–90 דקות","Namba Ramen Ichiza":"45–60 דקות","Nihonbashi":"45–60 דקות","Pokemon Center Tokyo DX":"30–60 דקות","Gransta / Character Street":"45–75 דקות","Tokyo Gyoza Stand Oolong":"20–30 דקות"};
   Object.entries(visitTimes).forEach(([key,value])=>{if(T.places[key])T.places[key].visitTime=value;});
 
   Object.entries(guides).forEach(([key, lines]) => {

@@ -1,9 +1,10 @@
-/* Japan Trip 2026 · canonical data · v10.3.34
+/* Japan Trip 2026 · canonical data · v10.3.35
    One source of truth. No runtime hotel/place replacement patches. */
 (() => {
   'use strict';
   const G = q => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
   const D = (origin,destination,waypoints=[]) => 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(origin) + '&destination=' + encodeURIComponent(destination) + (waypoints.length ? '&waypoints=' + waypoints.map(encodeURIComponent).join('%7C') : '') + '&travelmode=transit';
+  const DR = (origin,destination,waypoints=[]) => 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(origin) + '&destination=' + encodeURIComponent(destination) + (waypoints.length ? '&waypoints=' + waypoints.map(encodeURIComponent).join('%7C') : '') + '&travelmode=driving';
   const RATE_JPY_ILS = 0.0196773; // snapshot used in the trip file on 10/09/2026
 
   const hotels = [
@@ -109,10 +110,14 @@
     'Odawara':{name:'Odawara',icon:'🚄',city:'Hakone / Fuji',cat:'אתרים',desc:'נקודת המעבר בין Tokyo לאזור Hakone. כאן מתוכננים איסוף והחזרת הרכב, ומכאן גם עולים ל-Shinkansen לקיוטו.',tip:'עדיף לרכז את כל פעולות הרכב ליד התחנה כדי לא להסתבך עם מזוודות.',map:G('Odawara Station')},
     'Lake Ashi':{name:'Lake Ashi',icon:'🏞️',city:'Hakone / Fuji',cat:'טבע',schedule:'08/11 · 12:00',desc:'אגם הררי שהוא אחד מסמלי Hakone. ביום בהיר אפשר לראות ממנו את Fuji, ועל שפתו נמצא Hakone Shrine.',tip:'אם הראות לפוג׳י טובה בבוקר, נותנים לה עדיפות לפני שהעננות מתפתחת.',map:G('Lake Ashi Hakone')},
     'Hakone Shrine':{name:'Hakone Shrine',icon:'⛩️',city:'Hakone / Fuji',cat:'מקדשים',schedule:'08/11 · 14:00',desc:'מקדש שינטו בתוך יער לצד Lake Ashi, עם שער Torii אדום ליד המים.',tip:'התור לצילום בשער שעל שפת האגם יכול להיות ארוך; המקדש והיער שווים גם בלי להמתין.',map:G('Hakone Shrine')},
-    'Owakudani':{name:'Owakudani',icon:'🗻',city:'Hakone / Fuji',cat:'טבע',schedule:'09/11 · 09:00',desc:'עמק געשי פעיל עם אדים, ריח גופרית ונוף דרמטי. ביום בהיר יש לעיתים תצפית טובה ל-Fuji.',tip:'בודקים בבוקר שהגישה והרכבל פועלים בגלל רוח או מגבלות געשיות.',map:G('Owakudani Hakone')},
-    'Hakone Ropeway':{name:'Hakone Ropeway',icon:'🚡',city:'Hakone / Fuji',cat:'אתרים',schedule:'09/11 · 10:30',desc:'רכבל מעל האזור הגעשי של Hakone, שהוא גם אמצעי תחבורה וגם אטרקציה נופית.',tip:'אם יש רוח חזקה, בודקים סטטוס לפני שמבנים את היום סביבו.',map:G('Hakone Ropeway')},
-    'Kawaguchiko':{name:'Lake Kawaguchiko',icon:'🗻',city:'Hakone / Fuji',cat:'טבע',schedule:'09/11 · לפי הראות',desc:'אחד מחמשת אגמי Fuji ואחד המקומות הטובים לצפייה בהר מקרוב. בנובמבר יש גם שלכת.',tip:'נוסעים רק אם הראות מצדיקה את זה; ביום סגור עדיף להשקיע את הזמן ב-Hakone.',map:G('Lake Kawaguchiko Japan')},
-    'Oishi Park':{name:'Oishi Park · Lake Kawaguchiko',icon:'🗻',city:'Fuji · Kawaguchiko',cat:'טבע',optionalSchedule:'09/11 · רק אם בוחרים Kawaguchiko',desc:'פארק על שפת Lake Kawaguchiko עם קו ראייה פתוח לכיוון Fuji וטיילת נעימה.',worth:'אם כבר נוסעים ל-Kawaguchiko, זו תוספת טבעית שנותנת תצפית קלאסית בלי להוסיף יום או שינוי לינה.',tip:'נוסעים רק ביום עם ראות טובה. אין צורך להישאר שעות אם Fuji מכוסה.',map:G('Oishi Park Lake Kawaguchiko Japan')},
+    'Sounzan Station':{name:'Sounzan Station · Hakone Ropeway',icon:'🚡',city:'Hakone · Sounzan',cat:'אתרים',optionalSchedule:'09/11 · מסלול A · נקודת חניה לרכבל',desc:'תחנת המוצא של רכבל Hakone Ropeway. מחנים כאן את הרכב ועולים ל-Owakudani וחזרה לאותה תחנה.',worth:'זו הדרך הנוחה לשלב רכבל עם יום ברכב שכור, בלי להשאיר את הרכב בקצה אחר של הרכבל.',tip:'לוודא סטטוס פעילות, חניה זמינה ומועד רכבל אחרון. לאחר הביקור חוזרים ברכבל אל הרכב.',map:G('Sounzan Station Hakone Ropeway Japan')},
+    'Lake Tanuki':{name:'Lake Tanuki · Tanukiko',icon:'🏞️',city:'Fuji · Fujinomiya',cat:'טבע',optionalSchedule:'09/11 · מסלול B · אגמים ומפלים',desc:'אגם קטן ושקט בצדו המערבי של הר פוג׳י, עם טיילת ונקודות תצפית על ההר והשתקפות אפשרית במים.',worth:'משתלב היטב לפני Shiraito Falls ונותן חוויית אגם שלווה ושונה מאגם Kawaguchiko הגדול.',tip:'לעצור כ־20–40 דקות לתצפית. הנוף לפוג׳י תלוי בעננות וברוח; אין צורך להקיף את כל האגם.',map:G('Lake Tanuki Fujinomiya Japan')},
+    'Shiraito Falls':{name:'Shiraito Falls · Fujinomiya',icon:'💧',city:'Fuji · Fujinomiya · Shizuoka',cat:'טבע',optionalSchedule:'09/11 · מסלול B · אגמים ומפלים',desc:'מפל טבעי רחב שבו מאות קילוחי מים דקים נושרים לאורך קיר לבה ברוחב כ־150 מטר.',worth:'אחד ממפלי הטבע המיוחדים ביפן, יפה גם כשהר פוג׳י מוסתר בעננים. משתלב עם אגם Tanuki.',tip:'לכוון לחניה הרשמית ב־273-1 Kamiide, Fujinomiya. יש תצפית עליונה ללא ירידה, וכ־100 מדרגות לבריכה התחתונה; בדקו שעות חניה.',map:G('Shiraito Falls 273-1 Kamiide Fujinomiya Shizuoka Japan')},
+    'Otodome Falls':{name:'Otodome Falls',icon:'💦',city:'Fuji · Fujinomiya · Shizuoka',cat:'טבע',optionalSchedule:'09/11 · מסלול B · ליד Shiraito',desc:'מפל נוסף וסוער בקרבת מפלי Shiraito, שמאפשר עצירת צילום קצרה על אותה דרך גישה.',worth:'מוסיף סוג אחר של מפל ללא צורך בנסיעה נפרדת כאשר כבר מבקרים ב־Shiraito.',tip:'לעצור רק אם יש זמן, ולבקר בשביל המוסדר בהתאם לשילוט.',map:G('Otodome Falls Fujinomiya Shizuoka Japan')},
+    'Owakudani':{name:'Owakudani',icon:'🗻',city:'Hakone / Fuji',cat:'טבע',optionalSchedule:'09/11 · מסלול A בלבד',desc:'עמק געשי פעיל עם אדים, ריח גופרית ונוף דרמטי. ביום בהיר יש לעיתים תצפית טובה ל-Fuji.',tip:'בודקים בבוקר שהגישה והרכבל פועלים בגלל רוח או מגבלות געשיות.',map:G('Owakudani Hakone')},
+    'Hakone Ropeway':{name:'Hakone Ropeway',icon:'🚡',city:'Hakone / Fuji',cat:'אתרים',optionalSchedule:'09/11 · מסלול A בלבד',desc:'רכבל מעל האזור הגעשי של Hakone, שהוא גם אמצעי תחבורה וגם אטרקציה נופית.',tip:'אם יש רוח חזקה, בודקים סטטוס לפני שמבנים את היום סביבו.',map:G('Hakone Ropeway')},
+    'Kawaguchiko':{name:'Lake Kawaguchiko',icon:'🗻',city:'Hakone / Fuji',cat:'טבע',optionalSchedule:'09/11 · בשני המסלולים, לפי הראות',desc:'אחד מחמשת אגמי Fuji ואחד המקומות הטובים לצפייה בהר מקרוב. בנובמבר יש גם שלכת.',tip:'נוסעים רק אם הראות מצדיקה את זה; ביום סגור עדיף להשקיע את הזמן ב-Hakone.',map:G('Lake Kawaguchiko Japan')},
+    'Oishi Park':{name:'Oishi Park · Lake Kawaguchiko',icon:'🗻',city:'Fuji · Kawaguchiko',cat:'טבע',optionalSchedule:'09/11 · שני המסלולים אם פוג׳י גלוי',desc:'פארק על שפת Lake Kawaguchiko עם קו ראייה פתוח לכיוון Fuji וטיילת נעימה.',worth:'אם כבר נוסעים ל-Kawaguchiko, זו תוספת טבעית שנותנת תצפית קלאסית בלי להוסיף יום או שינוי לינה.',tip:'נוסעים רק ביום עם ראות טובה. אין צורך להישאר שעות אם Fuji מכוסה.',map:G('Oishi Park Lake Kawaguchiko Japan')},
     'Oishi Park Cafe':{name:'Oishi Park Cafe',icon:'🍦',city:'Fuji · Kawaguchiko',cat:'מסעדות',optionalSchedule:'09/11 · עם Oishi Park',desc:'עצירת קפה/גלידה ליד Oishi Park; בפוסט בלטו גלידות בטעמי פרחים ופירות.',worth:'אם אנחנו כבר ב-Oishi Park זו עצירת נשנוש כמעט בלי עלות זמן נוספת.',tip:'רק אם פתוח ומתחשק — לא נוסעים במיוחד בשביל בית הקפה.',map:G('Oishi Park Cafe Kawaguchiko'),type:'Cafe / ice cream'},
     'Hakone Open-Air Museum':{name:'Hakone Open-Air Museum',icon:'🖼️',city:'Hakone / Fuji',cat:'מוזיאונים',schedule:'09/11 · אופציה',desc:'מוזיאון פתוח המשלב פסלים ואמנות עם נוף ההרים של Hakone.',tip:'חלופה טובה אם הראות לפוג׳י פחות מוצלחת או אם רוצים יום רגוע יותר.',map:G('Hakone Open-Air Museum')},
     'Gion':{name:'Gion',icon:'🏮',city:'Kyoto',cat:'אתרים',schedule:'10/11 + 11/11',desc:'הרובע המסורתי המפורסם של Kyoto, עם machiya, סמטאות, Hanamikoji ואזור Shirakawa.',tip:'הכי נעים לקראת ערב; שומרים על שקט וכבוד לתושבים ולא מצלמים אנשים באופן פולשני.',map:G('Gion Kyoto')},
@@ -235,14 +240,26 @@
       {time:'14:00',icon:'⛩️',title:'Hakone Shrine',text:'מקדש בתוך היער ושער Torii על שפת האגם.',place:'Hakone Shrine'},
       {time:'אחה״צ',icon:'🏨',title:'Check-in · Hakone Kowakien TEN-YU',text:'הגעה למלון ב-Ninotaira. Superior Room with Open Air-Bath, ללא עישון, מיטה גדולה וארוחת בוקר.'}
     ],route:D('Odawara Station','Hakone Kowakien TEN-YU',['Lake Ashi Hakone','Hakone Shrine'])},
-    {date:'09/11',dow:'שני',city:'Hakone / Fuji',title:'Hakone · Fuji',summary:'TEN-YU → Owakudani → Ropeway → Kawaguchiko לפי הראות / Open-Air Museum',hotel:'hotel-hakone',stops:[
-      {time:'09:00',icon:'🗻',title:'Owakudani',text:'עמק געשי פעיל ותצפית אפשרית ל-Fuji.',place:'Owakudani'},
-      {time:'10:30',icon:'🚡',title:'Hakone Ropeway',text:'הרכבל מעל האזור הגעשי.',place:'Hakone Ropeway'},
-      {time:'אופציה A',icon:'🏞️',title:'Kawaguchiko',text:'אם הראות טובה — עדיפות לתצפיות Fuji באזור האגם.',place:'Kawaguchiko',optional:true,tag:'☀️ לבחור אם Fuji פתוח וברור'},
-      {time:'אופציה A',icon:'🗻',title:'Oishi Park',text:'אם כבר בחרנו Kawaguchiko — תצפית קלאסית על Fuji מהאגם.',place:'Oishi Park',optional:true,tag:'☀️ יחד עם Kawaguchiko'},
-      {time:'אופציה A',icon:'🍦',title:'Oishi Park Cafe',text:'גלידה/קפה קצר אם פתוח ומתחשק.',place:'Oishi Park Cafe',optional:true,tag:'🍽️ אוכל על הדרך'},
-      {time:'אופציה B',icon:'🖼️',title:'Hakone Open-Air Museum',text:'חלופה טובה אם הראות פחות מוצלחת או אם רוצים להישאר באזור Hakone.',place:'Hakone Open-Air Museum',optional:true,tag:'☁️ חלופה ל-Kawaguchiko'}
-    ],route:D('Owakudani Hakone','Hakone Open-Air Museum',['Hakone Ropeway','Lake Kawaguchiko'])},
+    {date:'09/11',dow:'שני',city:'Hakone / Fuji',title:'Hakone · Fuji · שתי חלופות',summary:'שני מסלולים לבחירה בבוקר: A האקונה והרכבל / B אגמים ומפלי Shiraito. יוצאים וחוזרים למלון TEN-YU.',hotel:'hotel-hakone',stops:[],route:null,routeChoices:[
+      {id:'hakone',label:'A · האקונה והרכבל',subtitle:'Owakudani · Ropeway · Kawaguchiko לפי הראות',duration:'יום עם רכבל וביקור געשי; אם פוג׳י מוסתר, נשארים בהאקונה.',summary:'TEN-YU → חניה ב-Sounzan → רכבל הלוך ושוב ל-Owakudani → Kawaguchiko ו-Oishi Park אם הראות מצדיקה → TEN-YU.',note:'הרכב נשאר ב-Sounzan בזמן הרכבל; עולים ל-Owakudani וחוזרים לאותו מקום. שעות משוערות, תלוי בתור לרכבל ובתנועה. אם פוג׳י מוסתר או היום מתארך, מחליפים את קטע Kawaguchiko במוזיאון הפתוח של האקונה.',route:DR('Hakone Kowakien TEN-YU','Hakone Kowakien TEN-YU',['Sounzan Station Hakone','Oishi Park Lake Kawaguchiko']),shortRoute:DR('Hakone Kowakien TEN-YU','Hakone Kowakien TEN-YU',['Sounzan Station Hakone','Hakone Open-Air Museum']),stops:[
+        {time:'08:30 לערך',icon:'🏨',title:'יציאה מ-TEN-YU',text:'ארוחת בוקר ואיסוף הרכב; בודקים מזג אוויר ורכבל לפני היציאה.'},
+        {time:'09:00 לערך',icon:'🚡',title:'Sounzan Station · חניה לרכבל',text:'מחנים את הרכב בתחנת Sounzan ועולים לרכבל לכיוון Owakudani.',place:'Sounzan Station'},
+        {time:'09:30–11:00',icon:'🗻',title:'Hakone Ropeway · Owakudani · חזרה',text:'נסיעת רכבל הלוך ושוב, תצפיות וביקור קצר בעמק; חוזרים עם הרכבל לרכב ב-Sounzan.',place:'Owakudani'},
+        {time:'12:30–13:30',icon:'🏞️',title:'Lake Kawaguchiko · אם פוג׳י גלוי',text:'נוסעים לאגם רק אם הראות טובה ויש די זמן; זהו קטע ארוך נוסף בכביש.',place:'Kawaguchiko',optional:true,tag:'☀️ תלוי בראות ובשעת היציאה'},
+        {time:'13:30–14:15',icon:'🗻',title:'Oishi Park · אם בחרנו באגם',text:'נקודת תצפית על האגם ופוג׳י, עם קפה או עצירה קצרה לפי הרצון.',place:'Oishi Park',optional:true},
+        {time:'חלופה בעננים',icon:'🖼️',title:'Hakone Open-Air Museum',text:'במקום הנסיעה הארוכה לאגם: חוזרים לאזור האקונה ומבקרים במוזיאון, אם פתוח ויש זמן.',place:'Hakone Open-Air Museum',optional:true,tag:'☁️ מחליף את Kawaguchiko, לא מצטרף אליו'},
+        {time:'אחה״צ',icon:'🏨',title:'חזרה ל-TEN-YU',text:'חוזרים למלון למנוחה ולאונסן. זמן ההגעה תלוי במסלול שבחרנו ובתנועה.'}
+      ]},
+      {id:'falls',label:'B · אגמים ומפלי Shiraito',subtitle:'Kawaguchiko · Oishi Park · Lake Tanuki · Shiraito Falls',duration:'יום נהיגה ארוך יותר סביב פוג׳י, עם אגמים ומפלים.',summary:'TEN-YU → Kawaguchiko ו-Oishi Park → Lake Tanuki → Shiraito Falls → TEN-YU. ללא Owakudani או רכבל.',note:'זהו מסלול נהיגה ארוך. השעות משוערות בלבד ולא זמני ניווט מובטחים; פותחים Google Maps ביום הנסיעה. אם פוג׳י מוסתר, אפשר לקצר את העצירות באגם, אבל עדיין ליהנות מהמפלים.',route:DR('Hakone Kowakien TEN-YU','Hakone Kowakien TEN-YU',['Oishi Park Lake Kawaguchiko','Lake Tanuki Fujinomiya','Shiraito Falls Fujinomiya Shizuoka']),stops:[
+        {time:'08:30 לערך',icon:'🏨',title:'יציאה מ-TEN-YU',text:'יוצאים מוקדם ברכב; בודקים ראות, תנועה ושעת שקיעה.'},
+        {time:'10:15 לערך',icon:'🏞️',title:'Lake Kawaguchiko',text:'הגעה משוערת לאזור האגם ותצפיות אם פוג׳י גלוי; לא מתעכבים אם מעונן.',place:'Kawaguchiko'},
+        {time:'10:45–11:30',icon:'🗻',title:'Oishi Park',text:'תצפית בצד האגם וקפה קצר לפי הצורך.',place:'Oishi Park'},
+        {time:'12:30–13:00',icon:'🏞️',title:'Lake Tanuki',text:'אגם שקט בצד המערבי של פוג׳י, עצירה של כ־20–30 דקות.',place:'Lake Tanuki'},
+        {time:'13:15–14:15',icon:'💧',title:'Shiraito Falls',text:'ביקור במפלים. מהתצפית העליונה אפשר ליהנות גם בלי לרדת את כל המדרגות.',place:'Shiraito Falls'},
+        {time:'על הדרך',icon:'💦',title:'Otodome Falls',text:'מפל סמוך לתצפית קצרה, רק אם יש זמן.',place:'Otodome Falls',optional:true},
+        {time:'אחה״צ המאוחר',icon:'🏨',title:'חזרה ל-TEN-YU',text:'מתחילים את הנסיעה חזרה מוקדם ככל האפשר; ייתכנו כמה שעות נהיגה בהתאם לתנועה.'}
+      ]}
+    ]},
     {date:'10/11',dow:'שלישי',city:'Kyoto',title:'Hakone / Fuji → Kyoto',summary:'TEN-YU → Odawara → החזרת רכב → Shinkansen → Kyoto → Gion',hotel:'hotel-daiwa-kyoto-shijo',evening:'gion',stops:[
       {time:'בוקר',icon:'🏨',title:'Check-out · Hakone Kowakien TEN-YU',text:'יציאה מהמלון לכיוון Odawara והחזרת הרכב עד 11:00.'},
       {time:'בוקר',icon:'🚗',title:'החזרת רכב · Odawara',text:'החזרת הרכב ליד התחנה לפני ה-Shinkansen.',place:'Odawara'},
@@ -395,7 +412,7 @@
   ];
 
   window.TRIP_DATA = {
-    version:'10.3.34', title:'Japan Trip', year:2026, travelers:'2 travelers',
+    version:'10.3.35', title:'Japan Trip', year:2026, travelers:'2 travelers',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
     hotels, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
     maps:{search:G,directions:D}

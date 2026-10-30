@@ -1,0 +1,19 @@
+/* Japan Trip 2026 · alternate Fuji day routes · v10.3.35 */
+.fuji-route-chooser{background:#fff;border:1px solid #eddbcc;border-radius:16px;padding:13px;margin:10px 0 11px;box-shadow:0 3px 15px #00000006}
+.fuji-route-title strong{display:block;color:#45362e;font-size:16px;line-height:1.4}
+.fuji-route-title p{font-size:12px;color:#6e635e;line-height:1.5;margin:5px 0 12px}
+.fuji-route-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fuji-route-choice{min-width:0;border:1px solid #ede3db;border-radius:12px;padding:6px;background:#fffcfa;display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.fuji-route-select{background:transparent;border:0;border-radius:9px;padding:8px 7px;min-height:96px;display:flex;flex-direction:column;align-items:flex-start;text-align:right;gap:5px;cursor:pointer;color:#5b514a}
+.fuji-route-select.active{background:#fff0e1;outline:2px solid #e69b48;outline-offset:-2px;color:#814405}
+.fuji-route-select b{font-weight:900;font-size:14px;line-height:1.35}
+.fuji-route-select span{font-size:11px;line-height:1.45}
+.fuji-route-select small{font-size:10px;font-weight:850;color:inherit;opacity:.78}
+.fuji-route-map-link{display:block;border:1px solid #dfcdbb;background:#fff;border-radius:9px;padding:9px 7px;font-size:12px;font-weight:900;text-align:center;color:#9b5514;text-decoration:none;min-height:38px}
+.fuji-route-note{font-size:11px;line-height:1.55;margin:10px 2px 0;color:#776a5e}
+.fuji-route-context{background:#f8f6f2;border-inline-start:3px solid #c87b34;border-radius:10px;margin:0 0 9px;padding:10px 12px;color:#5a5149;font-size:12px;line-height:1.6}
+.fuji-route-context strong{display:block;font-size:13px;color:#59412a}
+.fuji-route-context span{display:block;margin-top:3px}
+.fuji-route-subtitle{font-size:12px;line-height:1.55;color:#70645d;margin-top:14px}
+@media(max-width:380px){.fuji-route-chooser{padding:9px}.fuji-route-options{gap:6px}.fuji-route-select{padding:6px 5px}.fuji-route-select b{font-size:12px}.fuji-route-select span{font-size:10px}}
+@media(min-width:740px){.fuji-route-chooser{padding:17px}.fuji-route-select{min-height:100px}.fuji-route-select b{font-size:15px}}

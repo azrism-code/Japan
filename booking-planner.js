@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · booking planner · v10.3.34
+/* Japan Trip 2026 · booking planner · v10.3.35
    Enhanced reservation checklist with type badges, prices, booking windows,
    provider links, filters, Drive confirmations and cloud-synced completion state. */
 (() => {
