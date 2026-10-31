@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · canonical data · v10.3.35
+/* Japan Trip 2026 · canonical data · v10.3.36
    One source of truth. No runtime hotel/place replacement patches. */
 (() => {
   'use strict';
@@ -65,7 +65,7 @@
     'Tokyu Kabukicho Tower':{name:'Tokyu Kabukicho Tower',icon:'🌆',city:'Tokyo · Shinjuku',cat:'אתרים',optionalSchedule:'04/11 · ערב',desc:'מגדל הבילוי הגדול של Kabukicho, סמוך ל-Godzilla ולמסלול ההליכה הראשון שלנו בשינג׳וקו.',tip:'עוברים לידו כחלק מהמסלול; נכנסים רק אם יש כוח ועניין, בלי להפוך אותו ליעד ארוך ביום הנחיתה.',map:G('Tokyu Kabukicho Tower Tokyo')},
     'Hanazono Shrine':{name:'Hanazono Shrine',icon:'⛩️',city:'Tokyo · Shinjuku',cat:'מקדשים',optionalSchedule:'04/11 · ערב',desc:'מקדש שינטו היסטורי בקצה Kabukicho, קרוב ל-Golden Gai ולמסלול הערב בשינג׳וקו.',tip:'אופציה טובה אם נשאר כוח אחרי JINS והאורות של Kabukicho; לא חובה ביום הנחיתה.',map:G('Hanazono Shrine Shinjuku Tokyo')},
     'Shinjuku Golden Gai':{name:'Shinjuku Golden Gai',icon:'🏮',city:'Tokyo · Shinjuku',cat:'אתרים',optionalSchedule:'04/11 · ערב מאוחר',desc:'מקבץ סמטאות צפופות עם ברים זעירים ואווירת Tokyo ישנה בלב Shinjuku.',tip:'רוב הברים מתעוררים מאוחר; גם מעבר קצר בסמטאות מספיק. לא מצלמים אנשים או פנים של ברים בלי רשות.',map:G('Shinjuku Golden Gai Tokyo')},
-    'Omoide Yokocho':{name:'Omoide Yokocho',icon:'🍢',city:'Tokyo · Shinjuku',cat:'אתרים',optionalSchedule:'04/11 · ארוחת ערב',desc:'סמטאות צרות ליד West Exit עם דוכני yakitori ומסעדות קטנות באווירה נוסטלגית.',tip:'אופציה טובה לארוחת ערב או מעבר קצר; אם עייפים מהטיסה אפשר לדלג בלי לפגוע במסלול.',map:G('Omoide Yokocho Shinjuku Tokyo')},
+    'Omoide Yokocho':{name:'Omoide Yokocho',icon:'🍢',city:'Tokyo · Shinjuku',cat:'אתרים',schedule:'04/11 וגם 07/11 · ערב',desc:'סמטאות צרות ליד West Exit עם דוכני yakitori ומסעדות קטנות באווירה נוסטלגית.',tip:'4/11: ביקור קצר וגמיש ביום ההגעה; 7/11: חוזרים בנחת לאוכל וישיבה בסמטאות. לא חייבים לאכול במקום בשני הביקורים.',map:G('Omoide Yokocho Shinjuku Tokyo')},
     'Shinjuku Gyoen':{name:'Shinjuku Gyoen National Garden',icon:'🌳',city:'Tokyo · Shinjuku',cat:'טבע',optionalSchedule:'06/11 · אופציה בשעות היום',desc:'גן לאומי גדול ושקט בלב Shinjuku, עם גנים יפניים ומרחבים ירוקים.',tip:'מתאים רק אם רוצים להחליף חלק מיום Meiji / Harajuku / Shibuya בחוויה רגועה יותר; לא מתאים למסלול הלילה.',map:G('Shinjuku Gyoen National Garden Tokyo')},
     'JINS Shinjuku':{name:'JINS Shinjuku',icon:'👓',city:'Tokyo',cat:'שווקים וקניות',schedule:'04/11 · אחרי צ׳ק-אין אם פתוח, אחרת 05–07/11 · איסוף בהמשך',desc:'חנות משקפיים של JINS בשינג׳וקו. התוכנית היא לבצע בדיקת ראייה ולהזמין מוקדם בטיול כדי להשאיר זמן להכנה ולאיסוף.',tip:'להגיע עם המרשם הקיים אם יש, ולוודא בזמן ההזמנה מתי המשקפיים יהיו מוכנים.',map:G('JINS Shinjuku Tokyo')},
     'Don Quijote Shinjuku Kabukicho':{name:'Don Quijote Shinjuku Kabukicho',icon:'🛍️',city:'Tokyo · Shinjuku',cat:'שווקים וקניות',optionalSchedule:'04/11 · טיול ערב Shinjuku',storeOptional:true,desc:'סניף גדול של Don Quijote בלב Kabukicho עם קוסמטיקה, חטיפים, מזכרות, מוצרי יומיום, אלקטרוניקה קטנה והמון מציאות יפניות.',worth:'הוא יושב ממש על מסלול הערב שלנו ליד Godzilla, כך שאפשר להיכנס בלי לבנות נסיעה מיוחדת ולראות במקום אחד הרבה סוגי קניות.',tip:'להיכנס רק אם יש כוח אחרי הטיסה; החנות גדולה וקל להיתקע בה הרבה זמן. עדיף להגדיר מראש 20–30 דקות.',map:G('Don Quijote Shinjuku Kabukicho Tokyo')},
@@ -184,14 +184,15 @@
       {time:'22:20',icon:'✈️',title:'Abu Dhabi → Tokyo Narita',text:'EY800 · Etihad Airways · Airbus A380-800 · כ־9:55 שעות · טרמינל A באבו דאבי.',tag:'🟠 שעה חדשה לפי הודעת החברה'},
       {time:'מחר 13:15',icon:'🇯🇵',title:'נחיתה Narita',text:'הנחיתה ביפן מופיעה בתחילת היום הבא.'}
     ],route:null},
-    {date:'04/11',dow:'רביעי',city:'Tokyo · Shinjuku',title:'נחיתה · Shinjuku First Day',summary:'נחיתה ב-13:15 → הסעת Booking → צ׳ק-אין → Shinjuku בערב · JINS אם מספיקים',hotel:'hotel-jr-kyushu-shinjuku',evening:'shinjuku',stops:[
+    {date:'04/11',dow:'רביעי',city:'Tokyo · Shinjuku',title:'נחיתה · Shinjuku First Day',summary:'נחיתה ב-13:15 → הסעת Booking → צ׳ק-אין → Shinjuku ו-Omoide Yokocho בערב · JINS אם מספיקים',hotel:'hotel-jr-kyushu-shinjuku',evening:'shinjuku',stops:[
       {time:'13:15',icon:'✈️',title:'נחיתה Narita · Terminal 1',text:'EY800 · Etihad · ביקורת דרכונים, הצגת QR של Visit Japan Web בהגירה ובמכס, איסוף מזוודות ומעבר להסעת Booking.',place:'Narita Airport',entryQr:true},
       {time:'אחרי איסוף המזוודות',icon:'🚕',title:'Narita → Shinjuku Prince · מונית Booking',text:'הסעת Booking שהוזמנה ואושרה במקור לפי נחיתה ב-11:40: xiooh travel · People Carrier לעד 2 נוסעים · הנהג עוקב אחרי EY800. הנחיתה השתנתה ל-13:15! יש לוודא שהספק עודכן ושהאיסוף/חלון ההמתנה של 45 דקות מותאמים, לפי אישור Booking. אין שינוי מאומת בהזמנה עצמה.',tag:'🚕 הוזמן · ₪0 · לאמת שינוי שעה'},
       {time:'בהגעה למלון',icon:'🏨',title:'Check-in · Shinjuku Prince Hotel',text:'קבלת החדר אם הוא מוכן, התארגנות ומנוחה קצרה; אם טרם ניתן להיכנס לחדר משאירים מזוודות בקבלה. לאחר ההתארגנות מתחילים בטיול קל בסביבה; JINS רק אם הזמן ושעות הפתיחה מאפשרים.'},
       {time:'אם פתוח · אחרי צ׳ק-אין',icon:'👓',title:'JINS Shinjuku · אם מספיקים',text:'בדיקת ראייה והזמנת משקפיים רק אם נגיע בזמן והחנות פתוחה; אחרת להעביר ליום אחר בתחילת טוקיו, כדי להשאיר זמן להכנת העדשות.',place:'JINS Shinjuku',optional:true,tag:'גמיש · לא להעמיס ביום הנחיתה'},
       {time:'אחרי התארגנות',icon:'🐈',title:'Cross Shinjuku Vision · 3D Cat',text:'עצירה קצרה מול המסך המעוקל ליד East Exit.',place:'Cross Shinjuku Vision – 3D Cat'},
       {time:'ערב',icon:'🦖',title:'Godzilla Head · Kabukicho',text:'צילום קצר והמשך דרך הרחובות של Kabukicho.',place:'Godzilla Head'},
-      {time:'אם יש כוח',icon:'🌆',title:'Tokyu Kabukicho Tower',text:'עוברים בדרך; כניסה קצרה רק אם יש כוח ועניין.',place:'Tokyu Kabukicho Tower',optional:true,tag:'אופציונלי על הדרך'}
+      {time:'אם יש כוח',icon:'🌆',title:'Tokyu Kabukicho Tower',text:'עוברים בדרך; כניסה קצרה רק אם יש כוח ועניין.',place:'Tokyu Kabukicho Tower',optional:true,tag:'אופציונלי על הדרך'},
+      {time:'ערב · גמיש',icon:'🍢',title:'Omoide Yokocho · סמטאות היקיטורי',text:'הליכה קצרה בסמטאות המוארות ליד תחנת Shinjuku. אפשר לשבת לשיפודים סביב 21:00, או רק להתרשם אם עייפים מהטיסה; חוזרים לביקור רגוע נוסף ב־7/11.',place:'Omoide Yokocho',optional:true,tag:'ערב ראשון · גמיש לפי העייפות'}
     ],route:D('JR Kyushu Hotel Blossom Shinjuku','Tokyu Kabukicho Tower Tokyo',['JINS Shinjuku Tokyo','Cross Shinjuku Vision Tokyo','Godzilla Head Shinjuku Tokyo'])},
     {date:'05/11',dow:'חמישי',city:'Tokyo',title:'Asakusa · Ueno · Akihabara',summary:'Asakusa → Ueno → Ameyoko → 2k540 → Akihabara עד הלילה → ארוחת ערב סביב 21:00',hotel:'hotel-jr-kyushu-shinjuku',stops:[
       {time:'09:00',icon:'⛩️',title:'Kaminarimon',text:'פתיחת היום בשער הראשי של Asakusa.',place:'Kaminarimon'},
@@ -222,7 +223,7 @@
       {time:'15:00',icon:'🚦',title:'Shibuya Crossing',text:'מעבר החצייה האייקוני של Tokyo.',place:'Shibuya Crossing'},
       {time:'אחה״צ / ערב',icon:'🌇',title:'Shibuya Sky · מועדפת אם הראות טובה',text:'אם הראות טובה — Shibuya Sky היא הבחירה המועדפת. Tokyo Metropolitan Government Building נשאר גיבוי חינמי וגמיש; Roppongi רק אם משתלב.',place:'Shibuya Sky',optional:true,tag:'🌇 מועדפת לפי הראות'}
     ],route:D('Meiji Jingu Tokyo','Shibuya Scramble Crossing',['Takeshita Street Harajuku','Harajuku Gyoza Lou Tokyo','Omotesando Tokyo','Onitsuka Tiger Omotesando Tokyo'])},
-    {date:'07/11',dow:'שבת',city:'Tokyo',title:'שווקים ומרכז Tokyo',summary:'Tsukiji → Ginza → Imperial Palace → Tokyo Station / Marunouchi',hotel:'hotel-jr-kyushu-shinjuku',stops:[
+    {date:'07/11',dow:'שבת',city:'Tokyo',title:'שווקים ומרכז Tokyo',summary:'Tsukiji → Ginza → Imperial Palace → Tokyo Station / Marunouchi → Omoide Yokocho בערב',hotel:'hotel-jr-kyushu-shinjuku',stops:[
       {time:'09:00',icon:'🛍️',title:'Tsukiji Outer Market',text:'שוק אוכל, סכינים, כלי מטבח, תה ודוכנים.',place:'Tsukiji Outer Market'},
       {time:'11:30',icon:'🏙️',title:'Ginza',text:'שיטוט באזור הקניות האלגנטי ובתי הכלבו.',place:'Ginza'},
       {time:'אופציה',icon:'🍜',title:'Ginza Kagari',text:'ראמן על בסיס עוף — אם התור סביר.',place:'Ginza Kagari',optional:true,tag:'🍽️ אוכל על הדרך'},
@@ -231,7 +232,8 @@
       {time:'אופציה',icon:'👕',title:'GU Ginza',text:'אופנה יפנית זולה וטרנדית.',place:'GU Ginza',optional:true,tag:'🛍️ חנות אופציונלית'},
       {time:'אופציה',icon:'🧺',title:'MUJI Ginza',text:'חנות דגל של MUJI עם מוצרי נסיעות, בית וכלי כתיבה.',place:'MUJI Ginza',optional:true,tag:'🛍️ חנות אופציונלית'},
       {time:'14:00',icon:'🏰',title:'Imperial Palace',text:'עצירה קצרה באזור החפיר והגנים.',place:'Imperial Palace'},
-      {time:'16:30',icon:'🚉',title:'Tokyo Station / Marunouchi',text:'חזית התחנה והאזור האלגנטי לקראת ערב.',place:'Tokyo Station / Marunouchi'}
+      {time:'16:30',icon:'🚉',title:'Tokyo Station / Marunouchi',text:'חזית התחנה והאזור האלגנטי לקראת ערב.',place:'Tokyo Station / Marunouchi'},
+      {time:'ערב · סביב 20:30–21:00',icon:'🍢',title:'Omoide Yokocho · ערב רגוע בשינג׳וקו',text:'אחרי Marunouchi חוזרים לכיוון המלון בשינג׳וקו. ערב שני ונינוח יותר בסמטאות, עם אפשרות לשבת לארוחת יקיטורי ושתייה. אם כבר אכלנו שם ביום ההגעה, אפשר להסתפק בסיבוב ולבחור מסעדה אחרת.',place:'Omoide Yokocho',tag:'לילה פנוי · קרוב למלון'}
     ],route:D('Tsukiji Outer Market','Tokyo Station Marunouchi',['Ginza Tokyo','Tokyo Imperial Palace'])},
     {date:'08/11',dow:'ראשון',city:'Hakone / Fuji',title:'Tokyo → Hakone',summary:'Shinjuku → Odawara → רכב → Lake Ashi → Hakone Shrine → TEN-YU',hotel:'hotel-hakone',stops:[
       {time:'בוקר',icon:'🚆',title:'Shinjuku → Odawara',text:'Romancecar אם השעה מתאימה ויש מקום; אחרת Odakyu רגילה. היעד נשאר Odawara ואיסוף הרכב.'},
@@ -412,7 +414,7 @@
   ];
 
   window.TRIP_DATA = {
-    version:'10.3.35', title:'Japan Trip', year:2026, travelers:'2 travelers',
+    version:'10.3.36', title:'Japan Trip', year:2026, travelers:'2 travelers',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
     hotels, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
     maps:{search:G,directions:D}
