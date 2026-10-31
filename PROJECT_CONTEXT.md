@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after v10.3.36 adding explicit Omoide Yokocho evening stops on 4 and 7 November; v10.3.35 Fuji alternatives remain intact.
-> **Current app version:** **v10.3.36**.  
+> **Verified against:** current main after v10.3.37 consolidating Omoide into two rich evening guides, without duplicated itinerary cards; v10.3.35 Fuji routes remain intact.
+> **Current app version:** **v10.3.37**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -66,7 +66,7 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.36**
+Current release: **v10.3.37**
 
 Current service-worker cache:
 `japan-trip-v10-3-35-two-fuji-routes`
@@ -387,9 +387,9 @@ Optional:
 - Glitch Coffee,
 - UNIQLO / GU / MUJI.
 
-**7/11 evening:** after Tokyo Station / Marunouchi, return to Shinjuku and visit **Omoide Yokocho** for a relaxed evening around 20:30–21:00, optionally eating yakitori. A separate dedicated evening-walk modal is not assigned; the itinerary stop has the place guide and map. This does not displace the Shibuya evening on 6/11.
+**7/11 evening:** after Tokyo Station / Marunouchi, return to Shinjuku for dedicated `omoideRelaxed` evening walk. The route includes Shinjuku West Exit → Omoide Yokocho → Shinjuku Prince Hotel, with restaurant etiquette, history and food details in its popup. No separate daily Omoide stop. This does not displace the Shibuya evening on 6/11.
 
-**4/11 evening:** Omoide Yokocho is now also shown explicitly as a flexible stop after the Shinjuku highlights; it remains inside the original Shinjuku night-walk guide. If tired after the flight, shorten the first visit and use 7/11 for a longer meal.
+**4/11 evening:** Omoide Yokocho appears only inside the original Shinjuku night-walk guide, not as a duplicated daily stop. If tired after the flight, visit briefly and use 7/11 for a longer meal.
 
 ### 08/11 · Hakone
 08:50 checkout → Romancecar 09:20 → Odawara 10:35 → rental 11:00 → Lake Ashi → Hakone Shrine → **Hakone Kowakien TEN-YU**.
@@ -816,3 +816,11 @@ When a future chat starts:
 - **04/11** after first-night Shinjuku highlights: Omoide Yokocho explicitly visible in itinerary as a flexible short visit; Shinjuku evening-walk map/guide still includes it. Night is not overpacked after 13:15 arrival.
 - **07/11** after Tokyo Station / Marunouchi: return to Shinjuku for an unhurried visit and optionally yakitori dinner around 20:30–21:00. No additional intercity outing or duplicate Shibuya walk.
 - Places schedule covers both dates; refreshed PWA version/cache to 10.3.36. Booking, transportation, QR, other trip days and Fuji alternatives unchanged.
+
+## 16N. Rich Omoide evening guides; duplicate fix · v10.3.37
+
+- 04/11: the evening walk already included Omoide Yokocho; removed its redundant daily timeline card while keeping the primary evening route, map, and flexible first-night visit.
+- 07/11: removed standalone Omoide timeline card and assigned a new primary `omoideRelaxed` evening walk, after Marunouchi, with pedestrian route Shinjuku Station West Exit → Omoide Yokocho → Shinjuku Prince Hotel.
+- Both evening-walk popups now show four detailed topics: postwar historical setting, yakitori/motsuyaki and other food, indicative JPY cost + payment/cover charges, and seating/photography/smoking etiquette. Hours vary between shops; visit stays flexible.
+- `worthText` no longer uses `p.tip` as a fallback, preventing the exact duplicate guide/tip seen on the user's screenshot. The Omoide place info now has its own short nonduplicative history guide and visit-time estimate in `place-content.js`.
+- Bumped HTML, PWA service-worker cache, manifest, application and data to 10.3.37; all other day plans/booking details unaffected.
