@@ -1,7 +1,7 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after v10.3.38 moving JINS flagship to 07/11 after Tokyo Station, removing it from 04/11 arrival day; v10.3.37 Omoide walks and Fuji alternatives remain intact.
+> **Verified against:** current main v10.3.39: 05/11 dedicated shopping/rain day (JINS, Shinjuku/Ginza malls, Akihabara shops); outdoor Asakusa/Ueno moved to 07/11, while 06/11 Meiji/Harajuku/Shibuya stays intact. Hotel bookings unchanged.
 > **Current app version:** **v10.3.38**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
@@ -833,3 +833,10 @@ When a future chat starts:
 - JINS shopping checklist and place guide now point to flagship. Same-day pickup is not guaranteed, especially with non-stock/special lenses; confirm delivery before paying because Shinjuku hotel checkout is 08/11.
 - Osaka Hotel Royal Classic remains booked. No hotel cancellation, replacement, or payment action was taken.
 - PWA version/cache bumped to 10.3.38.
+
+## 16P. Tokyo rainy Thursday: shopping Thu, outdoor sites Sat · v10.3.39
+
+- User-selected change on 2 Nov: **05/11 (Thu)** becomes a shopping/department-store day for persistent rain. Start with **JINS flagship in Shinjuku** at 10:30, then **LUMINE EST Shinjuku** (weekday shops start 11:00), Ginza shopping (UNIQLO, GU, MUJI and optional **GINZA SIX**), then indoor stores **Radio Kaikan, Yodobashi Akiba**, optional GiGO, Kikanbo and dinner. The brief outside walk to 2k540 is optional only if rain eases. Shopping choices are flexible.
+- **06/11 (Fri)** unchanged: Meiji Shrine → Harajuku → Omotesando → Shibuya and possible Shibuya Sky, saving favorable weather for outdoor attractions.
+- **07/11 (Sat)** moves the original 05/11 outdoor Asakusa (Kaminarimon, Nakamise, Sensō-ji and optional information-center lookout/gyoza) and Ueno/Ameyoko (optional gyoza) into the existing Tsukiji morning. Optional late **Imperial Palace exterior and Tokyo Station/Marunouchi** remain on Saturday, but may be moved to 16/11 when the couple is staying next to Tokyo Station if the day runs long. Evening Omoide Yokocho remains unchanged; no JINS stop Saturday.
+- Updated relevant place schedules and Google Maps day routes. No new itinerary on other dates, booked hotels, flights, transfers, budgets, or private records changed. Version and PWA cache updated to v10.3.39. The older day-by-day schedules earlier in this context file describe historical versions; this section is the current authority.

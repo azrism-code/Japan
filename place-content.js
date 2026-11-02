@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · curated place content · v10.3.38
+/* Japan Trip 2026 · curated place content · v10.3.39
    Restored historical popup guides and place photos from the pre-v10 trip app.
    Loaded after trip-data and before app.js. */
 (() => {
