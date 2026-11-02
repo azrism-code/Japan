@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main after v10.3.37 consolidating Omoide into two rich evening guides, without duplicated itinerary cards; v10.3.35 Fuji routes remain intact.
-> **Current app version:** **v10.3.37**.  
+> **Verified against:** current main after v10.3.38 moving JINS flagship to 07/11 after Tokyo Station, removing it from 04/11 arrival day; v10.3.37 Omoide walks and Fuji alternatives remain intact.
+> **Current app version:** **v10.3.38**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -824,3 +824,12 @@ When a future chat starts:
 - Both evening-walk popups now show four detailed topics: postwar historical setting, yakitori/motsuyaki and other food, indicative JPY cost + payment/cover charges, and seating/photography/smoking etiquette. Hours vary between shops; visit stays flexible.
 - `worthText` no longer uses `p.tip` as a fallback, preventing the exact duplicate guide/tip seen on the user's screenshot. The Omoide place info now has its own short nonduplicative history guide and visit-time estimate in `place-content.js`.
 - Bumped HTML, PWA service-worker cache, manifest, application and data to 10.3.37; all other day plans/booking details unaffected.
+
+## 16O. JINS flagship visit shifted to 7 Nov · v10.3.38
+
+- Removed optional JINS stop from 04/11 arrival day, removed the day-summary JINS reference and the waypoint from the old fallback city route. Hotel migration now also keeps JINS off the arrival-day check-in text, so it cannot reintroduce a conflicting instruction.
+- 07/11 after Tokyo Station/Marunouchi: visit the verified 3-storey JINS Shinjuku flagship at 3-1-20 Shinjuku, 10:30–21:30, approx. 1,300 styles. Fits the return to Shinjuku before evening Omoide Yokocho. Keep the visit flexible; no extra cross-city journey.
+- Updated the day route to terminate at JINS, and the evening guide to continue from the shop to Omoide Yokocho when visited. Keep Omoide on both 04/11 and 07/11.
+- JINS shopping checklist and place guide now point to flagship. Same-day pickup is not guaranteed, especially with non-stock/special lenses; confirm delivery before paying because Shinjuku hotel checkout is 08/11.
+- Osaka Hotel Royal Classic remains booked. No hotel cancellation, replacement, or payment action was taken.
+- PWA version/cache bumped to 10.3.38.
