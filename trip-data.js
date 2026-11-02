@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · canonical data · v10.3.39
+/* Japan Trip 2026 · canonical data · v10.3.40
    One source of truth. No runtime hotel/place replacement patches. */
 (() => {
   'use strict';
@@ -56,6 +56,259 @@
       map:G('Hotel Metropolitan Tokyo Marunouchi')
     }
   ];
+
+  // Optional nearby ideas, grouped by the five confirmed hotel slots. Walk times are approximate.
+  // Sites are not added to timed itineraries. Walking links let travelers verify real-time routes.
+  const hotelNearby = {
+  "hotel-jr-kyushu-shinjuku": [
+    {
+      "kind": "קניות",
+      "name": "ABC-MART · Seibu Shinjuku PePe · קומה 7",
+      "walk": "בבניין המלון · 1–2 דק׳",
+      "detail": "נעלי ספורט וסניקרס; אין צורך בנסיעה לסניף בגינזה.",
+      "query": "ABC MART Seibu Shinjuku PePe 7F Tokyo"
+    },
+    {
+      "kind": "קניות",
+      "name": "Seibu Shinjuku PePe · MUJI / GU / Can Do",
+      "walk": "בבניין המלון · 1–2 דק׳",
+      "detail": "קניון מחובר למלון: GU בקומה 5, MUJI בקומה 7 וחנות 100 ין בקומה 8.",
+      "query": "Seibu Shinjuku PePe Tokyo"
+    },
+    {
+      "kind": "קניות",
+      "name": "Don Quijote · Shinjuku Kabukicho",
+      "walk": "כ־3 דק׳",
+      "detail": "חנות ענקית למזכרות, קוסמטיקה, מתנות ונשנושים; אפשר לקפוץ בכל ערב.",
+      "query": "Don Quijote Shinjuku Kabukicho"
+    },
+    {
+      "kind": "אוכל",
+      "name": "ICHIRAN · Shinjuku Kabukicho",
+      "walk": "כ־4–6 דק׳",
+      "detail": "ראמן טונקוצו עם עמדות אישיות; סניף שפועל 24 שעות.",
+      "query": "ICHIRAN Shinjuku Kabukicho 1-17-10"
+    },
+    {
+      "kind": "אוכל",
+      "name": "Omoide Yokocho",
+      "walk": "כ־5–7 דק׳",
+      "detail": "סמטת דלפקים ושיפודים; מתאימה לסיבוב קצר או ארוחת ערב.",
+      "query": "Omoide Yokocho Shinjuku Tokyo"
+    },
+    {
+      "kind": "אטרקציה",
+      "name": "Godzilla Head · Kabukicho",
+      "walk": "כ־3–5 דק׳",
+      "detail": "צילום ראש הגודזילה מעל בניין TOHO; ממש ליד המלון.",
+      "query": "Godzilla Head Shinjuku Tokyo"
+    },
+    {
+      "kind": "אטרקציה",
+      "name": "Shinjuku Golden Gai",
+      "walk": "כ־8–10 דק׳",
+      "detail": "סמטאות ברים קטנות ופנסים; מומלץ לשוטט בערב בלי להתחייב לבר מסוים.",
+      "query": "Shinjuku Golden Gai Tokyo"
+    }
+  ],
+  "hotel-hakone": [
+    {
+      "kind": "אטרקציה",
+      "name": "Hakone Kowakien Yunessun",
+      "walk": "כ־3–5 דק׳",
+      "detail": "מתחם מרחצאות ובריכות נושא; נדרש כרטיס וייתכנו כללי כניסה נפרדים.",
+      "query": "Hakone Kowakien Yunessun"
+    },
+    {
+      "kind": "אטרקציה",
+      "name": "Okada Museum of Art",
+      "walk": "כ־4–6 דק׳",
+      "detail": "מוזיאון אמנות יפנית ואסייתית ממש מול אזור המלון; טוב גם ביום גשום.",
+      "query": "Okada Museum of Art Hakone"
+    },
+    {
+      "kind": "אוכל",
+      "name": "Soba Kihinkan · 蕎麦 貴賓館",
+      "walk": "כ־5 דק׳",
+      "detail": "מסעדת סובה בבית היסטורי עם גן; פתוחה לארוחת צהריים, לא לערב.",
+      "query": "Soba Kihinkan Hakone Kowakien Yunessun"
+    },
+    {
+      "kind": "אוכל",
+      "name": "Teppan-yaki Geihinkan · 迎賓館",
+      "walk": "כ־5 דק׳",
+      "detail": "טפניאקי איכותי, כולל נתחי בקר יפני; נדרשת הזמנת ערב מראש.",
+      "query": "Hakone Kowakien Teppanyaki Geihinkan"
+    },
+    {
+      "kind": "קניות",
+      "name": "חנות המזכרות במתחם Yunessun",
+      "walk": "כ־3–5 דק׳",
+      "detail": "מזכרות ומוצרים מקומיים בתוך מתחם המרחצאות; לבדוק שעות פתיחה במקום.",
+      "query": "Hakone Kowakien Yunessun shop"
+    },
+    {
+      "kind": "אטרקציה",
+      "name": "גני TEN-YU והמרחץ במלון",
+      "walk": "במתחם המלון",
+      "detail": "פינת טבע ושהייה רגועה בלי לנסוע; גישה לפי שעות ושירותי המלון.",
+      "query": "Hakone Kowakien TEN YU garden"
+    }
+  ],
+  "hotel-daiwa-kyoto-shijo": [
+    {
+      "kind": "אטרקציה",
+      "name": "Kyoto Station · Hachijo Exit",
+      "walk": "כ־2 דק׳",
+      "detail": "תחנת רכבת עצומה ומבנה מרשים; נוח לסיבוב ערב ולהתמצאות.",
+      "query": "Kyoto Station Hachijo West Exit"
+    },
+    {
+      "kind": "קניות",
+      "name": "ASTY Kyoto · קניות ואוכל בתחנה",
+      "walk": "כ־3–5 דק׳",
+      "detail": "מזכרות, מתוקים ודוכני אוכל באזור יציאת השינקנסן הדרומית.",
+      "query": "ASTY Kyoto Hachijo"
+    },
+    {
+      "kind": "קניות",
+      "name": "Kyoto Avanti",
+      "walk": "כ־3–5 דק׳",
+      "detail": "קניון מקורה עם חנויות אופנה, גאדג׳טים ומסעדות.",
+      "query": "Kyoto Avanti Kyoto Station"
+    },
+    {
+      "kind": "קניות",
+      "name": "AEON MALL Kyoto",
+      "walk": "כ־5–8 דק׳",
+      "detail": "קניון גדול לקניות שימושיות, אוכל וקולנוע; קרוב למלון.",
+      "query": "AEON MALL KYOTO"
+    },
+    {
+      "kind": "אוכל",
+      "name": "Yakiniku Hiro · Hachijo-guchi",
+      "walk": "כ־6–9 דק׳",
+      "detail": "יאקיניקו עם בשר ואגיו יפני, מתאים לערב; כדאי לבדוק שולחן מראש.",
+      "query": "Yakiniku Hiro Hachijoguchi Kyoto"
+    },
+    {
+      "kind": "אוכל",
+      "name": "Kintetsu Mall Miyakomichi · מסעדות",
+      "walk": "כ־3–6 דק׳",
+      "detail": "מסעדות וחנויות בקומת המעבר הסמוכה לתחנת Kyoto.",
+      "query": "Kintetsu Miyakomichi Kyoto Station"
+    }
+  ],
+  "hotel-royal-classic-osaka": [
+    {
+      "kind": "קניות",
+      "name": "Takashimaya Osaka · Namba",
+      "walk": "כ־2–4 דק׳",
+      "detail": "בית כלבו גדול עם קומת אוכל, קוסמטיקה, ביגוד ומתנות.",
+      "query": "Takashimaya Osaka Namba"
+    },
+    {
+      "kind": "קניות",
+      "name": "Namba CITY · ABC-MART בקומת B2",
+      "walk": "כ־4–6 דק׳",
+      "detail": "מתחם קניות מקורה המחובר לתחנת Nankai Namba, כולל סניף ABC-MART.",
+      "query": "ABC MART Namba CITY Osaka"
+    },
+    {
+      "kind": "קניות",
+      "name": "Namba Parks",
+      "walk": "כ־7–9 דק׳",
+      "detail": "קניון גדול עם מסעדות וגג ירוק מדורג.",
+      "query": "Namba Parks Osaka"
+    },
+    {
+      "kind": "קניות",
+      "name": "Don Quijote · Namba Sennichimae",
+      "walk": "כ־7–10 דק׳",
+      "detail": "חנות ענקית לקניות ומזכרות; סניף 24 שעות.",
+      "query": "Don Quijote Namba Sennichimae Osaka"
+    },
+    {
+      "kind": "אוכל",
+      "name": "551 HORAI · הסניף הראשי",
+      "walk": "כ־3–5 דק׳",
+      "detail": "לחמניות מאודות במילוי חזיר ושומאי; נשנוש אוסקה מפורסם.",
+      "query": "551 Horai Honten Namba Osaka"
+    },
+    {
+      "kind": "אטרקציה",
+      "name": "Hozenji Yokocho",
+      "walk": "כ־5–7 דק׳",
+      "detail": "סמטת אבן מסורתית ופנסים ליד מקדש Hozenji.",
+      "query": "Hozenji Yokocho Osaka"
+    },
+    {
+      "kind": "אטרקציה",
+      "name": "Dotonbori · Glico Man",
+      "walk": "כ־7–9 דק׳",
+      "detail": "הניאון, התעלה והגשר המפורסם; שווה במיוחד בערב.",
+      "query": "Dotonbori Glico Man Osaka"
+    },
+    {
+      "kind": "אוכל",
+      "name": "Kuromon Ichiba Market",
+      "walk": "כ־10 דק׳",
+      "detail": "שוק אוכל מקורה למחצה; לפי אתר Royal Classic מרחק הליכה של כ־10 דקות.",
+      "query": "Kuromon Ichiba Market Osaka"
+    }
+  ],
+  "hotel-metropolitan-marunouchi": [
+    {
+      "kind": "קניות",
+      "name": "Marunouchi Oazo · Maruzen",
+      "walk": "כ־2–4 דק׳",
+      "detail": "מתחם מסעדות וחנויות ובו חנות ספרים גדולה עם כלי כתיבה.",
+      "query": "Marunouchi Oazo Maruzen Tokyo"
+    },
+    {
+      "kind": "קניות",
+      "name": "Daimaru Tokyo",
+      "walk": "כ־3–5 דק׳",
+      "detail": "בית כלבו גדול ביציאה הצפונית של צד Yaesu, כולל קומות אוכל ומתנות.",
+      "query": "Daimaru Tokyo Station"
+    },
+    {
+      "kind": "קניות",
+      "name": "GRANSTA Tokyo",
+      "walk": "כ־3–7 דק׳",
+      "detail": "מתנות, קופסאות אוכל, מאפים ומוצרים ייחודיים לתחנה; חלק מהחנויות מעבר לשערי הכרטיסים.",
+      "query": "Gransta Tokyo Station"
+    },
+    {
+      "kind": "קניות",
+      "name": "Tokyo Character Street · First Avenue",
+      "walk": "כ־7–10 דק׳",
+      "detail": "חנויות דמויות, צעצועים ומתנות ב־Yaesu B1, מחוץ לשערי הרכבת.",
+      "query": "Tokyo Character Street First Avenue Tokyo Station"
+    },
+    {
+      "kind": "אוכל",
+      "name": "Tokyo Ramen Street · First Avenue",
+      "walk": "כ־8–10 דק׳",
+      "detail": "כמה מסעדות ראמן מרוכזות בתחנה; אפשר לבחור לפי תור ושעת פתיחה.",
+      "query": "Tokyo Ramen Street Tokyo Station"
+    },
+    {
+      "kind": "אוכל",
+      "name": "Dining & Bar TENQOO",
+      "walk": "בתוך המלון · קומה 27",
+      "detail": "מסעדה עם נוף לעיר ולמסילות; אופציה לארוחה מיוחדת ממש במלון.",
+      "query": "Dining Bar TENQOO Hotel Metropolitan Marunouchi"
+    },
+    {
+      "kind": "אטרקציה",
+      "name": "Tokyo Station · חזית Marunouchi",
+      "walk": "כ־7–10 דק׳",
+      "detail": "חזית הלבנים האדומות של התחנה — יפה במיוחד בשעות הערב.",
+      "query": "Tokyo Station Marunouchi Building red brick facade"
+    }
+  ]
+};
 
   const places = {
     'Narita Airport':{name:'Narita International Airport · Terminal 1',icon:'✈️',city:'Tokyo / Chiba',cat:'אתרים',desc:'נחיתה והמראה של טיסות Etihad בטרמינל 1. בהגעה מחכה הסעת Booking מאושרת ישירות ל-Shinjuku Prince Hotel; אין צורך להזמין רכבת.',tip:'4/11: לוודא את נקודת המפגש עם xiooh travel אחרי איסוף המזוודות. 17/11: להגיע לטרמינל 1 לקראת צ׳ק-אין 14:20 לטיסת EY801 ב-17:20.',map:G('Narita International Airport Terminal 1')},
@@ -351,7 +604,7 @@
     ['טיפים שימושיים','הכי נעים כשהפנסים דולקים בערב. שעות הפתיחה משתנות בין הדוכנים. המקומות צפופים ומכילים מעט כיסאות; חלקם מעושנים. השאירו מזוודות במלון, אל תחסמו את המעבר ובקשו רשות לפני צילום אנשים או פנים של מסעדה.']
   ];
   const eveningWalks = {
-    shinjuku:{title:'Shinjuku Night · Hanazono → Golden Gai → Omoide',start:'אחרי צ׳ק-אין · גמיש',primary:true,duration:'כ־1–2 שעות לפי שעת ההגעה והעייפות',out:'🚶 ערב קל ליד המלון אחרי הנחיתה המאוחרת ב-13:15. JINS אינו מובטח ביום הנחיתה; 3D Cat ו-Godzilla אפשר לשלב פעם אחת בלבד, לפני או במהלך הטיול. מדלגים על עצירות אם מאוחר.',back:'🚶 מסיימים ב-Omoide Yokocho ליד Shinjuku Station וחוזרים למלון ברגל.',stops:[['Don Quijote Shinjuku Kabukicho','🛍️ אופציונלי — כניסה של 20–30 דקות רק אם יש כוח.'],['Hanazono Shrine','מקדש קטן ונעים על הדרך בין Kabukicho ל-Golden Gai.'],['Golden Gai','מעבר קצר בסמטאות כשהן מתחילות להתעורר בערב.'],['Omoide Yokocho','סיום בסמטת הפנסים והגריל ליד התחנה; אפשר להסתפק בסיבוב קצר של 20–40 דקות אחרי הטיסה.']],details:omoideDetails,dinner:'🍽️ אם יש כוח אפשר להזמין שיפודי yakitori סביב 21:00. ביום הנחיתה אפשר גם רק לטייל ולאכול במקום אחר.',map:'https://www.google.com/maps/dir/?api=1&origin=Tokyu+Kabukicho+Tower+Tokyo&destination=Omoide+Yokocho+Tokyo&waypoints=Don+Quijote+Shinjuku+Kabukicho%7CHanazono+Shrine+Tokyo%7CShinjuku+Golden+Gai+Tokyo&travelmode=walking'},
+    shinjuku:{title:'Shinjuku Night · Hanazono → Golden Gai → Omoide',start:'אחרי צ׳ק-אין · גמיש',primary:true,duration:'כ־1–2 שעות לפי שעת ההגעה והעייפות',out:'🚶 ערב קל ליד המלון אחרי הנחיתה ב־13:15. אין עצירת קניות מחייבת; ABC-MART, Don Quijote ושאר החנויות הקרובות מופיעות ב״מקומות → באזור המלון״. את 3D Cat ו-Godzilla אפשר לשלב פעם אחת, לפני או במהלך הטיול.',back:'🚶 מסיימים ב-Omoide Yokocho ליד Shinjuku Station וחוזרים למלון ברגל.',stops:[['Hanazono Shrine','מקדש קטן ונעים על הדרך בין Kabukicho ל-Golden Gai.'],['Golden Gai','מעבר קצר בסמטאות כשהן מתחילות להתעורר בערב.'],['Omoide Yokocho','סיום בסמטת הפנסים והגריל ליד התחנה; אפשר להסתפק בסיבוב קצר של 20–40 דקות אחרי הטיסה.']],details:omoideDetails,dinner:'🍽️ אם יש כוח אפשר להזמין שיפודי yakitori סביב 21:00. ביום הנחיתה אפשר גם רק לטייל ולאכול במקום אחר.',map:'https://www.google.com/maps/dir/?api=1&origin=Tokyu+Kabukicho+Tower+Tokyo&destination=Omoide+Yokocho+Tokyo&waypoints=Don+Quijote+Shinjuku+Kabukicho%7CHanazono+Shrine+Tokyo%7CShinjuku+Golden+Gai+Tokyo&travelmode=walking'},
     omoideRelaxed:{title:'Shinjuku · ערב רגוע ב-Omoide Yokocho',start:'אחרי החזרה לשינג׳וקו · סביב 21:00',primary:true,duration:'כ־60–90 דקות עם ארוחה, או פחות אם רק מטיילים',out:'🚆 אחרי היום בשווקים ובאתרים חוזרים לשינג׳וקו וניגשים לצד המערבי של תחנת Shinjuku אל Omoide Yokocho. את JINS העברנו ליום הקניות של 5/11, ולכן לא צריך להוסיף חנות לערב שבת.',back:'🚶 מסיימים את הערב וחוזרים ברגל למלון Shinjuku Prince.',stops:[['Shinjuku Station · West Exit','מגיעים לאזור היציאה המערבית, סמוך לסמטאות.'],['Omoide Yokocho','בוחרים דלפק שיפודים שנראה מזמין; אפשר לשבת לארוחת יקיטורי או רק לשוטט בין הפנסים והגרילים.'],['Shinjuku Prince Hotel','חוזרים בנחת למלון אחרי האוכל והסיור.']],details:omoideDetails,dinner:'🍢 ארוחת ערב סביב 21:00, ללא הזמנה קשיחה. אם כבר אכלנו כאן ב־4/11, אפשר לנסות מסעדה אחרת או להסתפק בסיבוב.',map:'https://www.google.com/maps/dir/?api=1&origin=Shinjuku+Station+West+Exit+Tokyo&destination=Shinjuku+Prince+Hotel+Tokyo&waypoints=Omoide+Yokocho+Tokyo&travelmode=walking'},
     asakusa:{title:'Asakusa Lights',duration:'כ־3–3.5 שעות כולל נסיעות וארוחת ערב',out:'🚆 יציאה 19:30 מהמלון · Shinjuku → Kanda ב-JR Chuo Line, החלפה ל-Tokyo Metro Ginza Line → Asakusa. כ־30–35 דק׳.',back:'🚆 חזרה · Asakusa → Kanda ב-Ginza Line, החלפה ל-JR Chuo Line → Shinjuku. כ־30–35 דק׳.',stops:[['Sensō-ji','המקדש והאזור המואר בלילה.'],['Nakamise & side streets','סמטאות Asakusa באווירת ערב רגועה.'],['Sumida River Promenade','הליכה לאורך הנהר והגשרים.'],['Skytree view','סיום מול ה-Skytree המואר.']],dinner:'🍽️ ארוחת ערב סביב 21:00 באזור Asakusa.',map:'https://www.google.com/maps/dir/?api=1&origin=Senso-ji+Tokyo&destination=Sumida+Park+Tokyo&waypoints=Nakamise+Shopping+Street+Tokyo&travelmode=walking',image:'images/evening-walks/asakusa.jpg'},
     ueno:{title:'Ueno → Akihabara',duration:'כ־3–3.5 שעות כולל נסיעות וארוחת ערב',out:'🚆 יציאה 19:30 מהמלון · Shinjuku → Ueno ב-JR Yamanote Line. כ־25 דק׳.',back:'🚆 חזרה · Akihabara → Shinjuku ב-JR Chuo-Sobu Line. כ־20 דק׳.',stops:[['Ueno Park','מתחילים בפארק Ueno כשהאזור כבר מואר.'],['Ameyoko Market','השוק והרחובות התוססים.'],['Okachimachi','הליכה דרומה ברחובות המקומיים.'],['Akihabara Electric Town','מסיימים בניאון, אלקטרוניקה ואנימה.']],dinner:'🍽️ ארוחת ערב סביב 21:00 באזור Akihabara / Kanda.',map:'https://www.google.com/maps/dir/?api=1&origin=Ueno+Park+Tokyo&destination=Akihabara+Electric+Town&waypoints=Ameyoko+Shopping+District+Tokyo%7COkachimachi+Station&travelmode=walking',image:'images/evening-walks/ueno-akihabara.jpg'},
@@ -421,9 +674,9 @@
   ];
 
   window.TRIP_DATA = {
-    version:'10.3.39', title:'Japan Trip', year:2026, travelers:'2 travelers',
+    version:'10.3.40', title:'Japan Trip', year:2026, travelers:'2 travelers',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
-    hotels, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
-    maps:{search:G,directions:D}
+    hotels, hotelNearby, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
+    maps:{search:G,directions:D,walk:(from,to)=>'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(from)+'&destination='+encodeURIComponent(to)+'&travelmode=walking'}
   };
 })();
