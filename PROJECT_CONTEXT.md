@@ -1,7 +1,7 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** main v10.3.41: payment status persists; Kyoto / city filters work in Places including hotel neighborhoods; TEN-YU check-in mentions free Mori no Yu without extra onsens.
+> **Verified against:** main v10.3.42: payment status persists; Kyoto / city filters work in Places including hotel neighborhoods; TEN-YU check-in mentions free Mori no Yu without extra onsens.
 > **Current app version:** **v10.3.38**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
@@ -860,3 +860,6 @@ When a future chat starts:
 - Places hotel-nearby filtering fixed a wrong single-element selector `$(...).forEach` and now includes city filtering. Choosing Kyoto shows Kyoto results, not Tokyo; choosing a city resets selected hotel and deep-linking a hotel resets city.
 - TEN-YU Hakone check-in on 8/11 explains the free adjacent **Mori no Yu** onsen, linked by a covered walkway, with pass/QR from reception. Shared public baths separated by gender; private bath requires booking and extra fee. TEN-YU official https://www.ten-yu.com/en/yunessun.html and FAQ https://www.ten-yu.com/faq.html (valid through 2026-12-31).
 - Per user's request, do **not** add any other onsen visits or driving list at this time. No hotel reservations, flights, budget user records or external payments changed by this code update. A previously overwritten saved payment status may have to be set again after app update.
+
+## 16S. Places hotel area filter final regression fix · v10.3.42
+- Replace the erroneous single-element DOM query `$('#nearbyHotels .nearby-hotel').forEach` with the proper collection query `$$('#nearbyHotels .nearby-hotel').forEach`. This eliminates the JS TypeError and enables city and hotel chips, including Kyoto-only results. All v10.3.41 expense and Mori no Yu check-in fixes remain in place. PWA cache bumped.
