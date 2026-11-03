@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · canonical data · v10.3.41
+/* Japan Trip 2026 · canonical data · v10.3.43
    One source of truth. No runtime hotel/place replacement patches. */
 (() => {
   'use strict';
@@ -155,7 +155,7 @@
       "query": "Hakone Kowakien TEN YU garden"
     }
   ],
-  "hotel-daiwa-kyoto-shijo": [
+  "hotel-sakura-terrace-gallery-kyoto": [
     {
       "kind": "אטרקציה",
       "name": "Kyoto Station · Hachijo Exit",
@@ -674,7 +674,7 @@
   ];
 
   window.TRIP_DATA = {
-    version:'10.3.41', title:'Japan Trip', year:2026, travelers:'2 travelers',
+    version:'10.3.43', title:'Japan Trip', year:2026, travelers:'2 travelers',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
     hotels, hotelNearby, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
     maps:{search:G,directions:D,walk:(from,to)=>'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(from)+'&destination='+encodeURIComponent(to)+'&travelmode=walking'}

@@ -1,7 +1,7 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** main v10.3.42: payment status persists; Kyoto / city filters work in Places including hotel neighborhoods; TEN-YU check-in mentions free Mori no Yu without extra onsens.
+> **Verified against:** main v10.3.43: Kyoto nearby key aligned with the confirmed Sakura Terrace hotel, and Places results prefiltered by city+hotel. Payment and Mori no Yu information unchanged.
 > **Current app version:** **v10.3.38**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
@@ -863,3 +863,9 @@ When a future chat starts:
 
 ## 16S. Places hotel area filter final regression fix · v10.3.42
 - Replace the erroneous single-element DOM query `$('#nearbyHotels .nearby-hotel').forEach` with the proper collection query `$$('#nearbyHotels .nearby-hotel').forEach`. This eliminates the JS TypeError and enables city and hotel chips, including Kyoto-only results. All v10.3.41 expense and Mori no Yu check-in fixes remain in place. PWA cache bumped.
+
+## 16T. Missing Kyoto nearby recommendations and Places city/hotel filters · v10.3.43
+- Fixed key mismatch: Kyoto `hotelNearby` records were keyed `hotel-daiwa-kyoto-shijo` even though `kyoto-hotel-update.js` changes active hotel key to `hotel-sakura-terrace-gallery-kyoto`; six Kyoto recommendations now appear at SAKURA TERRACE THE GALLERY.
+- Filter visible results at HTML creation: both city and hotel in hotel-nearby mode, city and category in regular Places. Avoid relying only on hiding already-created cards. Text search continues to filter rendered subset.
+- In hotel-nearby mode, hotel selector chips are also limited to selected city, removing confusing Tokyo hotels from Kyoto selection. Clicking specific hotel sets current city to hotel's city. Changing city preserves hotel only if compatible; conflicting choice resets hotel to all. Selecting All hotels preserves city; selecting All cities preserves specific hotel until user clears that selector.
+- Show results count or informative empty state. No changes to reservations, budget, itinerary, Mora no Yu details or private data.
