@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · canonical data · v10.3.40
+/* Japan Trip 2026 · canonical data · v10.3.41
    One source of truth. No runtime hotel/place replacement patches. */
 (() => {
   'use strict';
@@ -493,7 +493,7 @@
       {time:'הגעה',icon:'🚗',title:'איסוף רכב · Odawara',text:'הרכב מיועד ליומיים באזור Hakone / Fuji.',place:'Odawara'},
       {time:'12:00',icon:'🏞️',title:'Lake Ashi',text:'אגם, נוף הררי ואפשרות לתצפית לכיוון Fuji.',place:'Lake Ashi'},
       {time:'14:00',icon:'⛩️',title:'Hakone Shrine',text:'מקדש בתוך היער ושער Torii על שפת האגם.',place:'Hakone Shrine'},
-      {time:'אחה״צ',icon:'🏨',title:'Check-in · Hakone Kowakien TEN-YU',text:'הגעה למלון ב-Ninotaira. Superior Room with Open Air-Bath, ללא עישון, מיטה גדולה וארוחת בוקר.'}
+      {time:'אחה״צ',icon:'🏨',title:'Check-in · Hakone Kowakien TEN-YU',text:'הגעה למלון ב-Ninotaira. Superior Room with Open Air-Bath, ללא עישון, מיטה גדולה וארוחת בוקר. ♨️ יש גם כניסה חינם לאורחי TEN-YU לאונסן Mori no Yu הצמוד במתחם Yunessun, דרך מעבר מקורה — בלי רכב. מבקשים בקבלה אישור כניסה/QR ומוודאים שעות. המרחצאות הציבוריים נפרדים לגברים ולנשים; אמבט פרטי כרוך בהזמנה ותשלום נוספים.'}
     ],route:D('Odawara Station','Hakone Kowakien TEN-YU',['Lake Ashi Hakone','Hakone Shrine'])},
     {date:'09/11',dow:'שני',city:'Hakone / Fuji',title:'Hakone · Fuji · שתי חלופות',summary:'שני מסלולים לבחירה בבוקר: A האקונה והרכבל / B אגמים ומפלי Shiraito. יוצאים וחוזרים למלון TEN-YU.',hotel:'hotel-hakone',stops:[],route:null,routeChoices:[
       {id:'hakone',label:'A · האקונה והרכבל',subtitle:'Owakudani · Ropeway · Kawaguchiko לפי הראות',duration:'יום עם רכבל וביקור געשי; אם פוג׳י מוסתר, נשארים בהאקונה.',summary:'TEN-YU → חניה ב-Sounzan → רכבל הלוך ושוב ל-Owakudani → Kawaguchiko ו-Oishi Park אם הראות מצדיקה → TEN-YU.',note:'הרכב נשאר ב-Sounzan בזמן הרכבל; עולים ל-Owakudani וחוזרים לאותו מקום. שעות משוערות, תלוי בתור לרכבל ובתנועה. אם פוג׳י מוסתר או היום מתארך, מחליפים את קטע Kawaguchiko במוזיאון הפתוח של האקונה.',route:DR('Hakone Kowakien TEN-YU','Hakone Kowakien TEN-YU',['Sounzan Station Hakone','Oishi Park Lake Kawaguchiko']),shortRoute:DR('Hakone Kowakien TEN-YU','Hakone Kowakien TEN-YU',['Sounzan Station Hakone','Hakone Open-Air Museum']),stops:[
@@ -674,7 +674,7 @@
   ];
 
   window.TRIP_DATA = {
-    version:'10.3.40', title:'Japan Trip', year:2026, travelers:'2 travelers',
+    version:'10.3.41', title:'Japan Trip', year:2026, travelers:'2 travelers',
     tripStart:'2026-11-03', tripEnd:'2026-11-18', rateJpyIls:RATE_JPY_ILS,
     hotels, hotelNearby, places, days, eveningWalks, flights, bookings, takeDefault, shoppingDefault, expenseDefaults, trains,
     maps:{search:G,directions:D,walk:(from,to)=>'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(from)+'&destination='+encodeURIComponent(to)+'&travelmode=walking'}

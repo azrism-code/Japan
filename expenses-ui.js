@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · compact expense controls + dual budget filters · v10.3.35 */
+/* Japan Trip 2026 · compact expense controls + dual budget filters · v10.3.41 */
 (() => {
   'use strict';
   const VERSION='10.3.35';
@@ -29,7 +29,8 @@
     if(old&&!current){current=old;changed=true}
     else if(old&&current){items=items.filter(x=>x!==old);changed=true}
     if(!current){current={id:Date.now()+items.length,...HAKONE_EXPENSE};items.push(current);changed=true}
-    for(const [k,v] of Object.entries(HAKONE_EXPENSE))if(current[k]!==v){current[k]=v;changed=true}
+    // Existing Hakone expense is user data; do not reset status, amount or notes.
+    if(current.name!==HAKONE_EXPENSE.name){current.name=HAKONE_EXPENSE.name;changed=true}
     if(changed){
       localStorage.setItem(EXP_KEY,JSON.stringify(items));
       if(notifyCloud&&window.JapanCloud?.canWrite?.())document.dispatchEvent(new CustomEvent('japan:stateChanged'));

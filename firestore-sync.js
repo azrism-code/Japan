@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · Firestore auth lifecycle and privacy-safe sync · v10.3.31 */
+/* Japan Trip 2026 · Firestore auth lifecycle and privacy-safe sync · v10.3.41 */
 (() => {
   'use strict';
   const F=window.JAPAN_FIREBASE_CONFIG||{}, C=window.JAPAN_CLOUD_CONFIG||{};
@@ -239,7 +239,7 @@
   }
 
   document.addEventListener('japan:stateChanged',schedule);
-  const writeSelector='[data-action="add-take"],[data-take-move],[data-take-delete],[data-action="add-shop"],[data-shop-move],[data-shop-delete],[data-action="save-exp-settings"],[data-action="add-expense"],[data-exp-delete],[data-exp-include],[data-take-check],[data-shop-check],#importFile,.reservation-doc-link,.reservation-doc-replace,.reservation-doc-unlink';
+  const writeSelector='[data-action="add-take"],[data-take-move],[data-take-delete],[data-action="add-shop"],[data-shop-move],[data-shop-delete],[data-action="save-exp-settings"],[data-action="add-expense"],[data-exp-delete],[data-exp-include],[data-hotel-payment],[data-take-check],[data-shop-check],#importFile,.reservation-doc-link,.reservation-doc-replace,.reservation-doc-unlink';
   document.addEventListener('click',e=>{if(role==='viewer'&&e.target.closest(writeSelector)){e.preventDefault();e.stopImmediatePropagation();deny()}},true);
   document.addEventListener('change',e=>{if(role==='viewer'&&e.target.closest(writeSelector)){e.preventDefault();e.stopImmediatePropagation();deny()}},true);
   document.addEventListener('click',e=>{if(e.target.closest('[data-auth-action]'))authAction()});

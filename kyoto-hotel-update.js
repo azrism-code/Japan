@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · Kyoto hotel replacement · v10.2.5 */
+/* Japan Trip 2026 · Kyoto hotel replacement · v10.3.41 */
 (() => {
   'use strict';
   const T=window.TRIP_DATA;
@@ -89,10 +89,7 @@
     if(old&&!current){old.name=NEW_NAME;current=old;changed=true}
     else if(old&&current){a=a.filter(x=>x!==old);changed=true}
 
-    if(current){
-      const next={status:'שולם',payment:'אשראי',currency:'USD',amount:840.91,category:'🏨 לינה',included:true,note:'10–14/11 · Official website · Room only · prepaid'};
-      for(const [k,v] of Object.entries(next))if(current[k]!==v){current[k]=v;changed=true}
-    }
+    // Preserve the user's existing expense status, amount and payment edits.
 
     if(changed){
       localStorage.setItem(EXP_KEY,JSON.stringify(a));
@@ -115,7 +112,7 @@
           value.textContent='$840.91';
         }
         if(/מחיר בשקלים/.test(t))row.hidden=true;
-        if(/מצב תשלום/.test(t))value.textContent='שולם מראש (Prepaid)';
+        // The hotel payment row is driven by current saved expense state.
       });
     }
 

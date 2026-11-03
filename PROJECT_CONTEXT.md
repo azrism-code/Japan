@@ -1,7 +1,7 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** current main v10.3.40: Places has a hotel-specific '🏨 באזור המלון' list for all five booked hotels, each with nearby shops, dining and sights (roughly ≤10 minutes' walk), Google Maps walking directions and hotel filters. Version 10.3.39 rainy-day itineraries remain unchanged.
+> **Verified against:** main v10.3.41: payment status persists; Kyoto / city filters work in Places including hotel neighborhoods; TEN-YU check-in mentions free Mori no Yu without extra onsens.
 > **Current app version:** **v10.3.38**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
@@ -853,3 +853,10 @@ When a future chat starts:
 - Each hotel's card in Hotels has a dedicated button to open the filtered nearby list. Places category filter has “🏨 באזור המלון”, hotel chips and search. Places tab and all other categories still behave as before; no changes to private bookings, hotel payments, flights, QR or Firestore data.
 - All walking times are **approximate** and may vary by entrances, multi-level passages and slopes; Google Maps walking links show the real path at visit time.
 - Reference locations checked 2026-11-02 via official pages: https://www.seibu-shop.jp/shinjuku/en/ (ABC on 7F); https://www.princehotels.com/shinjuku/ (Don 3min); https://www.ten-yu.com/en/facility.html (Kihinkan and Geihinkan ~5min); https://www.expedia.co.jp/en/Hakone-Hotels-Hakone-Kowakien-TEN-YU.h16219270.Hotel-Information (Yunessun and Okada; Open-Air Museum excluded); https://sakuraterrace-gallery.jp/en/access/ ; https://en.yakiniku-hiro.com/shop/hachijoguchi.php ; https://hotel-royalclassic.jp/en/access (Dotonbori 7min, Kuromon 10min); https://nambacity.com/shopresearch/421 (ABC); https://tokyo-marunouchi.hotel-metropolitan.com/access/ ; https://www.marunouchi.com/en/building/oazo/information-access/.
+
+## 16R. Payment persistence, city filters, Mori no Yu · v10.3.41
+- Fixed default hotel expense overwrites in app.js normalizeExpenses and in shinjuku-prince-update.js and kyoto-hotel-update.js migration scripts, and Hakone seed in expenses-ui.js. Previously edited payment status, amount and notes now survive startup and Firestore snapshot reapplication.
+- Hotels cards use saved expense status and Owner/Editor can mark each hotel paid or booked from its card; the edit writes the same Firestore-synced budget item. Viewers blocked.
+- Places hotel-nearby filtering fixed a wrong single-element selector `$(...).forEach` and now includes city filtering. Choosing Kyoto shows Kyoto results, not Tokyo; choosing a city resets selected hotel and deep-linking a hotel resets city.
+- TEN-YU Hakone check-in on 8/11 explains the free adjacent **Mori no Yu** onsen, linked by a covered walkway, with pass/QR from reception. Shared public baths separated by gender; private bath requires booking and extra fee. TEN-YU official https://www.ten-yu.com/en/yunessun.html and FAQ https://www.ten-yu.com/faq.html (valid through 2026-12-31).
+- Per user's request, do **not** add any other onsen visits or driving list at this time. No hotel reservations, flights, budget user records or external payments changed by this code update. A previously overwritten saved payment status may have to be set again after app update.

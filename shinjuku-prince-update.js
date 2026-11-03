@@ -1,4 +1,4 @@
-/* Japan Trip 2026 · Shinjuku Prince hotel migration · v10.3.39
+/* Japan Trip 2026 · Shinjuku Prince hotel migration · v10.3.41
    Keeps the existing private booking slot intact until Firestore private data is verified.
    Updates only non-sensitive hotel facts, itinerary routing, station guidance and the matching expense. */
 (() => {
@@ -78,10 +78,7 @@
     if(old&&!current){old.name=NEW_NAME;current=old;changed=true}
     else if(old&&current){a=a.filter(x=>x!==old);changed=true}
 
-    if(current){
-      const next={status:'מוזמן',payment:'אשראי',currency:'JPY',amount:257395,category:'🏨 לינה',included:true,note:'4–8/11 · Booking.com · כולל ארוחת בוקר'};
-      for(const [k,v] of Object.entries(next))if(current[k]!==v){current[k]=v;changed=true}
-    }
+    // Preserve the user's existing expense status, amount and payment edits.
 
     if(changed){
       localStorage.setItem(EXP_KEY,JSON.stringify(a));
