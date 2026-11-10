@@ -1,12 +1,20 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** main v10.3.43: Kyoto nearby key aligned with the confirmed Sakura Terrace hotel, and Places results prefiltered by city+hotel. Payment and Mori no Yu information unchanged.
-> **Current app version:** **v10.3.38**.  
+> **Verified against:** main v10.3.44: Kyoto 11/11 and 13/11 itinerary revised, food-only route stops removed, flexible dining preference applied. Payment and Mori no Yu information unchanged.
+> **Current app version:** **v10.3.44**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
 ---
+
+## 2026-11-10 · Confirmed itinerary update (v10.3.44)
+
+- Dining is **spontaneous**. Do not schedule restaurants, gyoza, ramen, snacks, or fixed dinner stops anywhere in the daily itinerary or map route unless specifically requested again. Preserve food venues in Places for on-demand lookup only, with no itinerary schedule markers.
+- **11/11:** Kiyomizu-dera → Sannenzaka/Ninenzaka → Yasaka Pagoda → optional tea ceremony at Nagomi or CHAYU around midday (not booked) → Gion in daylight → optional Samurai Kenbu show around 16:15 (not booked; verify timetable).
+- **10/11 already visited:** Tō-ji, Yasaka Shrine, Pontocho and Gion at night. No repeated visit to Yasaka Shrine or Pontocho planned tomorrow. Yasaka Pagoda is not the Tō-ji pagoda.
+- **13/11:** Arashiyama/Okusaga → Tenryu-ji → Kinkaku-ji → Nishiki Market 14:30–15:00 → optional Samurai Ninja Museum if time → Onitsuka Tiger Kawaramachi OPA in early evening (store hours generally 11:00–21:00). Free time for shopping.
+- Tea ceremony is a cultural activity, **not a casual food stop**. Do not clear any localStorage, existing bookings, documents, or budgets as part of this change.
 
 ## 1. Working rules — MUST preserve
 
@@ -66,10 +74,10 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.37**
+Current release: **v10.3.44**
 
 Current service-worker cache:
-`japan-trip-v10-3-35-two-fuji-routes`
+`japan-trip-v10-3-44-kyoto-food-flex`
 
 When app code/assets change:
 
