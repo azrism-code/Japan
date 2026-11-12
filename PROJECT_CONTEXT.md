@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** main v10.3.44: Kyoto 11/11 and 13/11 itinerary revised, food-only route stops removed, flexible dining preference applied. Payment and Mori no Yu information unchanged.
-> **Current app version:** **v10.3.44**.  
+> **Verified against:** main v10.3.45: 12/11 and 13/11 swapped, separate map legs and 18:00 teamLab booking confirmed. Payment and Mori no Yu information unchanged.
+> **Current app version:** **v10.3.45**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -15,6 +15,14 @@
 - **10/11 already visited:** Tō-ji, Yasaka Shrine, Pontocho and Gion at night. No repeated visit to Yasaka Shrine or Pontocho planned tomorrow. Yasaka Pagoda is not the Tō-ji pagoda.
 - **13/11:** Arashiyama/Okusaga → Tenryu-ji → Kinkaku-ji → Nishiki Market 14:30–15:00 → optional Samurai Ninja Museum if time → Onitsuka Tiger Kawaramachi OPA in early evening (store hours generally 11:00–21:00). Free time for shopping.
 - Tea ceremony is a cultural activity, **not a casual food stop**. Do not clear any localStorage, existing bookings, documents, or budgets as part of this change.
+
+## 2026-11-12 · Kyoto two-day plan update v10.3.45
+
+- 12/11 Thu: direct taxi from Sakura Terrace The Gallery to Otagi, downhill via Saga Toriimoto to Bamboo Grove and Tenryu-ji, taxi to Kinkaku-ji and then to teamLab Biovortex Kyoto. **teamLab booked at 18:00 today, user confirmed.**
+- 13/11 Fri: JR Kyoto to Inari, Fushimi Inari, Tofuku-ji, Sanjusangen-do, taxi to Nijō Castle with Ninomaru Palace, then Nishiki Market and Teramachi/Shinkyogoku.
+- Samurai Ninja Museum and Onitsuka Tiger already visited 11/11. Keep restaurants in Places for spontaneous meals only.
+- Google Maps per segment (driving, transit, walking) in days routeSegments and map/tablet UI. General route is not intended for actual driving inside walking-only forest paths.
+- No ticket numbers, credentials or sensitive documents in public repository. Keep all original flights, booked hotels, Firestore data, QR and expenses intact.
 
 ## 1. Working rules — MUST preserve
 
@@ -74,10 +82,10 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.44**
+Current release: **v10.3.45**
 
 Current service-worker cache:
-`japan-trip-v10-3-44-kyoto-food-flex`
+`japan-trip-v10-3-45-kyoto-two-day-routes`
 
 When app code/assets change:
 
