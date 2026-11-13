@@ -1,12 +1,20 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** main v10.3.45: 12/11 and 13/11 swapped, separate map legs and 18:00 teamLab booking confirmed. Payment and Mori no Yu information unchanged.
-> **Current app version:** **v10.3.45**.  
+> **Verified against:** main v10.3.46: 13/11 includes Nijō Castle, Nishiki Market and CHAYU 17:00 (not booked); 12/11 teamLab 18:00 booking remains unchanged.
+> **Current app version:** **v10.3.46**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
 ---
+
+## 2026-11-13 · Updated Kyoto itinerary (v10.3.46)
+
+- 13/11 Friday: JR Kyoto → Fushimi Inari 10:45–11:45 (short visit) → taxi to Nijō Castle 12:20–13:45 → Nishiki Market 14:05–15:20 → taxi to Kiyomizu area → optional nearby historic lanes → CHAYU tea ceremony **17:00–17:40, NOT BOOKED** → Gion optional afterwards.
+- Remove Tofuku-ji and Sanjūsangen-dō from the 13/11 timed route; retain both as optional Places listings without a 13/11 time.
+- CHAYU user-reported 17:00 availability; it is not a confirmed purchase. Official details: https://chayu-kyoto.com/ · 4-172-7 Kiyomizu, Higashiyama, Kyoto · ~40 minutes. No booking reference or financial transaction was added.
+- Keep dinner spontaneous at ~21:00, no repeat of booked 12/11 teamLab or already visited 11/11 sites.
+- Add separate transport/walking map legs; leave all other days, hotels, payments, and credentials intact.
 
 ## 2026-11-10 · Confirmed itinerary update (v10.3.44)
 
@@ -82,10 +90,10 @@ Some final trip facts are still applied by runtime modules rather than being ful
 
 ## 3. Versioning and cache rules
 
-Current release: **v10.3.45**
+Current release: **v10.3.46**
 
 Current service-worker cache:
-`japan-trip-v10-3-45-kyoto-two-day-routes`
+`japan-trip-v10-3-46-kyoto-chayu-1700`
 
 When app code/assets change:
 
