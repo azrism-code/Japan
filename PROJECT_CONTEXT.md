@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** main v10.3.47: added payment-method filtering and an approximate ¥90,000 cash wallet in the budget; other trip plans and bookings remain unchanged.
-> **Current app version:** **v10.3.47**.  
+> **Verified against:** main v10.3.48: editable dates for all expenses, Japan-local default creation date, previous cash wallet and payment filter unchanged.
+> **Current app version:** **v10.3.48**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -900,3 +900,9 @@ When a future chat starts:
 - Add buttons to filter expense list by **מזומן / אשראי / לא סווג**. Combine with status and category filters; clicking again toggles, and 'clear filters' clears all three. Never automatically classify old payment value 'טרם שולם' as credit.
 - Add `expPayment` dropdown to both add and edit forms; default newly added expense to credit as before, retain legacy payment strings in edits; choice is persisted in expense `payment` field and cloud sync. Actual wallet spending only subtracts cash when expense is **paid**.
 - Settings includes editable total `cashWithdrawnJPY`, stored in existing Firestore-synced settings. Do not change individual preexisting expense statuses or payment methods without user input. No actual bank cash withdrawal or external payment action was performed.
+
+## 2026-11-15 · Editable dates on expense records · v10.3.48
+- Every expense card shows the record's date (DD/MM/YYYY), or `לא ידוע · אפשר לערוך` when unavailable. Add/edit forms use native editable date input. New expenses default to current Asia/Tokyo calendar date and store both `date` (YYYY-MM-DD) and `createdAt` (immutable UTC ISO).
+- Legacy migration fills `date` only when a trustworthy record creation timestamp is available from existing `createdAt` or epoch-ms numeric `id`. The documented 7G eSIM purchase on 27/10/2026 receives that known purchase date. Other unknown legacy dates remain unset; do not misrepresent hotel stay/rail travel dates as payment dates or stamp the feature deployment date as the original creation date.
+- Existing manually selected dates stay unchanged; cleared dates remain cleared. Migration is idempotent, only runs for Owner/Editor, and re-runs after Firestore hydration without changing other budget fields. No cash withdrawal, FX rate, amount, booking or payment method changes.
+- Old backup imports without dates stay readable and editable. Existing Firestore expense array syncs additional date fields without requiring a schema/permission change.

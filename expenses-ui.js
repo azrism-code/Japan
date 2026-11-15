@@ -1,7 +1,7 @@
-/* Japan Trip 2026 · compact expense controls, cash wallet and payment filtering · v10.3.47 */
+/* Japan Trip 2026 · compact expense controls, cash wallet, payment filtering and editable dates · v10.3.48 */
 (() => {
   'use strict';
-  const VERSION='10.3.47';
+  const VERSION='10.3.48';
   const EXP_KEY='japanTrip_expenses_v1';
   const SETTINGS_KEY='japanTrip_expense_settings_v1';
   const TRASH_KEY='japanTrip_expenses_trash_v1';
@@ -35,6 +35,23 @@
       localStorage.setItem(EXP_KEY,JSON.stringify(items));
       if(notifyCloud&&window.JapanCloud?.canWrite?.())document.dispatchEvent(new CustomEvent('japan:stateChanged'));
     }
+    return changed;
+  }
+
+  // Idempotent, non-destructive migration of trustworthy creation dates.
+  function migrateExistingExpenseDates(){
+    if(!canWrite())return false;
+    const items=read(EXP_KEY,[]),infer=window.JapanTripApp?.expenseDateValue;
+    if(!Array.isArray(items)||typeof infer!=='function')return false;
+    let changed=false;
+    for(const item of items){
+      if(!item||Object.prototype.hasOwnProperty.call(item,'date'))continue;
+      const date=infer(item);
+      if(!date)continue; // Unknown date is left blank; never invent transaction dates.
+      item.date=date;
+      changed=true;
+    }
+    if(changed)writeExpenses(items);
     return changed;
   }
 
@@ -362,12 +379,14 @@
     const name=panel.querySelector('#expName'), amount=panel.querySelector('#expAmount');
     const currency=panel.querySelector('#expCurrency'), status=panel.querySelector('#expStatus');
     const category=panel.querySelector('#expCategory'), note=panel.querySelector('#expNote');
+    const date=panel.querySelector('#expDate');
     if(name)name.value=item.name||'';
     if(amount)amount.value=Number(item.amount)||0;
     addOptionIfMissing(currency,item.currency||'ILS');
     addOptionIfMissing(status,item.status||'הערכה');
     addOptionIfMissing(category,item.category||'📦 אחר');
     if(note)note.value=item.note||'';
+    if(date)date.value=window.JapanTripApp?.expenseDateValue?.(item)||'';
 
     let payment=panel.querySelector('#expPayment');
     if(!payment){
@@ -426,6 +445,7 @@
     Object.assign(item,{
       name,
       amount,
+      date:panel.querySelector('#expDate')?.value||'',
       currency:panel.querySelector('#expCurrency')?.value||item.currency,
       status:panel.querySelector('#expStatus')?.value||item.status,
       category:panel.querySelector('#expCategory')?.value||item.category,
@@ -568,6 +588,7 @@
 
   document.addEventListener('japan:cloudApplied',()=>setTimeout(()=>{
     seedTrainEstimates();
+    migrateExistingExpenseDates();
     scheduleEnhance();
   },0));
 
@@ -631,6 +652,7 @@
 
   seedTrainEstimates();
   migrateHakoneExpense(false);
+  migrateExistingExpenseDates();
   document.addEventListener('japan:cloudApplied',()=>migrateHakoneExpense(true));
   if(window.TRIP_DATA)window.TRIP_DATA.version=VERSION;
   document.documentElement.dataset.appReady='v'+VERSION;

@@ -4,3 +4,6 @@
 .expense-actions-bar button.active{background:#fff0df;border-color:#e9a45c;color:#a8560b}
 .expense-panel{margin-top:8px}
 .expense-panel[hidden]{display:none!important}
+
+.expense-date{margin-top:3px;font-size:12px;line-height:1.3;font-weight:700;color:#71645a}
+#expDate{width:100%;max-width:100%;min-width:0;direction:ltr;text-align:left}
