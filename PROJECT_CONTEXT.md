@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** main v10.3.46: 13/11 includes Nijō Castle, Nishiki Market and CHAYU 17:00 (not booked); 12/11 teamLab 18:00 booking remains unchanged.
-> **Current app version:** **v10.3.46**.  
+> **Verified against:** main v10.3.47: added payment-method filtering and an approximate ¥90,000 cash wallet in the budget; other trip plans and bookings remain unchanged.
+> **Current app version:** **v10.3.47**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -893,3 +893,10 @@ When a future chat starts:
 - Filter visible results at HTML creation: both city and hotel in hotel-nearby mode, city and category in regular Places. Avoid relying only on hiding already-created cards. Text search continues to filter rendered subset.
 - In hotel-nearby mode, hotel selector chips are also limited to selected city, removing confusing Tokyo hotels from Kyoto selection. Clicking specific hotel sets current city to hotel's city. Changing city preserves hotel only if compatible; conflicting choice resets hotel to all. Selecting All hotels preserves city; selecting All cities preserves specific hotel until user clears that selector.
 - Show results count or informative empty state. No changes to reservations, budget, itinerary, Mora no Yu details or private data.
+
+## 2026-11-15 · Expense payment-method filtering and cash wallet · v10.3.47
+- User reported withdrawing approximately **¥90,000 cash**, subsequently using it to pay cash transactions. Model withdrawal as cash funding in `japanTrip_expense_settings_v1.cashWithdrawnJPY` (default 90000, editable in budget settings), **not** as an expense entry; never count both withdrawal and paid cash purchases against trip budget. Seed once if missing after an Owner/Editor opens the budget; preserve all other settings and cash modifications.
+- Paid cash JPY-equivalent amount is calculated from expense records with `status='שולם'` and `payment='מזומן'`, including excluded-from-budget expenses because physical cash still left the wallet. Convert other currencies to JPY using existing budget FX rates. Present withdrawn cash, paid recorded cash and estimated remainder; caution that unrecorded cash spending is not reflected and values may be approximate.
+- Add buttons to filter expense list by **מזומן / אשראי / לא סווג**. Combine with status and category filters; clicking again toggles, and 'clear filters' clears all three. Never automatically classify old payment value 'טרם שולם' as credit.
+- Add `expPayment` dropdown to both add and edit forms; default newly added expense to credit as before, retain legacy payment strings in edits; choice is persisted in expense `payment` field and cloud sync. Actual wallet spending only subtracts cash when expense is **paid**.
+- Settings includes editable total `cashWithdrawnJPY`, stored in existing Firestore-synced settings. Do not change individual preexisting expense statuses or payment methods without user input. No actual bank cash withdrawal or external payment action was performed.

@@ -1,7 +1,7 @@
-/* Japan Trip 2026 · compact expense controls + dual budget filters · v10.3.41 */
+/* Japan Trip 2026 · compact expense controls, cash wallet and payment filtering · v10.3.47 */
 (() => {
   'use strict';
-  const VERSION='10.3.35';
+  const VERSION='10.3.47';
   const EXP_KEY='japanTrip_expenses_v1';
   const SETTINGS_KEY='japanTrip_expense_settings_v1';
   const TRASH_KEY='japanTrip_expenses_trash_v1';
@@ -134,7 +134,46 @@
     '📱 תקשורת':'#8c95a3','🛡️ ביטוח':'#af7a4b','📦 אחר':'#9a8a7a'
   };
   const FALLBACK_CATEGORY_COLORS=['#5478bf','#2f9c8d','#e7a347','#9875cd','#d77888','#408eab','#8c95a3','#af7a4b','#9a8a7a'];
-  let statusFilter=null,categoryFilter=null;
+  let statusFilter=null,categoryFilter=null,paymentFilter=null;
+  // 'payment' stores the *method*; 'status' stores paid/booked/estimated.
+  // Do not infer that unclassified legacy transactions used a credit card.
+  function paymentMethod(payment){
+    const p=String(payment??'').toLowerCase().trim();
+    if(/מזומן|cash|現金/.test(p))return 'cash';
+    if(/אשראי|כרטיס|credit|visa|mastercard|master card|card/.test(p))return 'credit';
+    return 'unknown';
+  }
+  const PAYMENT_CHOICES=[
+    {key:'cash',label:'💴 מזומן'},
+    {key:'credit',label:'💳 אשראי'},
+    {key:'unknown',label:'לא סווג'}
+  ];
+  function yen(value){return '¥'+new Intl.NumberFormat('he-IL',{maximumFractionDigits:0}).format(Math.round(Number(value)||0))}
+  function cashWallet(){
+    const T=window.TRIP_DATA||{},settings=read(SETTINGS_KEY,{});
+    const amount=Math.max(0,Number(settings.cashWithdrawnJPY ?? 90000)||0);
+    const rates={ILS:1,JPY:Number(T.rateJpyIls)||0.0196773,USD:3,EUR:3.5,...(settings.rates||{})};
+    const yenRate=Number(rates.JPY)>0?Number(rates.JPY):0.0196773;
+    const entries=read(EXP_KEY,[]);
+    let spentJPY=0,count=0;
+    if(Array.isArray(entries))for(const item of entries){
+      if(item?.status!=='שולם'||paymentMethod(item?.payment)!=='cash')continue;
+      // Excluded-from-budget purchases still reduce real cash in hand.
+      const rate=Number(rates[item?.currency])||1;
+      spentJPY+=(Number(item?.amount)||0)*rate/yenRate;
+      count++;
+    }
+    return {amount,spentJPY,remainingJPY:amount-spentJPY,count};
+  }
+  function initializeCashWallet(){
+    if(!canWrite())return;
+    const settings=read(SETTINGS_KEY,null);
+    if(!settings||typeof settings!=='object'||Array.isArray(settings)||settings.cashWithdrawnJPY!==undefined)return;
+    // User-reported approximate withdrawal; record as a cash *funding* amount,
+    // never as an expense, so cash purchases are not counted twice.
+    localStorage.setItem(SETTINGS_KEY,JSON.stringify({...settings,cashWithdrawnJPY:90000}));
+    document.dispatchEvent(new CustomEvent('japan:stateChanged'));
+  }
 
   function expenseStatus(status){
     return status==='שולם'?'paid':status==='מוזמן'?'booked':'estimate';
@@ -171,10 +210,16 @@
 
     const t=budgetData();
     const categories=expenseCategories();
+    const wallet=cashWallet();
+    const expenses=read(EXP_KEY,[]);
     if(categoryFilter&&!categories.some(c=>c.name===categoryFilter))categoryFilter=null;
     const denom=Math.max(t.budget,t.used,1);
     const pct=t.budget?Math.round(t.used/t.budget*100):0;
     const statusItems=STATUS_CHOICES.map(s=>({...s,amount:t[s.key]}));
+    const paymentChoices=PAYMENT_CHOICES.map(p=>({...p,count:Array.isArray(expenses)?expenses.filter(x=>paymentMethod(x?.payment)===p.key).length:0}));
+    const paymentButtons=paymentChoices.map(p=>
+      `<button type="button" class="payment-filter-chip ${paymentFilter===p.key?'active':''}" data-exp-payment="${p.key}" aria-pressed="${paymentFilter===p.key}">${p.label} <small>${p.count}</small></button>`
+    ).join('');
 
     const statusBar=statusItems.filter(s=>s.amount>0).map(s=>
       `<button type="button" class="budget-seg budget-seg-button ${s.colorClass} ${statusFilter&&statusFilter!==s.key?'is-muted':''}" data-exp-status="${s.key}" aria-pressed="${statusFilter===s.key}" aria-label="${s.label}: ${money(s.amount)}" style="width:${s.amount/denom*100}%" title="${s.label}: ${money(s.amount)}"></button>`
@@ -201,8 +246,21 @@
         <div class="budget-stack" role="group" aria-label="סינון הוצאות לפי מצב התשלום">${statusBar}</div>
         <div class="budget-legend">${statusLegend}</div>
       </div>
+      <div class="budget-chart expense-payment-chart">
+        <div class="budget-chart-head"><span>סינון לפי צורת תשלום</span>${statusFilter||categoryFilter||paymentFilter?'<button type="button" class="expense-clear-filters" data-exp-clear-filters>נקה סינון ✕</button>':''}</div>
+        <div class="expense-payment-choices" role="group" aria-label="סינון הוצאות במזומן או אשראי">${paymentButtons}</div>
+      </div>
+      <div class="budget-chart cash-tracker" aria-label="מעקב מזומן ביפן">
+        <div class="budget-chart-head"><span>💴 קופת מזומן ביפן · יתרה משוערת</span></div>
+        <div class="cash-tracker-numbers">
+          <div><small>משיכות מזומן</small><strong>${yen(wallet.amount)}</strong></div>
+          <div><small>הוצאות מזומן ששולמו</small><strong>${yen(wallet.spentJPY)}</strong></div>
+          <div><small>יתרה מחושבת</small><strong>${yen(wallet.remainingJPY)}</strong></div>
+        </div>
+        <div class="cash-tracker-note">${wallet.count} הוצאות שסומנו ״שולם״ ו״מזומן״. המשיכה אינה נספרת כהוצאה בתקציב. היתרה לא כוללת תשלומים שלא נרשמו, ואפשר לעדכן את סכום המשיכות בהגדרות התקציב.</div>
+      </div>
       <div class="budget-chart expense-category-chart">
-        <div class="budget-chart-head"><span>חלוקת הוצאות · סינון לפי סוג</span>${statusFilter||categoryFilter?'<button type="button" class="expense-clear-filters" data-exp-clear-filters>נקה סינון ✕</button>':''}</div>
+        <div class="budget-chart-head"><span>חלוקת הוצאות · סינון לפי סוג</span>${statusFilter||categoryFilter||paymentFilter?'<button type="button" class="expense-clear-filters" data-exp-clear-filters>נקה סינון ✕</button>':''}</div>
         <div class="budget-stack" role="group" aria-label="סינון הוצאות לפי קטגוריה">${categoryBar}</div>
         <div class="expense-category-legend">${categoryLegend||'<span class="expense-filter-empty-label">אין הוצאות להצגה</span>'}</div>
       </div>`;
@@ -218,7 +276,8 @@
     for(const card of cards){
       const item=byId.get(String(card.dataset.expId));
       const show=!!item&&(!statusFilter||expenseStatus(item.status)===statusFilter)
-        &&(!categoryFilter||String(item.category||'📦 אחר')===categoryFilter);
+        &&(!categoryFilter||String(item.category||'📦 אחר')===categoryFilter)
+        &&(!paymentFilter||paymentMethod(item.payment)===paymentFilter);
       card.hidden=!show;
       if(show)visible++;
     }
@@ -230,10 +289,10 @@
       if(oldFilters)oldFilters.after(note);
       else body.querySelector('.expense-card')?.before(note);
     }
-    const filtered=!!(statusFilter||categoryFilter);
+    const filtered=!!(statusFilter||categoryFilter||paymentFilter);
     note.hidden=!filtered;
     if(filtered)note.textContent=visible
-      ?`מציג ${visible} הוצאות · ${[STATUS_CHOICES.find(s=>s.key===statusFilter)?.label,categoryFilter].filter(Boolean).join(' + ')}`
+      ?`מציג ${visible} הוצאות · ${[STATUS_CHOICES.find(s=>s.key===statusFilter)?.label,categoryFilter,PAYMENT_CHOICES.find(p=>p.key===paymentFilter)?.label].filter(Boolean).join(' + ')}`
       :'אין הוצאות המתאימות לסינון. לחיצה נוספת על הבחירה תבטל אותה.';
   }
 
@@ -314,11 +373,11 @@
     if(!payment){
       const field=document.createElement('div');
       field.className='field';
-      field.innerHTML='<label>אמצעי / מצב תשלום</label><input id="expPayment">';
+      field.innerHTML='<label>צורת תשלום</label><select id="expPayment"><option value="אשראי">💳 אשראי</option><option value="מזומן">💴 מזומן</option><option value="">לא צוין</option></select>';
       category?.closest('.field')?.after(field);
       payment=field.querySelector('#expPayment');
     }
-    if(payment)payment.value=item.payment||'';
+    if(payment){addOptionIfMissing(payment,item.payment||'');if(!item.payment)payment.value=''}
 
     let editOptions=panel.querySelector('.expense-edit-options');
     if(!editOptions){
@@ -370,7 +429,7 @@
       currency:panel.querySelector('#expCurrency')?.value||item.currency,
       status:panel.querySelector('#expStatus')?.value||item.status,
       category:panel.querySelector('#expCategory')?.value||item.category,
-      payment:panel.querySelector('#expPayment')?.value.trim()||'',
+      payment:panel.querySelector('#expPayment')?.value??item.payment??'',
       note:panel.querySelector('#expNote')?.value.trim()||'',
       included:include?include.checked:item.included!==false
     });
@@ -402,6 +461,7 @@
     const body=page.querySelector('.page-body');
     if(!body)return;
 
+    initializeCashWallet();
     enhanceSummary(body);
 
     const cards=[...body.querySelectorAll(':scope > .card')];
@@ -480,13 +540,15 @@
   document.addEventListener('click',e=>{
     const status=e.target.closest('[data-exp-status]');
     const category=e.target.closest('[data-exp-category]');
+    const payment=e.target.closest('[data-exp-payment]');
     const clear=e.target.closest('[data-exp-clear-filters]');
-    if(!status&&!category&&!clear)return;
+    if(!status&&!category&&!payment&&!clear)return;
     if(!isExpensesPage(document.querySelector('#sheetPage.open')))return;
     e.preventDefault();
-    if(clear){statusFilter=null;categoryFilter=null}
+    if(clear){statusFilter=null;categoryFilter=null;paymentFilter=null}
     else if(status){statusFilter=statusFilter===status.dataset.expStatus?null:status.dataset.expStatus}
     else if(category){categoryFilter=categoryFilter===category.dataset.expCategory?null:category.dataset.expCategory}
+    else if(payment){paymentFilter=paymentFilter===payment.dataset.expPayment?null:payment.dataset.expPayment}
     enhanceExpenses();
   });
 
@@ -522,6 +584,17 @@
     .budget-seg-button.is-muted{opacity:.26}
     .budget-seg-button:focus-visible,.expense-legend-choice:focus-visible,.expense-clear-filters:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
     .expense-category-chart{margin-top:0}
+    .expense-payment-chart,.cash-tracker{margin-top:0}
+    .expense-payment-choices{display:flex;gap:7px;flex-wrap:wrap}
+    .payment-filter-chip{border:1px solid #dfd5cd;border-radius:10px;background:#fff;padding:9px 11px;font:inherit;font-weight:800;font-size:13px;cursor:pointer;color:#594b40;display:inline-flex;gap:6px;align-items:center;min-height:41px}
+    .payment-filter-chip small{font-size:11px;color:#7a6a60}
+    .payment-filter-chip.active{border-color:#d18538;background:#fff0df;color:#935112}
+    .cash-tracker-numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+    .cash-tracker-numbers div{display:flex;flex-direction:column;gap:3px;min-width:0}
+    .cash-tracker-numbers small{font-size:11px;line-height:1.3;color:#73665a}
+    .cash-tracker-numbers strong{font-size:clamp(15px,4.3vw,20px);line-height:1.15;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+    .cash-tracker-note{margin-top:10px;font-size:12px;line-height:1.5;color:#74655b}
+    .payment-filter-chip:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
     .expense-legend-choice{display:grid;grid-template-columns:10px minmax(0,1fr);align-items:center;column-gap:6px;row-gap:3px;padding:7px 4px;min-height:44px;border:1px solid transparent;border-radius:8px;background:transparent;cursor:pointer;text-align:right;min-width:0;color:inherit;font:inherit;font-size:clamp(13px,3.5vw,14px)}
     .expense-legend-choice b{font-size:clamp(13px,3.5vw,14px);line-height:1.25;white-space:normal;overflow-wrap:anywhere}
     .expense-legend-choice small{grid-column:2;color:#776c65;font-size:clamp(11px,3vw,12px);line-height:1.35;white-space:normal;overflow-wrap:anywhere}
