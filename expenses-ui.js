@@ -1,7 +1,7 @@
-/* Japan Trip 2026 · compact expense controls, cash wallet, payment filtering and editable dates · v10.3.48 */
+/* Japan Trip 2026 · compact expense controls, cash wallet, editable dates and currency-specific CSV · v10.3.49 */
 (() => {
   'use strict';
-  const VERSION='10.3.48';
+  const VERSION='10.3.49';
   const EXP_KEY='japanTrip_expenses_v1';
   const SETTINGS_KEY='japanTrip_expense_settings_v1';
   const TRASH_KEY='japanTrip_expenses_trash_v1';
@@ -475,6 +475,75 @@
     setTimeout(scheduleEnhance,0);
   }
 
+
+  // CSV is a single rectangular table. Rows are labeled expense, budget or cash.
+  function csvValue(v){
+    if(v===''||v==null)return '';
+    if(typeof v==='number')return Number.isFinite(v)?String(v):'';
+    let t=String(v);
+    if(/^[\s\uFEFF]*[=+@-]/u.test(t))t="'"+t;
+    return '"'+t.replace(/"/g,'""')+'"';
+  }
+  function csvAmount(v){
+    const n=Number(v);
+    return Number.isFinite(n)?Math.round((n+Number.EPSILON)*100)/100:'';
+  }
+  function csvCurrency(raw){
+    const code=String(raw||'').trim().toUpperCase();
+    return /^[A-Z]{3}$/.test(code)?code:'OTHER';
+  }
+  function buildBudgetCsv(items,settings,summary,wallet,dateReader){
+    const expenses=Array.isArray(items)?items.filter(x=>x&&typeof x==='object'):[];
+    const present=new Set(expenses.map(x=>csvCurrency(x.currency)));
+    const currencies=['JPY','ILS','USD','EUR',...[...present].filter(c=>!['JPY','ILS','USD','EUR'].includes(c)).sort()];
+    const rates={USD:3,EUR:3.5,JPY:Number(window.TRIP_DATA?.rateJpyIls)||0.0196773,ILS:1,...(settings?.rates||{})};
+    const header=['סוג רשומה','תאריך','תיאור','קטגוריה','סטטוס','צורת תשלום','כלול בתקציב','מטבע מקורי',...currencies.map(c=>'סכום '+c),'שווי בש"ח','הערות'];
+    const rows=[header];
+    const row=(kind,title,o={})=>[
+      kind,o.date||'',title,o.category||'',o.status||'',o.payment||'',o.included||'',o.currency||'',
+      ...currencies.map(c=>o.multiCurrency?(o.multiCurrency[c]===undefined?'':csvAmount(o.multiCurrency[c])):(c===csvCurrency(o.currency)&&o.currency?csvAmount(o.amount??0):'')),
+      o.ils??'',o.note||''
+    ];
+    const totals=Object.fromEntries(currencies.map(c=>[c,0]));
+    for(const item of expenses){
+      const currency=csvCurrency(item.currency),amount=Number(item.amount)||0;
+      if(item.included!==false)totals[currency]+=amount;
+      rows.push(row('הוצאה',item.name||'',{
+        date:typeof dateReader==='function'?dateReader(item):item.date||'',
+        category:item.category||'',status:item.status||'',payment:item.payment||'',
+        included:item.included===false?'לא':'כן',currency:item.currency||'',
+        amount,ils:csvAmount(amount*(Number(rates[item.currency])||1)),note:item.note||''
+      }));
+    }
+    const sum=(name,amount,note)=>rows.push(row('סיכום תקציב',name,{currency:'ILS',amount,note}));
+    const ratesNote=['JPY','USD','EUR'].map(c=>c+' → ILS: '+rates[c]).join(' | ');
+    sum('תקציב כולל',summary.budget,'התקציב בשקלים. שערים: '+ratesNote);
+    sum('סך הוצאות צפויות בתקציב',summary.used,'שולם + הוזמן + הערכה, רק הוצאות שנכללות בתקציב');
+    sum('שולם בפועל',summary.paid,'לפי סטטוס שולם');
+    sum('הוזמן',summary.booked,'לפי סטטוס מוזמן');
+    sum('הערכה',summary.estimate,'לפי סטטוס הערכה');
+    sum('נותר בתקציב',summary.remaining,'תקציב פחות סך הוצאות צפויות');
+    rows.push(row('סיכום מטבעות','הוצאות כלולות לפי מטבע מקורי',{multiCurrency:totals,ils:csvAmount(summary.used),note:'סכומים במטבעות שונים מוצגים בנפרד ולא מחברים אותם ללא המרה'}));
+    const cash=(name,amount,note)=>rows.push(row('מעקב מזומן',name,{currency:'JPY',amount,note}));
+    cash('מזומן שנמשך',wallet.amount,'סכום בקירוב; מקור מימון בלבד, אינו נספר כהוצאה');
+    cash('הוצאות מזומן ששולמו',wallet.spentJPY,'כולל הוצאות שסומנו שולם + מזומן, גם אם הוחרגו מהתקציב');
+    cash('יתרת מזומן משוערת',wallet.remainingJPY,'לא כולל הוצאות שלא נרשמו');
+    return '\uFEFF'+rows.map(r=>r.map(csvValue).join(',')).join('\r\n')+'\r\n';
+  }
+  function exportBudgetCsv(){
+    if(!canWrite()){window.JapanCloud?.deny?.();return}
+    const csv=buildBudgetCsv(read(EXP_KEY,[]),read(SETTINGS_KEY,{}),budgetData(),cashWallet(),window.JapanTripApp?.expenseDateValue);
+    const filename='JapanTrip-Budget-Expenses-'+(window.JapanTripApp?.japanCalendarDate?.()||new Date().toISOString().slice(0,10))+'.csv';
+    const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+    const url=URL.createObjectURL(blob);
+    const link=document.createElement('a');
+    link.href=url;link.download=filename;link.style.display='none';
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+  }
+
   function enhanceExpenses(){
     const page=document.querySelector('#sheetPage.open');
     if(!page||!isExpensesPage(page))return;
@@ -498,7 +567,8 @@
       bar.className='expense-actions-bar';
       bar.innerHTML=`
         <button type="button" data-exp-panel="add" aria-expanded="false">＋ הוסף הוצאה</button>
-        <button type="button" data-exp-panel="settings" aria-expanded="false">⚙️ שערים ותקציב</button>`;
+        <button type="button" data-exp-panel="settings" aria-expanded="false">⚙️ שערים ותקציב</button>
+        <button type="button" class="expense-export-csv" data-exp-export-csv aria-label="ייצוא כל התקציב וההוצאות לקובץ CSV">⬇️ ייצוא תקציב והוצאות ל-CSV</button>`;
       settings.before(bar);
     }
 
@@ -573,6 +643,12 @@
   });
 
   document.addEventListener('click',e=>{
+    const exportButton=e.target.closest('[data-exp-export-csv]');
+    if(exportButton){
+      e.preventDefault();
+      if(!isExpensesPage(document.querySelector('#sheetPage.open')))return;
+      exportBudgetCsv();return;
+    }
     const panelButton=e.target.closest('[data-exp-panel]');
     if(panelButton){
       e.preventDefault();

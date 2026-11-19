@@ -1,8 +1,8 @@
 # Japan Trip — Project Context
 
 > **Purpose:** Durable source of context for future work on the Japan Trip app.  
-> **Verified against:** main v10.3.48: editable dates for all expenses, Japan-local default creation date, previous cash wallet and payment filter unchanged.
-> **Current app version:** **v10.3.48**.  
+> **Verified against:** main v10.3.49: added budget and expenses CSV export with separate native currency columns and budget/cash summaries.
+> **Current app version:** **v10.3.49**.  
 > **Repo:** `azrism-code/Japan` · branch `main` is the source of truth.  
 > **Live PWA:** https://azrism-code.github.io/Japan/
 
@@ -906,3 +906,9 @@ When a future chat starts:
 - Legacy migration fills `date` only when a trustworthy record creation timestamp is available from existing `createdAt` or epoch-ms numeric `id`. The documented 7G eSIM purchase on 27/10/2026 receives that known purchase date. Other unknown legacy dates remain unset; do not misrepresent hotel stay/rail travel dates as payment dates or stamp the feature deployment date as the original creation date.
 - Existing manually selected dates stay unchanged; cleared dates remain cleared. Migration is idempotent, only runs for Owner/Editor, and re-runs after Firestore hydration without changing other budget fields. No cash withdrawal, FX rate, amount, booking or payment method changes.
 - Old backup imports without dates stay readable and editable. Existing Firestore expense array syncs additional date fields without requiring a schema/permission change.
+
+## 2026-11-19 · CSV export for budget and expenses · v10.3.49
+- Expense actions now include an **export CSV** download button (Owner/Editor only; never exposes private expenses to Viewers). It exports all expenses independent of active UI filters; no user data is changed.
+- A single UTF-8 BOM, comma-delimited, CRLF CSV table with dated expense rows, description/category, paid/booked/estimate status, payment method, included flag, source currency, original amount in a **separate column for each currency** (JPY, ILS, USD, EUR, plus any additional codes), ILS-equivalent, and notes. Non-matching currency columns stay blank; numeric cells remain numeric without symbols/thousand separators, for Excel. Text is CSV-escaped and sanitized against leading spreadsheet formula injection.
+- Footer rows in the same table, clearly labeled as summaries, provide ILS budget, projected included expenses, paid/booked/estimated, balance, native-currency totals and JPY cash funding/spent/remaining, with explanatory notes; the approximate ¥90,000 cash withdrawal is **funding**, not an extra expense. Budget FX rates are noted.
+- The CSV is generated locally on click via Blob with a date-stamped file name, without paid API calls or server uploads. Existing JSON export remains untouched. Unknown dates stay empty. In Excel, filter “סוג רשומה=הוצאה” for transactions only, excluding summaries from subtotal formulas.
